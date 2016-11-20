@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("org.lasseufpa.circular", appContext.getPackageName());
+        assertEquals("org.lasseufpa.Circular", appContext.getPackageName());
     }
 }
