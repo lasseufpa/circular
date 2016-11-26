@@ -2,6 +2,7 @@ package org.lasseufpa.circular;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.internal.zzf;
 
 import java.util.Random;
@@ -12,14 +13,25 @@ import java.util.Random;
 
 public class Circular {
 
-    private LatLng position;
-    private Marker marcador;
-    private int velocidade;
-    private String nome;
-    private int currentcircularPoint = 0;
+    private LatLng position;                 //posição do circular
+    private Marker marcador;                 //marcador do Maps associado
+    private int velocidade;                  //velocidade do circular
+    private String nome;                     //nome do circular
+    private int currentcircularPoint = 0;    //ponto da rota
     private final int NCircularPoints = 439;
     public int[] stopPoints = {19,43,81,156,230,339};
     private int countStop = 0;
+
+    public Circular (String nome, LatLng local) {
+        this.nome = nome;
+        this.position = local;
+    }
+
+    public Circular () {
+
+    }
+
+
 
 
 
