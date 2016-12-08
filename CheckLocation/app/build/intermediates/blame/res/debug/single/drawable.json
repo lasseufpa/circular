@@ -48,24 +48,24 @@
         "source": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\drawable\\abc_seekbar_thumb_material.xml"
     },
     {
-        "merged": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\cast_ic_expanded_controller_closed_caption.xml",
-        "source": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-cast-framework\\10.0.1\\res\\drawable\\cast_ic_expanded_controller_closed_caption.xml"
+        "merged": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\mr_ic_media_route_on_light.xml",
+        "source": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\exploded-aar\\com.android.support\\mediarouter-v7\\24.0.0\\res\\drawable\\mr_ic_media_route_on_light.xml"
     },
     {
         "merged": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\cast_ic_notification_skip_prev.xml",
         "source": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-cast-framework\\10.0.1\\res\\drawable\\cast_ic_notification_skip_prev.xml"
     },
     {
-        "merged": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\mr_ic_media_route_on_light.xml",
-        "source": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\exploded-aar\\com.android.support\\mediarouter-v7\\24.0.0\\res\\drawable\\mr_ic_media_route_on_light.xml"
-    },
-    {
-        "merged": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_icon_light_focused.xml",
-        "source": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.0.1\\res\\drawable\\common_google_signin_btn_icon_light_focused.xml"
+        "merged": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\cast_ic_expanded_controller_closed_caption.xml",
+        "source": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-cast-framework\\10.0.1\\res\\drawable\\cast_ic_expanded_controller_closed_caption.xml"
     },
     {
         "merged": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_voice_search_api_material.xml",
         "source": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\drawable\\abc_ic_voice_search_api_material.xml"
+    },
+    {
+        "merged": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_icon_light_focused.xml",
+        "source": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.0.1\\res\\drawable\\common_google_signin_btn_icon_light_focused.xml"
     },
     {
         "merged": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_icon_dark.xml",
@@ -200,12 +200,12 @@
         "source": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\exploded-aar\\com.android.support\\mediarouter-v7\\24.0.0\\res\\drawable\\mr_ic_media_route_mono_light.xml"
     },
     {
-        "merged": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_dialog_material_background.xml",
-        "source": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\drawable\\abc_dialog_material_background.xml"
-    },
-    {
         "merged": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\ic_collapse.xml",
         "source": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\exploded-aar\\com.android.support\\mediarouter-v7\\24.0.0\\res\\drawable\\ic_collapse.xml"
+    },
+    {
+        "merged": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_dialog_material_background.xml",
+        "source": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\drawable\\abc_dialog_material_background.xml"
     },
     {
         "merged": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_radio_material.xml",

@@ -88,12 +88,12 @@
         "source": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\exploded-aar\\com.android.support\\mediarouter-v7\\24.0.0\\res\\drawable-xhdpi-v4\\ic_cast_dark.png"
     },
     {
-        "merged": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\ic_media_route_on_08_light.png",
-        "source": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\exploded-aar\\com.android.support\\mediarouter-v7\\24.0.0\\res\\drawable-xhdpi-v4\\ic_media_route_on_08_light.png"
-    },
-    {
         "merged": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\ic_media_route_on_10_dark.png",
         "source": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\exploded-aar\\com.android.support\\mediarouter-v7\\24.0.0\\res\\drawable-xhdpi-v4\\ic_media_route_on_10_dark.png"
+    },
+    {
+        "merged": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\ic_media_route_on_08_light.png",
+        "source": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\exploded-aar\\com.android.support\\mediarouter-v7\\24.0.0\\res\\drawable-xhdpi-v4\\ic_media_route_on_08_light.png"
     },
     {
         "merged": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\ic_media_route_connecting_03_dark.png",
@@ -116,12 +116,12 @@
         "source": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-cast-framework\\10.0.1\\res\\drawable-xhdpi-v4\\cast_abc_scrubber_control_to_pressed_mtrl_005.png"
     },
     {
-        "merged": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\abc_ic_star_half_black_48dp.png",
-        "source": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\drawable-xhdpi-v4\\abc_ic_star_half_black_48dp.png"
-    },
-    {
         "merged": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\ic_plusone_tall_off_client.png",
         "source": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-plus\\10.0.1\\res\\drawable-xhdpi-v4\\ic_plusone_tall_off_client.png"
+    },
+    {
+        "merged": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\abc_ic_star_half_black_48dp.png",
+        "source": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\drawable-xhdpi-v4\\abc_ic_star_half_black_48dp.png"
     },
     {
         "merged": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\ic_media_route_on_02_dark.png",
@@ -160,12 +160,12 @@
         "source": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\exploded-aar\\com.android.support\\mediarouter-v7\\24.0.0\\res\\drawable-xhdpi-v4\\ic_audiotrack_light.png"
     },
     {
-        "merged": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\ic_media_route_connecting_21_light.png",
-        "source": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\exploded-aar\\com.android.support\\mediarouter-v7\\24.0.0\\res\\drawable-xhdpi-v4\\ic_media_route_connecting_21_light.png"
-    },
-    {
         "merged": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\abc_ic_star_black_48dp.png",
         "source": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\drawable-xhdpi-v4\\abc_ic_star_black_48dp.png"
+    },
+    {
+        "merged": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\ic_media_route_connecting_21_light.png",
+        "source": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\exploded-aar\\com.android.support\\mediarouter-v7\\24.0.0\\res\\drawable-xhdpi-v4\\ic_media_route_connecting_21_light.png"
     },
     {
         "merged": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\abc_scrubber_control_to_pressed_mtrl_005.png",
@@ -260,12 +260,12 @@
         "source": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\10.0.1\\res\\drawable-xhdpi-v4\\common_full_open_on_phone.png"
     },
     {
-        "merged": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\abc_list_longpressed_holo.9.png",
-        "source": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\drawable-xhdpi-v4\\abc_list_longpressed_holo.9.png"
-    },
-    {
         "merged": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\ic_media_route_connecting_07_dark.png",
         "source": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\exploded-aar\\com.android.support\\mediarouter-v7\\24.0.0\\res\\drawable-xhdpi-v4\\ic_media_route_connecting_07_dark.png"
+    },
+    {
+        "merged": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\abc_list_longpressed_holo.9.png",
+        "source": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\drawable-xhdpi-v4\\abc_list_longpressed_holo.9.png"
     },
     {
         "merged": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\ic_media_route_on_17_light.png",
@@ -300,12 +300,12 @@
         "source": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-cast\\10.0.1\\res\\drawable-xhdpi-v4\\cast_ic_notification_1.png"
     },
     {
-        "merged": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\ic_media_route_on_08_dark.png",
-        "source": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\exploded-aar\\com.android.support\\mediarouter-v7\\24.0.0\\res\\drawable-xhdpi-v4\\ic_media_route_on_08_dark.png"
-    },
-    {
         "merged": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\ic_media_route_connecting_18_light.png",
         "source": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\exploded-aar\\com.android.support\\mediarouter-v7\\24.0.0\\res\\drawable-xhdpi-v4\\ic_media_route_connecting_18_light.png"
+    },
+    {
+        "merged": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\ic_media_route_on_08_dark.png",
+        "source": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\exploded-aar\\com.android.support\\mediarouter-v7\\24.0.0\\res\\drawable-xhdpi-v4\\ic_media_route_on_08_dark.png"
     },
     {
         "merged": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\ic_media_route_on_16_dark.png",
