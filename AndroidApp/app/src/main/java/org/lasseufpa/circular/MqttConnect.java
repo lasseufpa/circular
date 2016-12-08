@@ -46,11 +46,14 @@ public class MqttConnect  {
         this.handler = handler;
     }
 
+    public boolean isconnected () {
+        return mqttAndroidClient.isConnected();
+    }
+
     public void doConnect() {
 
-        publishMessage("conectando ao broker");
+        publishMessage("Tentando estabelecer conexão com o servidor");
         clientID = MqttClient.generateClientId();    //gera um código randomico que serve como identificação do cliente
-        publishMessage(clientID);
 
         try {
             //cria um objeto MQTTClient android entregando como parametro o endereço o servidor e o id do cliente
@@ -66,7 +69,7 @@ public class MqttConnect  {
                 //chamado quando há perda da conexão
                 @Override
                 public void connectionLost(Throwable cause) {
-                    publishMessage("Desconectado!");
+                    publishMessage("Conexão com o servidor perdida");
 
                 }
 
@@ -88,13 +91,12 @@ public class MqttConnect  {
             });
 
             IMqttToken token = mqttAndroidClient.connect(new MqttConnectOptions());            //realiza a conexão com o broker
-            publishMessage("conectando");
             token.setActionCallback(new IMqttActionListener() {
 
                 //chamado quando a conexão é estabelecida
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
-                    publishMessage("conectado ao servidor");
+                    publishMessage("conectado com sucesso ao servidor");
                     subscribeToTopic();
                 }
 

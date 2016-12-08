@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -35,6 +37,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private ArrayList<Circular> circulares;
     private final int NCircularPoints = 439;
     private final int NStopPoints = 5;
+    private TextView status;
+    private TextView viewMessage;
 
     //handler para capturar mensagens
     private Handler handler = new Handler() {
@@ -44,7 +48,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             super.handleMessage(msg);
 
             if (msg.what == 1) {
-                PublishMessage(msg.getData().getString("message"));
+              //  PublishMessage(msg.getData().getString("message"));
+                viewMessage.setText(msg.getData().getString("message"));
             }
 
 
@@ -73,6 +78,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        status = (TextView) findViewById(R.id.status);
+        viewMessage = (TextView) findViewById(R.id.message);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -95,9 +102,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         a.start();
 
 
-        //mqttconnect
+        //mqttconnect - objeto para conexão com o MQTT em um thread separado
         mqttconnect = new MqttConnect(this.getApplicationContext(),handler);
-
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -173,7 +179,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
     //traça a rota do Circular no mapa
-    public void traceRoute () {
+    private void traceRoute () {
 
         ArrayList<LatLng> pontos= new ArrayList<>();
 
@@ -199,10 +205,23 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
+    private void checkConectivity () {
+
+        if (mqttconnect.isconnected()) {
+            status.setText("Conectado");
+            status.setTextColor(Color.GREEN);
+        } else {
+            status.setText("Desconectado");
+            status.setTextColor(Color.RED);
+        }
+
+    }
 
 
 
-    public void updateCircularPosition(){
+
+
+    private void updateCircularPosition(){
         //int CurrentCircularPoint = updateCircular.CurrentCircularPoint;
 
         //arrray com marcadores de Circular
@@ -268,9 +287,13 @@ private class animacao extends Thread {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+
                     updateCircularPosition();
+                    checkConectivity();
+
                 }
             });
+
 
         }
 
