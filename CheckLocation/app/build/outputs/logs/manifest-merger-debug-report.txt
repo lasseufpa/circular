@@ -24,6 +24,7 @@ MERGED from [com.android.support:support-core-utils:24.2.1] C:\Users\alant\OneDr
 MERGED from [com.android.support:animated-vector-drawable:24.2.1] C:\Users\alant\OneDrive\Documentos\GitHub\circular\CheckLocation\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.2.1\AndroidManifest.xml:22:5-20
 MERGED from [com.android.support:support-vector-drawable:24.2.1] C:\Users\alant\OneDrive\Documentos\GitHub\circular\CheckLocation\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\24.2.1\AndroidManifest.xml:23:5-20
 MERGED from [com.android.support:support-compat:24.2.1] C:\Users\alant\OneDrive\Documentos\GitHub\circular\CheckLocation\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.0.0-beta3] C:\Users\alant\OneDrive\Documentos\GitHub\circular\CheckLocation\app\build\intermediates\exploded-aar\com.android.support.constraint\constraint-layout\1.0.0-beta3\AndroidManifest.xml:9:5-20
 	android:label
 		ADDED from C:\Users\alant\OneDrive\Documentos\GitHub\circular\CheckLocation\app\src\main\AndroidManifest.xml:8:9-41
 	android:supportsRtl
@@ -59,6 +60,7 @@ MERGED from [com.android.support:support-core-utils:24.2.1] C:\Users\alant\OneDr
 MERGED from [com.android.support:animated-vector-drawable:24.2.1] C:\Users\alant\OneDrive\Documentos\GitHub\circular\CheckLocation\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.2.1\AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:support-vector-drawable:24.2.1] C:\Users\alant\OneDrive\Documentos\GitHub\circular\CheckLocation\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\24.2.1\AndroidManifest.xml:21:5-43
 MERGED from [com.android.support:support-compat:24.2.1] C:\Users\alant\OneDrive\Documentos\GitHub\circular\CheckLocation\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support.constraint:constraint-layout:1.0.0-beta3] C:\Users\alant\OneDrive\Documentos\GitHub\circular\CheckLocation\app\build\intermediates\exploded-aar\com.android.support.constraint\constraint-layout\1.0.0-beta3\AndroidManifest.xml:5:5-7:41
 	tools:overrideLibrary
 		ADDED from [com.android.support:appcompat-v7:24.2.1] C:\Users\alant\OneDrive\Documentos\GitHub\circular\CheckLocation\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\24.2.1\AndroidManifest.xml:23:9-75
 	android:targetSdkVersion
