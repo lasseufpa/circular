@@ -1738,6 +1738,27 @@
                         "endOffset": 18445
                     }
                 }
+            },
+            {
+                "to": {
+                    "startLine": 253,
+                    "startColumn": 4,
+                    "startOffset": 18450,
+                    "endLine": 254,
+                    "endColumn": 8,
+                    "endOffset": 18575
+                },
+                "from": {
+                    "file": "C:\\Users\\alant\\OneDrive\\Documentos\\GitHub\\circular\\CheckLocation\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-appinvite\\10.0.1\\res\\values-v21\\values.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 0,
+                        "startOffset": 172,
+                        "endLine": 5,
+                        "endColumn": 8,
+                        "endOffset": 297
+                    }
+                }
             }
         ]
     }
