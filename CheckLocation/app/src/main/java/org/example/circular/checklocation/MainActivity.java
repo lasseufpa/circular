@@ -28,7 +28,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private LocationRequest locationRequest; //Objeto usafp pra fazer equisição pra uma localização
     private boolean istoggled = false;
     private boolean GPSconnect = false;
-    private update upTodate = new update();
+    private boolean firsttime = true;
+
 
 
     @Override
@@ -118,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         if(googleApiClient.isConnected()) {
             Toast.makeText(this, "Localização atualizada", Toast.LENGTH_LONG).show();
         }
+        firsttime = false;
     }
 
     @Override
@@ -132,17 +134,20 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     public void toggle(View v){
 
-        istoggled = !istoggled;
         GPSconnect = !GPSconnect;
 
         if(GPSconnect){
             // Conecta aos serviços da google play services com o cliente que criamos no onCreate()
             googleApiClient.connect();
+            istoggled = true;
             boton.setText("PARAR");
-            upTodate.start();
+            update upTodate = new update();
+                  upTodate.start();
+
         }
 
         else{
+            istoggled = false;
             googleApiClient.disconnect();
             boton.setText("INICIAR");
         }
