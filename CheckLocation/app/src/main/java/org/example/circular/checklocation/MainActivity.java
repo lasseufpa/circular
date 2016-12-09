@@ -2,6 +2,7 @@ package org.example.circular.checklocation;
 
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -29,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private boolean istoggled = false;
     private boolean GPSconnect = false;
     private boolean firsttime = true;
+    private MqttConnect mqttConnect;
+    private Handler handler;
 
 
 
@@ -54,6 +57,19 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         latitude = (TextView) findViewById(R.id.latitudeView);
         longitude = (TextView) findViewById(R.id.longitudeView);
         boton = (Button) findViewById(R.id.button);
+
+        //criando objeto mqtt Connect
+        mqttConnect = new MqttConnect(this.getApplicationContext(),handler);
+
+        //conectando
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mqttConnect.doConnect();
+            }
+        }).start();
+        
+
     }
 
     protected void onRestart() {
