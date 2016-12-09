@@ -1,4 +1,4 @@
- package org.lasseufpa.circular;
+﻿ package org.lasseufpa.circular;
 
 /**
  * Created by alberto on 18/11/2016.
@@ -30,11 +30,11 @@ public class MqttConnect  {
 
 
     private MqttAndroidClient mqttAndroidClient;         //objeto Cliente MQTT do Android
-    private String serverAndress = "tcp://192.168.1.79";  //variavel para armazenar o endereço do servidor
+    private String serverAndress = "tcp://iot.eclipse.org";  //variavel para armazenar o endereço do servidor
     private String clientID;                             //armazena o identificador do cliente MQTT
     private String username = "alberto";                 //armazena o nome de usuário
     private String password = "null";                    //armazena a senha de conexão do broker
-    private String publishTopic = "CircularUFPA";       //Tópico para o cliente subescrever no servidor
+    private String publishTopic = "CircularUFPA1675";       //Tópico para o cliente subescrever no servidor
     private CircularBuilder circularBuilder= new CircularBuilder();
     private Context contexto;
     private Handler handler;
