@@ -86,8 +86,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     protected void createLocationRequest() {
         //cria requisição de localização
         locationRequest = new LocationRequest();
-        locationRequest.setInterval(5 * 1000); // Com 5 segundos de atualização aproximadamente
-        locationRequest.setFastestInterval(5 * 1000); // mas nunca mais rápido que 5 segundos
+        locationRequest.setInterval(2500); // Com 5 segundos de atualização aproximadamente
+        locationRequest.setFastestInterval(2500); // mas nunca mais rápido que 5 segundos
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY); // Define a prioridade por localização de alta precisão (GPS)
     }
 
@@ -132,24 +132,33 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     }
 
-    public void toggle(View v){
+    public void toggle(View v) {
 
-        GPSconnect = !GPSconnect;
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-        if(GPSconnect){
-            // Conecta aos serviços da google play services com o cliente que criamos no onCreate()
-            googleApiClient.connect();
-            istoggled = true;
-            boton.setText("PARAR");
-            update upTodate = new update();
-                  upTodate.start();
-
+            //Exibe um toast caso a permissão para acesso aos serviços de localização não esteja dada
+            Toast.makeText(this, "Abilite o acesso do app aos serviços de localização", Toast.LENGTH_LONG).show();
+            return;
         }
 
-        else{
-            istoggled = false;
-            googleApiClient.disconnect();
-            boton.setText("INICIAR");
+        else {
+
+            GPSconnect = !GPSconnect;
+
+            if (GPSconnect) {
+                // Conecta aos serviços da google play services com o cliente que criamos no onCreate()
+                googleApiClient.connect();
+                istoggled = true;
+                boton.setText("PARAR");
+                update upTodate = new update();
+                upTodate.start();
+
+            } else {
+                istoggled = false;
+                googleApiClient.disconnect();
+                boton.setText("INICIAR");
+            }
+
         }
 
     }
