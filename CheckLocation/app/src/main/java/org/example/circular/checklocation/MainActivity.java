@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         boton = (Button) findViewById(R.id.button);
     }
 
-    protected void onRestart(){
+    protected void onRestart() {
         super.onRestart();
         // caso a pessoa saia do app com o app ainda rodando faz
         //com que ele volte a atualizar as localizações ao abrir ele de novo
