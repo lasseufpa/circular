@@ -197,10 +197,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         }
 
 
-
-
-
-
     private class update extends Thread {
         @Override
         public void run() {
@@ -221,6 +217,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
                     }
                 });
+
                 sendLocation();        //envia a localização
             }
 
