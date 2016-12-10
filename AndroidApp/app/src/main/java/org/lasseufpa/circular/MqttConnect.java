@@ -1,4 +1,4 @@
-﻿ package org.lasseufpa.circular;
+package org.lasseufpa.circular;
 
 /**
  * Created by alberto on 18/11/2016.
@@ -29,12 +29,12 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 public class MqttConnect  {
 
 
-    private MqttAndroidClient mqttAndroidClient;         //objeto Cliente MQTT do Android
-    private String serverAndress = "tcp://iot.eclipse.org";  //variavel para armazenar o endereço do servidor
-    private String clientID;                             //armazena o identificador do cliente MQTT
-    private String username = "alberto";                 //armazena o nome de usuário
-    private String password = "null";                    //armazena a senha de conexão do broker
-    private String publishTopic = "CircularUFPA1675";       //Tópico para o cliente subescrever no servidor
+    private MqttAndroidClient mqttAndroidClient;                //objeto Cliente MQTT do Android
+    private String serverAndress = "tcp://iot.eclipse.org";     //variavel para armazenar o endereço do servidor
+    private String clientID;                                    //armazena o identificador do cliente MQTT
+    private String username = "alberto";                        //armazena o nome de usuário
+    private String password = "null";                           //armazena a senha de conexão do broker
+    private String publishTopic = "CircularUFPA1675";           //Tópico para o cliente subescrever no servidor
     private CircularBuilder circularBuilder= new CircularBuilder();
     private Context contexto;
     private Handler handler;
@@ -62,9 +62,9 @@ public class MqttConnect  {
             mqttAndroidClient.setCallback(new MqttCallback() {
 
                 //@Override
-              //  public void connectComplete(boolean reconnect, String serverURI) {
-              //       publishMessage("conexão completa");
-              //  }
+                //  public void connectComplete(boolean reconnect, String serverURI) {
+                //       publishMessage("conexão completa");
+                //  }
 
                 //chamado quando há perda da conexão
                 @Override
@@ -90,7 +90,7 @@ public class MqttConnect  {
 
             });
 
-            IMqttToken token = mqttAndroidClient.connect(new MqttConnectOptions());            //realiza a conexão com o broker
+            IMqttToken token = mqttAndroidClient.connect();            //realiza a conexão com o broker
             token.setActionCallback(new IMqttActionListener() {
 
                 //chamado quando a conexão é estabelecida
@@ -104,6 +104,7 @@ public class MqttConnect  {
                 @Override
                 public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
                     publishMessage("falha na conexão");
+                    exception.printStackTrace();
                 }
             });
 
@@ -137,7 +138,7 @@ public class MqttConnect  {
                                           Throwable exception) {
                         // The subscription could not be performed, maybe the user was not
                         // authorized to subscribe on the specified topic e.g. using wildcards
-                        publishMessage("Falha na conexão");
+                        publishMessage("Falha na conexão ao subescrever");
 
                     }
                 });
