@@ -29,12 +29,12 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 public class MqttConnect  {
 
 
-    private MqttAndroidClient mqttAndroidClient;         //objeto Cliente MQTT do Android
-    private String serverAndress = "tcp://iot.eclipse.org";  //variavel para armazenar o endereço do servidor
-    private String clientID;                             //armazena o identificador do cliente MQTT
-    private String username = "alberto";                 //armazena o nome de usuário
-    private String password = "null";                    //armazena a senha de conexão do broker
-    private String publishTopic = "CircularUFPA1675";       //Tópico para o cliente subescrever no servidor
+    private MqttAndroidClient mqttAndroidClient;                //objeto Cliente MQTT do Android
+    private String serverAndress = "tcp://iot.eclipse.org";     //variavel para armazenar o endereço do servidor
+    private String clientID;                                    //armazena o identificador do cliente MQTT
+    private String username = "alberto";                        //armazena o nome de usuário
+    private String password = "null";                           //armazena a senha de conexão do broker
+    private String publishTopic = "CircularUFPA1675";           //Tópico para o cliente subescrever no servidor
     private CircularBuilder circularBuilder= new CircularBuilder();
     private Context contexto;
     private Handler handler;
