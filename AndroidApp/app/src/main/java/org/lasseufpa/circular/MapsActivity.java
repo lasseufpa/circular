@@ -48,7 +48,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             super.handleMessage(msg);
 
             if (msg.what == 1) {
-              //  PublishMessage(msg.getData().getString("message"));
+               //PublishMessage(msg.getData().getString("message"));
                 viewMessage.setText(msg.getData().getString("message"));
             }
 

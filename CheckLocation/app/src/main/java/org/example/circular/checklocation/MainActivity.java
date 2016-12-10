@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.Manifest;
 import android.widget.Toast;
@@ -21,17 +22,20 @@ import com.google.android.gms.location.LocationServices;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
 
-    private TextView latitude;   // Variável de classe para armazenar view de latitude
-    private TextView longitude;  // Variável de classe para armazenar view de longitude
-    private Button boton;        //Variável de classe para armazenar botão
-    private GoogleApiClient googleApiClient; // Variável de classe para armazenar instãncia de cliente do Google API
-    private Location Localiza; // Objeto do tipo Location, armazena informações de uma localização passadas pela API
-    private LocationRequest locationRequest; //Objeto usafp pra fazer equisição pra uma localização
+    private TextView latitudeView;      // Variável de classe para armazenar view de latitudeView
+    private TextView longitudeView;     // Variável de classe para armazenar view de longitudeView
+    private Button boton;               //Variável de classe para armazenar botão
+    private EditText nameEdit;
+    private GoogleApiClient googleApiClient;    // Variável de classe para armazenar instãncia de cliente do Google API
+    private Location Localiza;                  // Objeto do tipo Location, armazena informações de uma localização passadas pela API
+    private LocationRequest locationRequest;    //Objeto usafp pra fazer equisição pra uma localização
     private boolean istoggled = false;
     private boolean GPSconnect = false;
     private boolean firsttime = true;
     private MqttConnect mqttConnect;
     private Handler handler;
+    private MessageBuilder messageBuilder = new MessageBuilder();
+    private String name = "circular01";         //armazena o nome do circular
 
 
 
@@ -54,9 +58,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
 
         // Passando as referências dos views para as variaveis de classe
-        latitude = (TextView) findViewById(R.id.latitudeView);
-        longitude = (TextView) findViewById(R.id.longitudeView);
+        latitudeView = (TextView) findViewById(R.id.latitudeView);
+        longitudeView = (TextView) findViewById(R.id.longitudeView);
         boton = (Button) findViewById(R.id.button);
+        nameEdit = (EditText) findViewById(R.id.EditNome);
 
         //criando objeto mqtt Connect
         mqttConnect = new MqttConnect(this.getApplicationContext(),handler);
@@ -129,9 +134,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
     protected void updateUI(){
-        // N acho que precise explicar isso, atribuo os valores de latitude e longitude aos views da tel.
-        latitude.setText(String.valueOf(Localiza.getLatitude()));
-        longitude.setText(String.valueOf(Localiza.getLongitude()));
+        // N acho que precise explicar isso, atribuo os valores de latitudeView e longitudeView aos views da tel.
+        latitudeView.setText(String.valueOf(Localiza.getLatitude()));
+        longitudeView.setText(String.valueOf(Localiza.getLongitude()));
         if(googleApiClient.isConnected()) {
             Toast.makeText(this, "Localização atualizada", Toast.LENGTH_LONG).show();
         }
@@ -155,9 +160,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             //Exibe um toast caso a permissão para acesso aos serviços de localização não esteja dada
             Toast.makeText(this, "Abilite o acesso do app aos serviços de localização", Toast.LENGTH_LONG).show();
             return;
-        }
-
-        else {
+        } else {
 
             GPSconnect = !GPSconnect;
 
@@ -168,16 +171,33 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 boton.setText("PARAR");
                 update upTodate = new update();
                 upTodate.start();
+                nameEdit.setEnabled(false);
 
             } else {
                 istoggled = false;
                 googleApiClient.disconnect();
                 boton.setText("INICIAR");
+                nameEdit.setEnabled(true);
             }
 
         }
-
     }
+
+        private void sendLocation() {
+
+            String message = messageBuilder.Build(name,Localiza.getLatitude(),Localiza.getLongitude());
+            if (mqttConnect.isconnected()) {
+               mqttConnect.sendMessage(message);
+            }
+            else {
+                //erro, mqtt não conectado
+            }
+
+
+        }
+
+
+
 
 
 
@@ -191,14 +211,17 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 } catch (Exception e) {
 
                 }
+
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
 
                         updateUI(); // Chama a atualização dos views da interface
+                        name = nameEdit.getText().toString();
+
                     }
                 });
-
+                sendLocation();        //envia a localização
             }
 
         }

@@ -1,4 +1,4 @@
-﻿ package org.lasseufpa.circular;
+package org.lasseufpa.circular;
 
 /**
  * Created by alberto on 18/11/2016.
@@ -62,9 +62,9 @@ public class MqttConnect  {
             mqttAndroidClient.setCallback(new MqttCallback() {
 
                 //@Override
-              //  public void connectComplete(boolean reconnect, String serverURI) {
-              //       publishMessage("conexão completa");
-              //  }
+                //  public void connectComplete(boolean reconnect, String serverURI) {
+                //       publishMessage("conexão completa");
+                //  }
 
                 //chamado quando há perda da conexão
                 @Override
@@ -90,7 +90,7 @@ public class MqttConnect  {
 
             });
 
-            IMqttToken token = mqttAndroidClient.connect(new MqttConnectOptions());            //realiza a conexão com o broker
+            IMqttToken token = mqttAndroidClient.connect();            //realiza a conexão com o broker
             token.setActionCallback(new IMqttActionListener() {
 
                 //chamado quando a conexão é estabelecida
@@ -104,6 +104,7 @@ public class MqttConnect  {
                 @Override
                 public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
                     publishMessage("falha na conexão");
+                    exception.printStackTrace();
                 }
             });
 
@@ -137,7 +138,7 @@ public class MqttConnect  {
                                           Throwable exception) {
                         // The subscription could not be performed, maybe the user was not
                         // authorized to subscribe on the specified topic e.g. using wildcards
-                        publishMessage("Falha na conexão");
+                        publishMessage("Falha na conexão ao subescrever");
 
                     }
                 });

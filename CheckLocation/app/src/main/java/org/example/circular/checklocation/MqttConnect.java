@@ -157,10 +157,10 @@ import java.io.UnsupportedEncodingException;
     //enviar mensagem de localização para o broker
     public void sendMessage(String s) {
 
-        String payload = "the payload";
+
         byte[] encodedPayload = new byte[0];
         try {
-            encodedPayload = payload.getBytes("UTF-8");
+            encodedPayload = s.getBytes("UTF-8");
             MqttMessage message = new MqttMessage(encodedPayload);
             mqttAndroidClient.publish(publishTopic, message);
         } catch (UnsupportedEncodingException | MqttException e) {
@@ -175,14 +175,14 @@ import java.io.UnsupportedEncodingException;
 
     private void publishMessage(final String message) {
 
-        Bundle b = new Bundle();
+       // Bundle b = new Bundle();
 
-        b.putString("message",message);
-        Log.i("Status",message);
-        Message msg = new Message();
-        msg.what = 1;
-        msg.setData(b);
-        handler.sendMessage(msg);
+       // b.putString("message",message);
+       // Log.i("Status",message);
+       // Message msg = new Message();
+       // msg.what = 1;
+       /// msg.setData(b);
+       // handler.sendMessage(msg);
 
 
     }
