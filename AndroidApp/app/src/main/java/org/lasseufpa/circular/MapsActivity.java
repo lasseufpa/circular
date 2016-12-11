@@ -127,6 +127,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        repositorioCirculares.getCircularList().clear();
+
+    }
 
     /**
      * Manipulates the map once available.
@@ -141,9 +147,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-
-
-
         //marcar a rota do Circular
         traceRoute();
 
@@ -151,7 +154,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         setStops();
 
         //criar marcadores de Circular e setar as suas posições aleatoriamente
-
         /*animação
         for (int i=0; i<circulares.size(); i++) {
             Circular circ = circulares.get(i);
@@ -169,11 +171,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.moveCamera(CameraUpdateFactory.newLatLng(place));
         // Zoom in, animating the camera.
         mMap.animateCamera(CameraUpdateFactory.zoomIn());
-
         // Zoom out to zoom level 10, animating with a duration of 2 seconds.
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 1000, null);
-
-
 
     }
 

@@ -13,7 +13,7 @@ public class CircularBuilder {
 
 
 
-    //Formato da mensagem { #NCircular01*#X-4508526*#Y-56985413516*}
+    //Formato da mensagem { #NCircular01*#X-4.508526*#Y-56.985413516*}
 
     public Circular CircularBuild (String message) throws IllegalArgumentException {
 
@@ -49,10 +49,14 @@ public class CircularBuilder {
         }
 
         try {
+            valuex = valuex.replace(",",".");
+            valuey = valuey.replace(",",".");
             x=Double.parseDouble(valuex);
             y=Double.parseDouble(valuey);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new IllegalArgumentException();
+
         }
 
 

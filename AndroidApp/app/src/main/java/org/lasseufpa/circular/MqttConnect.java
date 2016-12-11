@@ -35,7 +35,7 @@ public class MqttConnect  {
     private String username = "alberto";                        //armazena o nome de usuário
     private String password = "null";                           //armazena a senha de conexão do broker
     private String publishTopic = "CircularUFPA1675";           //Tópico para o cliente subescrever no servidor
-    private CircularBuilder circularBuilder= new CircularBuilder();
+    private CircularBuilder circularBuilder= new CircularBuilder(); //Objeto que tranforma uma mensagem String em um objeto circular
     private Context contexto;
     private Handler handler;
 
@@ -53,7 +53,7 @@ public class MqttConnect  {
     public void doConnect() {
 
         publishMessage("Tentando estabelecer conexão com o servidor");
-        clientID = MqttClient.generateClientId();    //gera um código randomico que serve como identificação do cliente
+        clientID = MqttClient.generateClientId()+"circularUFPAapp";    //gera um código randomico que serve como identificação do cliente
 
         try {
             //cria um objeto MQTTClient android entregando como parametro o endereço o servidor e o id do cliente
@@ -119,8 +119,6 @@ public class MqttConnect  {
 
     }
 
-
-
     private void subscribeToTopic() {
         publishMessage("subescrevendo");
         if (mqttAndroidClient.isConnected()) {
@@ -162,9 +160,10 @@ public class MqttConnect  {
         try {
             c = circularBuilder.CircularBuild(s);
             MapsActivity.repositorioCirculares.salvarCircular(c);
-            publishMessage(c.getNome()+"salvo");
+            publishMessage("localização de "+c.getNome()+" Recebida");
         } catch (IllegalArgumentException e) {
             publishMessage("Mensagem de Localização Inválida");
+            e.printStackTrace();
         }
 
 
