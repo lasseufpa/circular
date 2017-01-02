@@ -36,4 +36,4 @@ No servidor funcionará um broker MQTT que será a base para a comunicação ent
 
 Adote uma tarefa [aqui](https://github.com/lasseufpa/circular/issues) ou entre em contato através do [forum](https://www.quicktopic.com/52/H/SaqZMyqNWQ66K).
 
-Temos reuniões semanais com duração de 1h todas as quartas no LASSE (no prédio do LEEC).
+Temos reuniões semanais com duração de 1h todas as quartas 13hs no LASSE (no prédio do LEEC).
