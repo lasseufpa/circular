@@ -10,6 +10,8 @@ Além de informações relacionadas aos ônibus também pretende se fazer com qu
 
 # Estrutura do Projeto
 
+![Mind Map](https://github.com/lasseufpa/circular/blob/master/Mind%20Map.png)
+
  O projeto pode ser dividido em três partes principais:
 
 ## Embarcado
