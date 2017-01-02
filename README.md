@@ -26,7 +26,7 @@ O sistema contará com um aplicativo android que mostrará aos usuários as loca
 ### Página *web*
 O sistema também contará com uma pagina web que mostrará a localização dos ônibus circulares em tempo real e a localização dos pontos de parada.
 
-### Bots
+### *Bots*
 Os usuários também poderão interagir com o sistema e obter informações sobre os ônibus por meio de chatbots em várias plataformas como Telegram e Twitter.
 
 # Servidor
