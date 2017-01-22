@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
     public void toggle(View v) {
-
+        name = nameEdit.getText().toString();
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             //Exibe um toast caso a permissão para acesso aos serviços de localização não esteja dada
