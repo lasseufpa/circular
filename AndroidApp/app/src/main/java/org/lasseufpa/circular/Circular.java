@@ -2,9 +2,8 @@ package org.lasseufpa.circular;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.internal.zzf;
 
+import java.util.Calendar;
 import java.util.Random;
 
 /**
@@ -18,6 +17,39 @@ public class Circular {
     private int velocidade;                  //velocidade do circular
     private String nome;                     //nome do circular
     private int currentcircularPoint = 0;    //ponto da rota
+    private Route route;                     //Rota do circular
+
+    public boolean isObsolet() {
+        return obsolet;
+    }
+
+    public void setObsolet(boolean obsolet) {
+        this.obsolet = obsolet;
+    }
+
+    public boolean isErase() {
+        return erase;
+    }
+
+    public void setErase(boolean erase) {
+        this.erase = erase;
+    }
+
+    private boolean obsolet;                 //marca se a informação é antiga
+    private boolean erase;                   //marca se a informação será descartada
+
+
+
+
+    public Calendar getRecivedTime() {
+        return RecivedTime;
+    }
+
+    public void setRecivedTime(Calendar recivedTime) {
+        RecivedTime = recivedTime;
+    }
+
+    private Calendar RecivedTime;            //tempo em que a informação foi recebida
     private final int NCircularPoints = 439;
     public int[] stopPoints = {19,43,81,156,230,339};
     private int countStop = 0;

@@ -31,12 +31,12 @@ import java.util.List;
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    boolean busOn = false;
-    private final int timeWait = 200;     //tempo de atualização em milisegundos
-    private final int nCircular = 3;
-    private ArrayList<Circular> circulares;
-    private final int NCircularPoints = 439;
-    private final int NStopPoints = 5;
+    boolean busOn = false;                    //flag para inicalização
+    private final int timeWait = 200;         //tempo de atualização em milisegundos
+    private final int NCircularPoints = 439;  //numero de pontos da rota do circular
+    private final int NStopPoints = 5;        //número de pontos de parada
+
+    //mensagens gráficas
     private TextView status;
     private TextView viewMessage;
 
@@ -76,6 +76,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //barra superior
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         status = (TextView) findViewById(R.id.status);
@@ -112,19 +113,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }).start();
 
 
-
-        //cria objetos circulares e define posições aleatorias
-        /*animação
-        circulares = new ArrayList<>();
-        for (int i=0; i<nCircular; i++) {
-            Circular circ = new Circular();
-            circ.setNome("UFPA circular "+ (i+1));
-            circ.setRandomPosition();
-            circulares.add(circ);
-        }
-        */
-
-
     }
 
     @Override
@@ -134,15 +122,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -152,19 +132,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         //definir os pontos de parada
         setStops();
-
-        //criar marcadores de Circular e setar as suas posições aleatoriamente
-        /*animação
-        for (int i=0; i<circulares.size(); i++) {
-            Circular circ = circulares.get(i);
-            Marker circmark = mMap.addMarker(new MarkerOptions()
-            .position(circ.getPosition())
-            .title(circ.getNome())
-            .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("circ",100,100)))
-            );
-            circ.setMarcador(circmark);
-        }
-        */
 
 
         LatLng place = new LatLng(rotaY[0], rotaX[0]);
@@ -177,7 +144,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
-    //traça a rota do Circular no mapa
+    /**
+     * Traça a rota do circular no mapa
+     */
     private void traceRoute () {
 
         ArrayList<LatLng> pontos= new ArrayList<>();
@@ -217,28 +186,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
-
-
-
+    /**
+     * updateCircularPosition()
+     * Atualiza os pontos do circular no mapa
+     *
+     */
     private void updateCircularPosition(){
-        //int CurrentCircularPoint = updateCircular.CurrentCircularPoint;
 
-        //arrray com marcadores de Circular
-        //atualizar as suas posições
-        //setar novas posições
-
-
-
-        /* animação
-        for (int i=0; i<circulares.size();i++) {
-            Circular circ = circulares.get(i);
-            circ.updatePosition();
-        }
-        */
-
+        //atualiza a lista de circulares
+        repositorioCirculares.UpdateCircularList();
 
         for (Circular C : repositorioCirculares.getCircularList()) {
             if (C.getMarcador()==null) {
+                //se o circular não tem marcador - cria um marcador
                 Marker circular = mMap.addMarker(new MarkerOptions()
                         .position(C.getPosition())
                         .title(C.getNome())
@@ -248,7 +208,39 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 C.setMarcador(circular);
             } else {
 
-                C.getMarcador().setPosition(C.getPosition());
+                //se o circular já tem marcador
+
+                //verificar se houve alteração nao posicionamento
+                if (C.getMarcador().getPosition().equals(C.getPosition())) {
+                    //a posição é igual
+                    //verifica se a informação é antiga para apagar
+                    if (C.isErase())
+                    {
+                        //remove marcador do mapa
+                        C.getMarcador().remove();
+                        //remove da lista
+                        repositorioCirculares.getCircularList()
+                                .remove(repositorioCirculares.getCircularList().indexOf(C));
+                    }
+                    //senão
+                    //verifica se a informação é antiga para marcar cinza
+                    else {
+
+                        if (C.isObsolet()) {
+                         C.getMarcador().setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("circg",100,100)));
+
+                         }
+
+                        if (!C.isObsolet()) {
+                            C.getMarcador().setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("circ",100,100)));
+
+                        }
+
+
+                     }
+
+                } else C.getMarcador().setPosition(C.getPosition());
+
 
             }
         }
@@ -270,10 +262,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
-
-
-
-private class animacao extends Thread {
+    //classe privada para a atualização deste fragment
+    private class animacao extends Thread {
     @Override
     public void run() {
         while (busOn) {
@@ -287,8 +277,8 @@ private class animacao extends Thread {
                 @Override
                 public void run() {
 
-                    updateCircularPosition();
-                    checkConectivity();
+                    updateCircularPosition(); //atualiza a posição do circular
+                    checkConectivity();//checa a conectividade
 
                 }
             });
