@@ -115,13 +115,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        repositorioCirculares.getCircularList().clear();
-
-    }
-
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -166,8 +159,22 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         for (int i = 0; i<NStopPoints; i++) {
             Marker stop = mMap.addMarker(new MarkerOptions()
                     .position(new LatLng(stopsX[i],stopsY[i]))
-            .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("pinstop",50,50))).flat(true));
+                    .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("pinstop",50,50))).flat(true));
         }
+
+
+    }
+
+    private void pauseMapService() {
+
+        //pausar o serviço de atualização
+
+
+    }
+
+    private void ReloadMapService() {
+
+        //reiniciar o serviço de atualização
 
 
     }
