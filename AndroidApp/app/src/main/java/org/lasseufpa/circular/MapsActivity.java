@@ -115,6 +115,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        pauseMapService();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        ReloadMapService();
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -168,6 +179,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void pauseMapService() {
 
         //pausar o serviço de atualização
+        mMap.clear();                                    //limpa marcadores do mapa
+        repositorioCirculares.removeAllCircularMarks();  //remove todos os marcadores da lista de circulares
+        busOn = false;                                   //para o serviço de atualização
 
 
     }
@@ -175,6 +189,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void ReloadMapService() {
 
         //reiniciar o serviço de atualização
+
+        setStops();                                      //insere os pontos de parada
+        traceRoute();                                    //traça a rota do circular
+        busOn = true;                                    //flg de inicio da animação ativava
+        animacao a = new animacao();                     //instancia o thread da animação
+        a.start();                                       //incia a animação
 
 
     }
@@ -211,45 +231,34 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         .title(C.getNome())
                         .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("circ",100,100)))
                 );
-
                 C.setMarcador(circular);
             } else {
+                //se o circular já tem marcador atualizar posição
+                 C.getMarcador().setPosition(C.getPosition());
+            }
 
-                //se o circular já tem marcador
+            //verifica se a informação é antiga para apagar
+            if (C.isErase())
+            {
+                //remove marcador do mapa
+                C.getMarcador().remove();
+                //remove da lista
+                repositorioCirculares.getCircularList()
+                        .remove(repositorioCirculares.getCircularList().indexOf(C));
+            }
 
-                //verificar se houve alteração nao posicionamento
-                if (C.getMarcador().getPosition().equals(C.getPosition())) {
-                    //a posição é igual
-                    //verifica se a informação é antiga para apagar
-                    if (C.isErase())
-                    {
-                        //remove marcador do mapa
-                        C.getMarcador().remove();
-                        //remove da lista
-                        repositorioCirculares.getCircularList()
-                                .remove(repositorioCirculares.getCircularList().indexOf(C));
-                    }
-                    //senão
-                    //verifica se a informação é antiga para marcar cinza
-                    else {
-
-                        if (C.isObsolet()) {
-                         C.getMarcador().setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("circg",100,100)));
-
-                         }
-
-                        if (!C.isObsolet()) {
-                            C.getMarcador().setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("circ",100,100)));
-
-                        }
-
-
-                     }
-
-                } else C.getMarcador().setPosition(C.getPosition());
-
+            //verifica se a informação é antiga para marcar cinza
+            if (C.isObsolet()) {
+                C.getMarcador().setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("circg",100,100)));
 
             }
+            //verifica se a informação foi renovada
+            if (!C.isObsolet()) {
+                C.getMarcador().setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("circ",100,100)));
+
+            }
+
+
         }
 
     }

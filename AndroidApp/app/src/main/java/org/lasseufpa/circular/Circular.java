@@ -94,7 +94,7 @@ public class Circular {
         this.position = new LatLng(MapsActivity.rotaY[currentcircularPoint], MapsActivity.rotaX[currentcircularPoint]);
         currentcircularPoint = (currentcircularPoint + 1) % NCircularPoints;
         marcador.setPosition(this.position);
-       // marcador.setTitle(""+currentcircularPoint);
+        marcador.setTitle(""+currentcircularPoint);
     }
 
 

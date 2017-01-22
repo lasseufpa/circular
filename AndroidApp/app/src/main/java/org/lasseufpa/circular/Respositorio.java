@@ -76,6 +76,16 @@ public class Respositorio {
 
     }
 
+    /**
+     * remove todos os marcadores da lista de circulares
+     */
+    public void removeAllCircularMarks() {
+        for (Circular currentC : circularesList) {
+            currentC.setMarcador(null);
+        }
+
+    }
+
 
 
 
