@@ -64,16 +64,7 @@ public class Circular {
     }
 
 
-
-
-
-    public void setRandomPosition () {
-
-        currentcircularPoint = new Random().nextInt(440);
-        this.position = new LatLng(MapsActivity.rotaY[currentcircularPoint],MapsActivity.rotaX[currentcircularPoint]);
-
-    }
-
+/*
     public void updatePosition () {
 
 
@@ -97,7 +88,7 @@ public class Circular {
         marcador.setTitle(""+currentcircularPoint);
     }
 
-
+*/
 
     public Marker getMarcador() {
         return marcador;

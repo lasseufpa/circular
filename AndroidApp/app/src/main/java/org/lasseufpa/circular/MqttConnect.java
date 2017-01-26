@@ -9,18 +9,13 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.design.widget.Snackbar;
-import android.view.View;
-import android.widget.Toast;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;   //Classe cliente MQTT android
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;   //Classe para Escuta de eventos de conexão MQTT
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
-import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
 import org.eclipse.paho.client.mqttv3.MqttClient;
-import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -40,14 +35,22 @@ public class MqttConnect  {
     private Handler handler;
 
 
-    public MqttConnect(Context contexto, Handler handler) {
+    public MqttConnect(Context contexto, Handler hand) {
 
         this.contexto = contexto;
-        this.handler = handler;
+        this.handler = hand;
     }
 
     public boolean isconnected () {
-        return mqttAndroidClient.isConnected();
+        boolean retorno;
+        try {
+            retorno = mqttAndroidClient.isConnected();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            retorno = false;
+        }
+        return retorno;
     }
 
     public void doConnect() {
@@ -80,8 +83,6 @@ public class MqttConnect  {
 
                 }
 
-
-
                 @Override
                 public void deliveryComplete(IMqttDeliveryToken token) {
 
@@ -113,9 +114,6 @@ public class MqttConnect  {
             publishMessage("ERRO");
 
         }
-
-
-
 
     }
 
@@ -159,7 +157,7 @@ public class MqttConnect  {
         Circular c;
         try {
             c = circularBuilder.CircularBuild(s);
-            MapsActivity.repositorioCirculares.salvarCircular(c);
+            MapUpdateService.repositorioCirculares.saveCircular(c);
             publishMessage("localização de "+c.getNome()+" Recebida");
         } catch (IllegalArgumentException e) {
             publishMessage("Mensagem de Localização Inválida");
@@ -169,23 +167,27 @@ public class MqttConnect  {
 
     }
 
-
-
-    public void publishMessage(final String message) {
-
-        Bundle b = new Bundle();
-
-        b.putString("message",message);
-        Message msg = new Message();
-        msg.what = 1;
-        msg.setData(b);
-        handler.sendMessage(msg);
-
-
+    public void Disconnect() {
+        if (isconnected()) {
+            try {
+                mqttAndroidClient.disconnect();
+            } catch (MqttException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 
 
+    private void publishMessage(final String message) {
+
+        Bundle b = new Bundle();
+        b.putString("message",message);
+        Message msg = new Message();
+        msg.what = 11;
+        msg.setData(b);
+        handler.sendMessage(msg);
+    }
 
     //getters and setters methods
 

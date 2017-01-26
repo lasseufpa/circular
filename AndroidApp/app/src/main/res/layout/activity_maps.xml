@@ -38,7 +38,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/message"
             android:layout_weight="1"
-            android:textColor="?attr/colorBackgroundFloating" />
+            android:textColor="?attr/colorBackgroundFloating"
+            android:textSize="10sp" />
 
         <TextView
             android:text="Conectado"
@@ -46,6 +47,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/status"
             android:layout_weight="1"
-            android:textColor="?attr/colorButtonNormal" />
+            android:textColor="?attr/colorButtonNormal"
+            android:textSize="12sp" />
     </LinearLayout>
 </LinearLayout>

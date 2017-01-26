@@ -259,7 +259,7 @@
         jumboMode="true"
         optimize="true"
         revision="23.0.3"
-        sha1="81fe6c5919843b9785c42bf80dd21541c614f62a">
+        sha1="c71697dba8af9ecb236f809b1702662ad63f2a94">
         <dex dex="C:\Users\alberto\Documents\circular\AndroidApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_6ebd0f04d9b2dfe41562cbff038b93ae06574ccd\classes.dex" />
     </item>
     <item
@@ -435,21 +435,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\alberto\Documents\circular\AndroidApp\app\build\intermediates\exploded-aar\com.android.support\mediarouter-v7\24.0.0\jars\libs\internal_impl-24.0.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.3"
-        sha1="b6763651ec29b4c95e7bbe63fc393ffcc8c4c2c5">
-        <dex dex="C:\Users\alberto\Documents\circular\AndroidApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.0.0_90e9528af4894808a2ee9c5a2b0720609188fae5\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="C:\Users\alberto\Documents\circular\AndroidApp\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-wearable\9.8.0\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.3"
         sha1="0b8e087da59c0b062c33f49a335e59f907086da2">
         <dex dex="C:\Users\alberto\Documents\circular\AndroidApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-wearable-9.8.0_b4b353176a59ea7c40d0cf2a49d8846b859041c7\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\alberto\Documents\circular\AndroidApp\app\build\intermediates\exploded-aar\com.android.support\mediarouter-v7\24.0.0\jars\libs\internal_impl-24.0.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="b6763651ec29b4c95e7bbe63fc393ffcc8c4c2c5">
+        <dex dex="C:\Users\alberto\Documents\circular\AndroidApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.0.0_90e9528af4894808a2ee9c5a2b0720609188fae5\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -466,7 +466,7 @@
         jumboMode="true"
         optimize="true"
         revision="23.0.3"
-        sha1="6ca1ca9c0d89bfc45663f922a65e68af2f230255">
+        sha1="15b1c7bff1832b82ae1c05d2f573dd5479c3e89f">
         <dex dex="C:\Users\alberto\Documents\circular\AndroidApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_426870084d714dfad5bd4e0e6dc5b59795d2d758\classes.dex" />
     </item>
     <item
