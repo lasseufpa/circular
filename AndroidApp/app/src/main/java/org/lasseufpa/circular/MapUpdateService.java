@@ -108,13 +108,13 @@ public class MapUpdateService implements Runnable {
         Bundle b = new Bundle();
         b.putBoolean("conectivity",conectivity);
         msg.setData(b);
-        msg.what = MapsActivity.CONECTIVITY_STATEMENT;
+        msg.what = CircularMapFragment.CONECTIVITY_STATEMENT;
         mapHandler.sendMessage(msg);
     }
 
     private void timeOutConnection() {
         Message msg = new Message();
-        msg.what = MapsActivity.ERR_CONECTION_TIMEOUT;
+        msg.what = CircularMapFragment.ERR_CONECTION_TIMEOUT;
         mapHandler.sendMessage(msg);
     }
 
@@ -127,7 +127,7 @@ public class MapUpdateService implements Runnable {
         Log.i("status","Update map called");
         lastUpdate = Calendar.getInstance();
         Message msg = new Message();
-        msg.what = MapsActivity.UPDATE_CIRCULAR;
+        msg.what = CircularMapFragment.UPDATE_CIRCULAR;
         mapHandler.sendMessage(msg);
     }
 
@@ -198,7 +198,7 @@ public class MapUpdateService implements Runnable {
 
     public void publishMessage(String message) {
         Message mensagem = new Message();
-        mensagem.what = MapsActivity.MESSAGE_LOG;
+        mensagem.what = CircularMapFragment.MESSAGE_LOG;
         Bundle b = new Bundle();
         b.putString("message",message);
         mensagem.setData(b);

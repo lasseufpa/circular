@@ -1,18 +1,23 @@
 package org.lasseufpa.circular;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Bundle;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -30,7 +35,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class CircularMapFragment extends Fragment implements OnMapReadyCallback {
 
     //Objeto Google Map
     private GoogleMap mMap;
@@ -46,6 +51,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //handler para capturar mensagens de MapUpdateService
     private Handler maphandler = new MapHandler();
 
+    Context contexto;
+
     //variaveis de mensagens
     public static final int MESSAGE_LOG             = 1;
     public static final int UPDATE_CIRCULAR         = 2;
@@ -56,35 +63,54 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        contexto = context;
+
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
 
 
-        status = (TextView) findViewById(R.id.status);
-        viewMessage = (TextView) findViewById(R.id.message);
 
-        mapUpdateService = new MapUpdateService(getApplicationContext(),maphandler);
 
 
         // obtém o SupportMapFragment e recebe uma notificação caso o mapa esteja pronto paras ser utilizado
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        SupportMapFragment mapFragment = (SupportMapFragment) getActivity().getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
     }
 
+    @Nullable
     @Override
-    protected void onStop() {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_maps,container);
+
+        status = (TextView) view.findViewById(R.id.status);
+        viewMessage = (TextView) view.findViewById(R.id.message);
+
+        mapUpdateService = new MapUpdateService(getActivity().getApplicationContext(),maphandler);
+
+        return view;
+    }
+
+
+    @Override
+    public void onStop() {
         super.onStop();
         pauseMapService();
     }
 
+    /*
     @Override
     protected void onRestart() {
         super.onRestart();
         ReloadMapService();
     }
+    */
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -101,7 +127,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         stopService();
     }
@@ -157,7 +183,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     //redimenciona os icones do mapa para tamanhos personalizados
     public Bitmap resizeMapIcons(String iconName,int width, int height){
-        Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(),getResources().getIdentifier(iconName, "drawable", getPackageName()));
+        Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(),getResources().getIdentifier(iconName, "drawable", getActivity().getPackageName()));
         Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
         return resizedBitmap;
     }
