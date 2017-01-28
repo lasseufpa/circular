@@ -7,14 +7,8 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.os.Bundle;
 import android.os.Message;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.widget.TextViewCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,18 +16,14 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
 
 public class CircularMapFragment extends Fragment implements OnMapReadyCallback {
 
@@ -43,6 +33,7 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
     //Objetos Textview para atualização de status do mapa
     private TextView status;
     private TextView viewMessage;
+    private MapView map;
 
     //variável do serviço de atualização do mapa
     private MapUpdateService mapUpdateService;
@@ -75,24 +66,54 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
 
 
 
-
-
-        // obtém o SupportMapFragment e recebe uma notificação caso o mapa esteja pronto paras ser utilizado
-        SupportMapFragment mapFragment = (SupportMapFragment) getActivity().getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mapUpdateService = new MapUpdateService(getActivity().getApplicationContext(),maphandler);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        map.onResume();
+        ReloadMapService();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        map.onDestroy();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        pauseMapService();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        map.onLowMemory();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater,  ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_maps,container);
 
         status = (TextView) view.findViewById(R.id.status);
         viewMessage = (TextView) view.findViewById(R.id.message);
 
-        mapUpdateService = new MapUpdateService(getActivity().getApplicationContext(),maphandler);
+        // obtém o SupportMapFragment e recebe uma notificação caso o mapa esteja pronto paras ser utilizado
+        map = (MapView) view.findViewById(R.id.map);
+
+        map.onCreate(savedInstanceState);
+        map.onResume();
+        map.getMapAsync(this);
+
+
 
         return view;
     }
@@ -102,6 +123,7 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
     public void onStop() {
         super.onStop();
         pauseMapService();
+        map.onStop();
     }
 
     /*
@@ -114,8 +136,8 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
 
+        mMap = googleMap;
         LatLng place = new LatLng(-1.472465599146933,-48.45721595321921);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(place));
         // Zoom in, animating the camera.
@@ -123,27 +145,26 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
         // Zoom out to zoom level 10, animating with a duration of 2 seconds.
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 1000, null);
 
+
         mapUpdateService.start();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        stopService();
+        StopMapService();
     }
 
     private void pauseMapService() {
        mapUpdateService.pause();
-
     }
 
-    private void stopService() {
+    private void StopMapService() {
         mapUpdateService.stop();
     }
 
     private void ReloadMapService() {
         mapUpdateService.start();
-
     }
 
 

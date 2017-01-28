@@ -8,14 +8,14 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
-    tools:context=".MapsActivity"
+    tools:context=".CircularMapFragment"
     android:weightSum="1">
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    <com.google.android.gms.maps.MapView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:map="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:name="com.google.android.gms.maps.MapView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="org.lasseufpa.circular.MapsActivity"
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/message"
             android:layout_weight="1"
-            android:textColor="?attr/colorBackgroundFloating"
+            android:textColor="@android:color/darker_gray"
             android:textSize="10sp" />
 
         <TextView
