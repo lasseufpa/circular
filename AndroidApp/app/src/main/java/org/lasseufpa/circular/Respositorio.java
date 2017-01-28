@@ -12,17 +12,25 @@ public class Respositorio {
     private  ArrayList<Circular> circularesList;
     private long  timeToObsolete = 30000; //tempo para informação obsoleta
     private long  timeToErase = 60000;    //tempo para informação ser apagada
+    private Calendar lastUpdate;
 
 
 
     public Respositorio () {
-
         circularesList = new ArrayList<>();
+        lastUpdate = Calendar.getInstance();
     }
 
-    //salva um circular
-    public void salvarCircular (Circular circ) {
 
+    public boolean isUpdated(Calendar timeUpdated) {
+        return (lastUpdate.getTimeInMillis()-timeUpdated.getTimeInMillis())<=0;
+    }
+
+
+    //salva um circular
+    public void saveCircular(Circular circ) {
+
+        lastUpdate = Calendar.getInstance(); //registra o tempo de atualização
         circ.setRecivedTime(Calendar.getInstance()); //salva o instante de captura da localização
 
         //loop para saber se o circular com o mesmo nome já está armazenado
@@ -39,6 +47,14 @@ public class Respositorio {
 
     public ArrayList<Circular> getCircularList () {
         return circularesList;
+    }
+
+    public ArrayList<Circular> getCircularcopyList () {
+        ArrayList<Circular> circ = new ArrayList<>();
+        for (Circular c : circularesList) {
+            circ.add(c);
+        }
+        return circ;
     }
 
     //pega circular pelo nome
@@ -63,11 +79,18 @@ public class Respositorio {
 
 
             if (timePassed>timeToErase) {
+                if (!currentC.isErase()) lastUpdate = Calendar.getInstance();
                 currentC.setErase(true);
+
             } else if (timePassed>timeToObsolete) {
+
+                if (!currentC.isObsolet()) lastUpdate = Calendar.getInstance();
                 currentC.setObsolet(true);
+
             } else {
+                if (currentC.isObsolet()) lastUpdate = Calendar.getInstance();
                 currentC.setObsolet(false);
+
             }
 
 
