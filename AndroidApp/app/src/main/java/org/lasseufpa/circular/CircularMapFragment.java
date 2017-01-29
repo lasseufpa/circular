@@ -22,6 +22,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
 
@@ -247,6 +248,19 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
         }
     }
 
+    private void traceRoute(ArrayList<LatLng> pontos) {
+        mMap.addPolyline(new PolylineOptions().addAll(pontos).width(5).color(Color.rgb(255,153,153)));
+    }
+
+    private void setStops(ArrayList<LatLng> pontos) {
+        for (LatLng ponto : pontos) {
+            Marker pontoParada = mMap.addMarker(new MarkerOptions()
+                    .position(ponto)
+                    .title("parada Circular")
+                    .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("stop", 50, 70))));
+        }
+    }
+
 
     //classe anonima para capturar mensagens
     private class MapHandler extends Handler {
@@ -267,6 +281,8 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
             }
 
             if (msg.what == UPDATE_STOPPOINT) { //2 - posiciona ponto de parada no mapa
+                ArrayList<LatLng> pontos = (ArrayList<LatLng>) msg.getData().getSerializable("pontos");
+                setStops(pontos);
 
             }
 
@@ -280,13 +296,15 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
             }
 
             if (msg.what == TRACE_ROUTE) {
-
+                ArrayList<LatLng> pontos = (ArrayList<LatLng>) msg.getData().getSerializable("pontos");
+                traceRoute(pontos);
             }
 
 
 
         }
     }
+
 
 
 

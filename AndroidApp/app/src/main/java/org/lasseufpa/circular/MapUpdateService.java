@@ -145,9 +145,31 @@ public class MapUpdateService implements Runnable {
         }
         pontos.add(new LatLng(rotaY[0], rotaX[0]));
 
+        sendRoute(pontos);
+
      //   Polyline line = mMap.addPolyline(new PolylineOptions().addAll(pontos).width(5).color(Color.rgb(255,153,153)));
 
     }
+
+    private void sendRoute(ArrayList<LatLng> pontos) {
+        Message msg = new Message();
+        Bundle b = new Bundle();
+        b.putSerializable("pontos",pontos);
+        msg.setData(b);
+        msg.what = CircularMapFragment.TRACE_ROUTE;
+        mapHandler.sendMessage(msg);
+    }
+
+    private void sendStopPoints(ArrayList<LatLng> pontos) {
+        Message msg = new Message();
+        Bundle b = new Bundle();
+        b.putSerializable("pontos",pontos);
+        msg.setData(b);
+        msg.what = CircularMapFragment.UPDATE_STOPPOINT;
+        mapHandler.sendMessage(msg);
+
+    }
+
 
 
     /**
@@ -163,6 +185,8 @@ public class MapUpdateService implements Runnable {
 
 
         traceRoute();   //traçar rota do circular
+
+        setStopPoints();
 
         //enquanto o serviço estiver ligado
         while (serviceOn) {
@@ -195,6 +219,18 @@ public class MapUpdateService implements Runnable {
 
 
     }
+
+    private void setStopPoints() {
+        ArrayList<LatLng> pontos= new ArrayList<>();
+
+        for (int i=0; i<NStopPoints; i++) {
+            pontos.add(new LatLng(stopsX[i], stopsY[i]));
+        }
+
+        sendStopPoints(pontos);
+    }
+
+
 
     public void publishMessage(String message) {
         Message mensagem = new Message();
