@@ -1,10 +1,9 @@
-package org.lasseufpa.circular;
+package org.lasseufpa.circular.Domain;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 
 import java.util.Calendar;
-import java.util.Random;
 
 /**
  * Created by alberto on 17/11/2016.

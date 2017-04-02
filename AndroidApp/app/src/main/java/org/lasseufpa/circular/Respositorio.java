@@ -1,5 +1,7 @@
 package org.lasseufpa.circular;
 
+import org.lasseufpa.circular.Domain.Circular;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 

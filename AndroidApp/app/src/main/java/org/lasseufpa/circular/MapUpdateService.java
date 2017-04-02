@@ -11,6 +11,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import org.lasseufpa.circular.Domain.StopPoints;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -223,8 +225,8 @@ public class MapUpdateService implements Runnable {
     private void setStopPoints() {
         ArrayList<LatLng> pontos= new ArrayList<>();
 
-        for (int i=0; i<NStopPoints; i++) {
-            pontos.add(new LatLng(stopsX[i], stopsY[i]));
+        for (int i = 0; i<StopPoints.N_STOP_POINTS; i++) {
+            pontos.add(new LatLng(StopPoints.POINTS[i][0], StopPoints.POINTS[i][1]));
         }
 
         sendStopPoints(pontos);

@@ -2,6 +2,7 @@ package org.lasseufpa.circular;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import org.lasseufpa.circular.Domain.Circular;
 
 
 /**
