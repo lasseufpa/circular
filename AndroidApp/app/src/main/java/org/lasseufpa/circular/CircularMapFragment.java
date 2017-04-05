@@ -24,6 +24,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import org.lasseufpa.circular.Domain.Circular;
+import org.lasseufpa.circular.Domain.StopPoint;
 
 import java.util.ArrayList;
 
@@ -38,10 +39,10 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
     private MapView map;
 
     //variável do serviço de atualização do mapa
-    private MapUpdateService mapUpdateService;
+    private MapUpdater mapUpdateService;
 
 
-    //handler para capturar mensagens de MapUpdateService
+    //handler para capturar mensagens de MapUpdater
     private Handler maphandler = new MapHandler();
 
     Context contexto;
@@ -73,7 +74,7 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mapUpdateService = new MapUpdateService(getActivity().getApplicationContext(),maphandler);
+        mapUpdateService = new MapUpdater(getActivity().getApplicationContext(),maphandler);
     }
 
     @Override
@@ -169,7 +170,6 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
         mapUpdateService.start();
     }
 
-
     private void updateConectivity (boolean connectivity) {
 
         if (connectivity) {
@@ -189,10 +189,10 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
      */
     private void updateCircularPosition(){
         //atualiza a lista de circulares
-        MapUpdateService.repositorioCirculares.UpdateCircularList();
+        MapUpdater.repositorioCirculares.UpdateCircularList();
 
         //captura a lista de circulares do repositório
-        ArrayList<Circular> circulares =  MapUpdateService.repositorioCirculares.getCircularcopyList();
+        ArrayList<Circular> circulares =  MapUpdater.repositorioCirculares.getCircularcopyList();
 
         //repete para cada circular na lista
         for (Circular currentC : circulares) {
@@ -231,8 +231,8 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
             //remove marcador do mapa
             C.getMarcador().remove();
             //remove da lista
-            MapUpdateService.repositorioCirculares.getCircularList()
-                    .remove(MapUpdateService.repositorioCirculares.getCircularcopyList().indexOf(C));
+            MapUpdater.repositorioCirculares.getCircularList()
+                    .remove(MapUpdater.repositorioCirculares.getCircularcopyList().indexOf(C));
         } else {
 
             //verifica se a informação é antiga para marcar cinza
@@ -253,13 +253,20 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
         mMap.addPolyline(new PolylineOptions().addAll(pontos).width(5).color(Color.rgb(255,153,153)));
     }
 
-    private void setStops(ArrayList<LatLng> pontos) {
-        for (LatLng ponto : pontos) {
+    private void setStops(ArrayList<StopPoint> pontos) {
+        for (StopPoint ponto : pontos) {
             Marker pontoParada = mMap.addMarker(new MarkerOptions()
-                    .position(ponto)
-                    .title("parada Circular")
-                    .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("stop", 50, 70))));
+                    .position(new LatLng(ponto.getX(),ponto.getY()))
+                    .title(ponto.getTitle())
+                    .snippet(ponto.getDescription())
+                    .anchor(0.5f,0.5f)
+                    .flat(true)
+                    .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("stoppoint", 50, 50))));
         }
+    }
+
+    private void UpdateStopPoints () {
+
     }
 
 
@@ -282,7 +289,7 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
             }
 
             if (msg.what == UPDATE_STOPPOINT) { //2 - posiciona ponto de parada no mapa
-                ArrayList<LatLng> pontos = (ArrayList<LatLng>) msg.getData().getSerializable("pontos");
+                ArrayList<StopPoint> pontos = (ArrayList<StopPoint>) msg.getData().getSerializable("pontos");
                 setStops(pontos);
 
             }

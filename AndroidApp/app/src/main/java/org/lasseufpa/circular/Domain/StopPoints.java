@@ -44,34 +44,34 @@ public abstract class StopPoints {
 
     public static final String[][] NAME_DESCRIPTION = {
 
-    {"#1-Espaço Inovação"          , "Espaço inovação, Parque de Ciência e Tecnologia (PCT-Guamá)"                 },        //0
-    {"#2-Hospital Betina Ferro"    , "Hospital Universitário Betina ferro de Souza"                                },        //1
-    {"#3-Portão 3 (Lado Portaria)"      , "Portão 3 Da Universidade Federal do Pará, Acesso ao Terminal Rodoviário"},        //2
-    {"#4-Portão 3 (Lado Estacionamento)", "Portão 3 Da Universidade Federal do Pará, Acesso ao Terminal Rodoviário"},        //3
-    {"#5-Vadião", "Espaço de Recreação, Bancos, Lojas e Serviços"                                                  },        //4
-    {"#6-ICEN", "Istituto de Ciências Exatas e Naturais"                                                           },        //5
-    {"#7-Ginásio", ""},        //6
-    {"#8", ""},        //7
-            {"", ""},        //8
-            {"", ""},        //9
-            {"", ""},        //10
-            {"", ""},        //11
-            {"", ""},        //12
-            {"", ""},        //13
-            {"", ""},        //14
-            {"", ""},        //15
-            {"", ""},        //16
-            {"", ""},        //17
-            {"", ""},        //18
-            {"", ""},        //19
-            {"", ""},        //20
-            {"", ""},        //21
-            {"", ""},        //22
-            {"", ""},        //23
-            {"", ""},        //24
-            {"", ""},        //25
-            {"", ""},        //26
-            {"", ""}         //27
+    {"#1-Espaço Inovação"          , "Espaço inovação, PCT-Guamá"                   },        //0
+    {"#2-Hospital Betina Ferro"    , "Hospital Universitário Betina ferro de Souza" },        //1
+    {"#3-Portão 3 (Lado Portaria)"      , "Portão 3 Da UFPA, Terminal Rodoviário"   },        //2
+    {"#4-Portão 3 (Lado Estacionamento)", "Portão 3 Da UFPA, ARodoviário"           },        //3
+    {"#5-Vadião", "Espaço de Recreação, Bancos, Lojas e Serviços"                   },        //4
+    {"#6-ICEN", "Istituto de Ciências Exatas e Naturais"                            },        //5
+    {"#7-Ginásio", "Ginásio de Esportes da UFPA"                                    },        //6
+    {"#8-Reitoria e Biblioteca Central", ""                                         },        //7
+    {"#9-Reitoria", "Reitoria da Universidade Federal do Pará"                      },        //8
+    {"#10-Instituto de Geociências", ""                                             },        //9
+    {"#11-Parada Circular", ""                                                      },        //10
+    {"#12-CAPACIT", "Coordenadoria de Capacitação e Desenvolvimento"                },        //11
+    {"#13-Bosque", "Espaço verde do ITEC"                                           },        //12
+    {"#14-PGITEC/NEWTON", "Bloco de Pós Graduação do ITEC"                          },        //13
+    {"#15-Mirante do Rio", "Novo Bloco de aulas do Campus básico"                   },        //14
+    {"#16-RU Básico", "Restaurante universitário do campus básico"                  },        //15
+    {"#17-Dona Gina", ""                                                            },        //16
+    {"#18-ICSA", "Instituto de Ciências Sociais Aplicadas"                          },        //17
+    {"#19-Odontologia e Laboratorio de Analises Clinicas", ""                       },        //18
+    {"#20-Odontologia e Laboratorio de Analises Clinicas", ""                       },        //19
+    {"#21-Nutrição e Hospital Betina Ferro", ""                                     },        //20
+    {"#22-Portão 4", "Portão 4 da UFPA"                                             },        //21
+    {"#23-CEAMAZON", "Centro de Exc. em Eficiência energética da Amazônia "         },        //22
+    {"#24-Biomedicina", ""                                                          },        //23
+    {"#25-Parada Circular", ""                                                      },        //24
+    {"#26-PCT guamá", "Parque de ciência e Tecnologia"                              },        //25
+    {"#27-PCT guamá", "Parque de Ciência e Tecnologia"                              },        //26
+    {"#28-Parada circular", ""                                                      }         //27
 
     };
 
