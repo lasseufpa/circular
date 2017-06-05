@@ -37,6 +37,5 @@
 				
 				SetBus();
 			});
-            client.publish('');
 			
         });

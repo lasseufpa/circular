@@ -1,5 +1,5 @@
 //endereco do icone dos onibus
-var imageBus = 'images/icon circular.png';
+var imageBus = 'images/bus/icon circular.png';
 
 //variaveis do circular
 var NameBus = [];

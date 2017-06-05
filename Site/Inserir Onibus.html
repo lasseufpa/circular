@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Inseridindo Onibus</title>
+    <script type="text/javascript" src="js/mqtt/browserMqtt.js"></script>  
+</head>
+<body>
+    <h1>Abra o Console</h1>
+	   <script>
+	   
+	   var client1 = mqtt.connect('ws://test.mosca.io:80')
+        client1.on('connect', function(){
+		var text='#NCircular01*#X-1.474539*#Y-48.451615';
+            client1.publish('CircularUFPA_Loc',text);
+			console.log(text);
+        });
+	 
+    </script>
+</body>
+</html>  
