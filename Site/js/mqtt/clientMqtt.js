@@ -1,40 +1,26 @@
-		function getVar (message, ident){ //Função que fará a separação da string recebida dependendo da TAG [#+identificador (Ex.: #N - Nome)] 
+		function getVar (message, ident){ //Função que trata a string e retorna o valor de cada variavel dependendo do seu identificador.  
 			var n = message.length 
-			var index
-			var res = "";
-			
-			for(i=0;i<n;i++){ //Percorre a string até achar a TAG (#+identificador)
-				if (message.charAt(i)=='#'&&message.charAt(i+1)==ident){
-					index = i+2
-					
-					for(j=index;j<n;j++){
-						if (message.charAt(j) == '*'){
-							j=i=n
-							break
-						}
-						res = res+message.charAt(j);
-					}
-				}
-			}
-			res=res.replace(",",".");
-			return res;
-	   }
+			var stg = message.substr(10, n);//Retira o '+CGNSINF: ' da string final 	
+			var res = stg.split(',');
+			return res[ident]; 
+	  }    
 
-	
-		
 	   var client = mqtt.connect('ws://test.mosca.io:80')
         client.on('connect', function(){
             console.log('client connected')
             client.subscribe('CircularUFPA_Loc');
             client.on('message', function(topic, payload) {
 				var mess = payload.toString()
-				CircularText = getVar(mess, 'N') //Nome do circular
-				CircularLng = getVar(mess, 'Y') //Longitude 
-				CircularLat = getVar(mess, 'X') //Latitude
+				CircularText = "Circular01" //Nome do circular - Cada circular vai ter seu topico
+				CircularTimer = getVar(mess, 2) // Hora e Data
+			        CircularLat = getVar(mess, 3) //Latitude
+				CircularLng = getVar(mess, 4) //Longitude 
+				CircularSpeed = getVar(mess, 6) //Velocidade
 				console.log(CircularText)
-				console.log(CircularLng)
 				console.log(CircularLat)
-				
+				console.log(CircularLng)
+				console.log(CircularTimer)
+				console.log(CircularSpeed)				
 				SetBus();
 			});
 			
