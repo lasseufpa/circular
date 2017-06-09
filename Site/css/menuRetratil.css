@@ -1,0 +1,140 @@
+#circle1 {   
+	position:absolute;
+	width: 50px;  
+	height: 50px;
+	top: 36%;
+	left: -250px;   
+	background: #4285F4;   
+	transition: all .1s linear;
+	-moz-border-radius: 70px;   
+	-webkit-border-radius: 70px;   
+	border-radius: 70px;
+	border: 1px solid #6b6868;	
+	z-index:3;
+	-moz-box-shadow: 3px 3px 2px #000000;
+	-webkit-box-shadow: 3px 3px 2px #000000;
+	box-shadow: 3px 3px 2px #000000;
+} 
+
+#circle2 {   
+	position:absolute;
+	width: 50px;  
+	height: 50px;
+	top: 36%;
+	left: -140px;   
+	background: #4285F4;  
+	transition: all .1s linear;	
+	-moz-border-radius: 70px;   
+	-webkit-border-radius: 70px;   
+	border-radius: 70px;  
+	border: 1px solid #6b6868;
+	z-index:3;
+	-moz-box-shadow: 3px 3px 2px #000000;
+	-webkit-box-shadow: 3px 3px 2px #000000;
+	box-shadow: 3px 3px 2px #000000;
+}
+
+#img{
+		position: absolute;
+		margin: 0;
+		padding: 0;
+		z-index: 4;
+		top: 37%;
+		left: -241.2px;  
+		transition: all .1s linear;
+}
+	
+
+#imgMap2{
+		position: absolute;
+		margin: 0;
+		padding: 0;
+		z-index: 4;
+		top: 36.85%;
+		left: -130px; 
+		transition: all .1s linear;
+}
+
+
+*{
+	margin:0;
+	padding:0;
+}
+
+
+#check{
+	display: none;
+	
+}
+
+#iconeMenu{
+	position:absolute;
+	top:1px;
+	left:1px;
+	cursor: pointer;
+	padding: 15px;
+	position: absolute;
+	z-index: 2;
+}
+
+.barra{
+	z-index: 1;
+	background-color: #FF8F1C;
+	height: 100%;
+	width: 300px;
+	position: absolute;
+	transition: all .1s linear;
+	left: -300px;
+	top:0px;
+	font-weight: bolder;
+}
+
+.classLogo{
+	z-index: 1;
+	position:absolute;
+	height:160px;
+	width:160px;
+	z-index:10;
+	top:50px;
+	left:-230px;
+	transition: all .1s linear;
+
+}
+
+
+nav{
+	width: 100%;
+	position: absolute;
+	top: 220px;
+}
+
+nav a{
+	text-decoration: none;
+}
+
+.link{
+	background-color: #FF8F1C;
+	padding: 20px;
+	font-family: 'Arial';
+	font-size: 12pt;
+	transition: all .1s linear;
+	color: #000000;
+	border-bottom: 2px solid #222;
+	opacity: 0;
+	margin-top: 200px;
+}
+
+.link:hover{
+	background-color: #4285F4;
+	color: #f4f4f9;
+}
+
+#check:checked ~ .barra{
+	transform: translateX(300px);
+}
+
+#check:checked ~ .barra nav a .link{
+	opacity: 1;
+	margin-top: 0;
+	transition-delay: .0s;
+}
