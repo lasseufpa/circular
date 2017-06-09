@@ -30,6 +30,11 @@ import java.util.ArrayList;
 
 public class CircularMapFragment extends Fragment implements OnMapReadyCallback {
 
+    //TASKS
+    // - atualizar pontos de parada
+    // - atualizar circulares
+    // - traçar rota
+
     //Objeto Google Map
     private GoogleMap mMap;
 
@@ -39,10 +44,11 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
     private MapView map;
 
     //variável do serviço de atualização do mapa
-    private MapUpdater mapUpdateService;
+    private CircularPositionUpdater mapUpdateService;
 
 
-    //handler para capturar mensagens de MapUpdater
+
+    //handler para capturar mensagens de CircularPositionUpdater
     private Handler maphandler = new MapHandler();
 
     Context contexto;
@@ -74,7 +80,7 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mapUpdateService = new MapUpdater(getActivity().getApplicationContext(),maphandler);
+        mapUpdateService = new CircularPositionUpdater(getActivity().getApplicationContext(),maphandler);
     }
 
     @Override
@@ -189,10 +195,10 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
      */
     private void updateCircularPosition(){
         //atualiza a lista de circulares
-        MapUpdater.repositorioCirculares.UpdateCircularList();
+        CircularPositionUpdater.repositorioCirculares.UpdateCircularList();
 
         //captura a lista de circulares do repositório
-        ArrayList<Circular> circulares =  MapUpdater.repositorioCirculares.getCircularcopyList();
+        ArrayList<Circular> circulares =  CircularPositionUpdater.repositorioCirculares.getCircularcopyList();
 
         //repete para cada circular na lista
         for (Circular currentC : circulares) {
@@ -231,8 +237,8 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
             //remove marcador do mapa
             C.getMarcador().remove();
             //remove da lista
-            MapUpdater.repositorioCirculares.getCircularList()
-                    .remove(MapUpdater.repositorioCirculares.getCircularcopyList().indexOf(C));
+            CircularPositionUpdater.repositorioCirculares.getCircularList()
+                    .remove(CircularPositionUpdater.repositorioCirculares.getCircularcopyList().indexOf(C));
         } else {
 
             //verifica se a informação é antiga para marcar cinza

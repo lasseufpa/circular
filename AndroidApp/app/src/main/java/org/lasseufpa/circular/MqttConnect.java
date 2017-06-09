@@ -157,7 +157,7 @@ public class MqttConnect  {
         Circular c;
         try {
             c = circularBuilder.CircularBuild(s);
-            MapUpdater.repositorioCirculares.saveCircular(c);
+            CircularPositionUpdater.repositorioCirculares.saveCircular(c);
             publishMessage("localização de "+c.getNome()+" Recebida");
         } catch (IllegalArgumentException e) {
             publishMessage("Mensagem de Localização Inválida");
