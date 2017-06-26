@@ -52,7 +52,13 @@ TinyGsm modem(SerialAT);
 TinyGsmClient client(modem);
 PubSubClient mqtt(client);
 
+
+// MQTT parameters
 const char* broker = "iot.eclipse.org"; //Broker adress
+const int broker_port = 1883; //Broker port adress
+const char* client_id = "circular01"; //MQTT client ID
+
+// MQTT topic to send the alive menssage
 const char* topicInit = "GsmClientTest/init";
 
 // MQTT topic to publish the current GNSS data
@@ -110,7 +116,7 @@ void setup()
   Serial.println(" OK");
 
   // MQTT Broker setup
-  mqtt.setServer(broker, 1883);
+  mqtt.setServer(broker, broker_port);
   Serial.println("set");
   mqtt.setCallback(mqttCallback);
   Serial.println("calback");
@@ -120,7 +126,7 @@ boolean mqttConnect()
 {
   Serial.print("Connecting to ");
   Serial.print(broker);
-  if (!mqtt.connect("GsmClientTest"))
+  if (!mqtt.connect(client_id))
   {
     Serial.println(" fail");
     return false;
@@ -171,7 +177,7 @@ void GNSSRequest()
     //Print and transmit GNSS data
     //Data structure: +CGNSINF: <GNSS run status>,<Fix status>,<UTC date & Time>,<Latitude>,<Longitude>,<MSL Altitude>,<Speed Over Ground>,<Course Over Ground>,<Fix Mode>,<Reserved1>,<HDOP>,<PDOP>,<VDOP>,<Reserved2>,<GNSS Satellites in View>,<GNSS Satellites Used>,<GLONASS Satellites Used>,<Reserved3>,<C/N0 max>,<HPA>,<VPA>
     Serial.println(data);
-    //MQTT lobrary only sends chars
+    //MQTT labrary only sends chars
     data.toCharArray(data2, 68);
     mqtt.publish(topicLocation, data2);
 
@@ -179,6 +185,9 @@ void GNSSRequest()
   }
 }
 
+
+//Function that gets and and publish on the MQTT network some enviromental data
+//Like temperature...
 void SensorRequest()
 {
   t = millis();
