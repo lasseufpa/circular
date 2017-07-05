@@ -2,8 +2,8 @@
 	position:absolute;
 	width: 50px;  
 	height: 50px;
-	top: 36%;
-	left: -250px;   
+	top: 44.5%;
+	left: 50px;   
 	background: #4285F4;   
 	transition: all .1s linear;
 	-moz-border-radius: 70px;   
@@ -20,8 +20,8 @@
 	position:absolute;
 	width: 50px;  
 	height: 50px;
-	top: 36%;
-	left: -140px;   
+	top: 44.5%;
+	left: 150px;   
 	background: #4285F4;  
 	transition: all .1s linear;	
 	-moz-border-radius: 70px;   
@@ -39,8 +39,8 @@
 		margin: 0;
 		padding: 0;
 		z-index: 4;
-		top: 37%;
-		left: -241.2px;  
+		top: 45.5%;
+		left: 58px;  
 		transition: all .1s linear;
 }
 	
@@ -50,8 +50,8 @@
 		margin: 0;
 		padding: 0;
 		z-index: 4;
-		top: 36.85%;
-		left: -130px; 
+		top: 45.5%;
+		left: 158px; 
 		transition: all .1s linear;
 }
 
@@ -62,21 +62,6 @@
 }
 
 
-#check{
-	display: none;
-	
-}
-
-#iconeMenu{
-	position:absolute;
-	top:1px;
-	left:1px;
-	cursor: pointer;
-	padding: 15px;
-	position: absolute;
-	z-index: 2;
-}
-
 .barra{
 	z-index: 1;
 	background-color: #FF8F1C;
@@ -84,7 +69,7 @@
 	width: 300px;
 	position: absolute;
 	transition: all .1s linear;
-	left: -300px;
+	left: 0px;
 	top:0px;
 	font-weight: bolder;
 }
@@ -96,10 +81,42 @@
 	width:160px;
 	z-index:10;
 	top:50px;
-	left:-230px;
+	left:50px;
 	transition: all .1s linear;
 
 }
+
+
+#mode-selector {
+	position:absolute;
+	top: 350px;
+	left: 20px;
+	color: #fff;
+	background-color: #4285F4;
+	transition: all .1s linear;
+	margin-left: 12px;
+	padding: 5px 11px 0px 11px;
+	z-index:4;
+  }
+    .controls {
+        top: 10px;
+        border: 1px solid transparent;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        height: 32px;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      }
+
+
+#mode-selector label {
+	font-family: Roboto;
+	font-size: 13px;
+	font-weight: 300;
+	}
+
+
 
 
 nav{
@@ -120,21 +137,11 @@ nav a{
 	transition: all .1s linear;
 	color: #000000;
 	border-bottom: 2px solid #222;
-	opacity: 0;
-	margin-top: 200px;
+	opacity: 1;
+	margin-top: 0px;
 }
 
 .link:hover{
 	background-color: #4285F4;
 	color: #f4f4f9;
-}
-
-#check:checked ~ .barra{
-	transform: translateX(300px);
-}
-
-#check:checked ~ .barra nav a .link{
-	opacity: 1;
-	margin-top: 0;
-	transition-delay: .0s;
 }
