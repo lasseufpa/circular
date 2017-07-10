@@ -28,7 +28,9 @@
 //#define TINY_GSM_MODEM_M590
 
 #include <TinyGsmClient.h> //Library for GPRS(GSM) connection
-#include <PubSubClient.h> //Livrery for MQTT protocol
+#include <PubSubClient.h> //Library for MQTT protocol
+#include <DHT.h> //Library for the temperature sensor
+#include <Adafruit_Sensor.h> //Library that supports DHT library
 
 //Variables to storage the GNSS data
 String data;
@@ -57,27 +59,39 @@ PubSubClient mqtt(client);
 const char* broker = "iot.eclipse.org"; //Broker adress
 const int broker_port = 1883; //Broker port adress
 const char* client_id = "circular01"; //MQTT client ID
+const char* mqtt_user = ""; //MQTT broker user
+const char* mqtt_pass = ""; //MQTT broker password
+
 
 // MQTT topic to send the alive menssage
 const char* topicInit = "GsmClientTest/init";
 
-// MQTT topic to publish the current GNSS data
-// /circularufpa/location/XX(number of the bus)
-const char* topicLocation = "/circularufpa/location/01";
+// MQTT topic to publish the cu rrent GNSS data
+// /ufpa/circular/loc/XX(number of the bus)
+const char* topicLocation = "/ufpa/circular/loc/01";
 
 // MQTT topics to publish the current enviromental data
 // /circularufpa/enviroment/data(temp, humidity...)/XX(number of the bus)
-const char* topicTemp = "/circularufpa/enviroment/temp/01";
+const char* topicTemp = "/ufpa/circular/enviroment/temp/01";
+const char* topicHum = "/ufpa/circular/enviroment/hum/01";
+const char* topicCac = "/ufpa/circular/enviroment/cac/01";
+
 
 //Timing variables
 unsigned long t = 0;
 unsigned long lastReconnectAttempt = 0;
 unsigned long lastGNSS = 0;
 unsigned long lastSensor = 0;
+//Functions intervals
+unsigned int intervalReconnect = 10000; //10 seconds
+unsigned int intervalGNSS = 2000; //2 seconds (send GNSS data every 2 seconds)
+unsigned int intervalSensor = 60000; //1 minute (send sensor data every minute)
 
-int intervalReconnect = 10000; //10 seconds
-int intervalGNSS = 2000; //2 seconds
-int intervalSensor = 60000; //1 minute
+
+//DHT parameters
+#define DHTPIN 7 // Sensor pin
+#define DHTTYPE DHT22   // Sensor type DHT 22  (AM2302)
+DHT dht(DHTPIN, DHTTYPE); //creat the sensor
 
 
 void setup()
@@ -88,6 +102,10 @@ void setup()
 
   // Set GSM module baud rate
   SerialAT.begin(115200);
+  delay(10);
+
+  //Inicialize the temperature sensor
+  dht.begin();
   delay(10);
 
   // Restart takes quite some time
@@ -126,7 +144,7 @@ boolean mqttConnect()
 {
   Serial.print("Connecting to ");
   Serial.print(broker);
-  if (!mqtt.connect(client_id))
+  if (!mqtt.connect(client_id, mqtt_user, mqtt_pass))
   {
     Serial.println(" fail");
     return false;
@@ -193,7 +211,16 @@ void SensorRequest()
   t = millis();
   if (t - lastSensor > intervalSensor)
   {
-    //code here
+    float t = dht.readTemperature();
+    float h = dht.readHumidity();
+    float cac = dht.computeHeatIndex(t, h, false);
+    Serial.println(t);
+    Serial.println(h);
+    Serial.println(cac);
+    Serial.println("sensor");
+    mqtt.publish(topicTemp, String(t).c_str());
+    mqtt.publish(topicHum, String(h).c_str());
+    mqtt.publish(topicCac, String(cac).c_str());
     lastSensor = millis();
   }
 }
