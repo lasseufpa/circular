@@ -154,7 +154,6 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
         // Zoom out to zoom level 10, animating with a duration of 2 seconds.
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 1000, null);
 
-
         mapUpdateService.start();
     }
 
@@ -204,9 +203,6 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
         for (Circular currentC : circulares) {
             addCircular(currentC);
         }
-
-
-
     }
 
 

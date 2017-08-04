@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import org.lasseufpa.circular.Domain.RouteCircular1;
 import org.lasseufpa.circular.Domain.StopPoint;
 import org.lasseufpa.circular.Domain.StopPoints;
 
@@ -142,10 +143,10 @@ public class CircularPositionUpdater implements Runnable {
 
         ArrayList<LatLng> pontos= new ArrayList<>();
 
-        for (int i=0; i<NCircularPoints; i++) {
-            pontos.add(new LatLng(rotaY[i], rotaX[i]));
+        for (int i=0; i<RouteCircular1.NROUTEPOINTS; i++) {
+            pontos.add(new LatLng(RouteCircular1.POINTS[i][0], RouteCircular1.POINTS[i][1]));
         }
-        pontos.add(new LatLng(rotaY[0], rotaX[0]));
+        pontos.add(new LatLng(RouteCircular1.POINTS[0][0], RouteCircular1.POINTS[0][1]));
 
         sendRoute(pontos);
 
