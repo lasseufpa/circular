@@ -144,9 +144,9 @@ public class CircularPositionUpdater implements Runnable {
         ArrayList<LatLng> pontos= new ArrayList<>();
 
         for (int i=0; i<RouteCircular1.NROUTEPOINTS; i++) {
-            pontos.add(new LatLng(RouteCircular1.POINTS[i][0], RouteCircular1.POINTS[i][1]));
+            pontos.add(new LatLng(RouteCircular1.POINTS[i][1], RouteCircular1.POINTS[i][0]));
         }
-        pontos.add(new LatLng(RouteCircular1.POINTS[0][0], RouteCircular1.POINTS[0][1]));
+        pontos.add(new LatLng(RouteCircular1.POINTS[0][1], RouteCircular1.POINTS[0][0]));
 
         sendRoute(pontos);
 

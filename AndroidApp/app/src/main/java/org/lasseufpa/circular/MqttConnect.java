@@ -29,8 +29,8 @@ public class MqttConnect  {
     private String clientID;                                    //armazena o identificador do cliente MQTT
     private String username = "alberto";                        //armazena o nome de usuário
     private String password = "null";                           //armazena a senha de conexão do broker
-    private String publishTopic = "CircularUFPA1675";           //Tópico para o cliente subescrever no servidor
-    private CircularBuilder circularBuilder= new CircularBuilder(); //Objeto que tranforma uma mensagem String em um objeto circular
+    private String publishTopic = "/ufpa/circular/loc/";           //Tópico para o cliente subescrever no servidor
+    private CircularBuilderGSM circularBuilder = new CircularBuilderGSM(); //Objeto que tranforma uma mensagem String em um objeto circular
     private Context contexto;
     private Handler handler;
 

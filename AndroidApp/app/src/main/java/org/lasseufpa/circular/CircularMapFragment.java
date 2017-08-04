@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -252,6 +253,7 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
     }
 
     private void traceRoute(ArrayList<LatLng> pontos) {
+        Log.i("rota","a rota foi adicionada ao mapa");
         mMap.addPolyline(new PolylineOptions().addAll(pontos).width(5).color(Color.rgb(255,153,153)));
     }
 
