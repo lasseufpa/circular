@@ -2,7 +2,7 @@
 var valor="ocultar";
 var Cmap="com rota";
 var animation="sim";
-var logoPosition="nao mostar";
+var iconesPosition="nao mostar";
 
 //variaveis usadas para os carros
 var iconCarStart='images/StartEnd/convertibleStart.png';
@@ -47,8 +47,7 @@ var idMenu = new Array(
 [ "menu-2","desce" ],
 [ "menu-3","desce"],    
 [ "menu-4","desce"],  
-[ "menu-5","desce"],
-[ "menu-6","desce"]
+[ "menu-5","desce"]
 );  
 
 //funcoes iniciais  
@@ -57,82 +56,14 @@ mudarEstado('imgMap2');
 mudarEstado('circle1');
 mudarEstado('circle2');
 mudarEstado('mode-selector');
-logoOptions();
 
-	
-//funcao que move o logo para fora da tela
-function logoBack(){
 
-	 // Standard syntax
-    document.getElementById("logo").style.transform = "translateX(0px)"; 
-	document.getElementById("circle1").style.transform = "translateX(0px)"; 
-	document.getElementById("circle2").style.transform = "translateX(0px)"; 
-	document.getElementById("img").style.transform = "translateX(0px)"; 
-	document.getElementById("imgMap2").style.transform = "translateX(0px)"; 
-	document.getElementById("mode-selector").style.transform = "translateX(0px)"; 	   
-	
-	// Code for Safari
-    document.getElementById("logo").style.WebkitTransform = "translateX(0px)"; 
-	document.getElementById("circle1").style.WebkitTransform = "translateX(0px)"; 
-	document.getElementById("circle2").style.WebkitTransform = "translateX(0px)"; 
-	document.getElementById("img").style.WebkitTransform = "translateX(0px)"; 
-	document.getElementById("imgMap2").style.WebkitTransform = "translateX(0px)"; 
-	document.getElementById("mode-selector").style.WebkitTransform = "translateX(0px)"; 
-   
-	// Code for IE9
-    document.getElementById("logo").style.msTransform = "translateX(0px)"; 
-    document.getElementById("circle1").style.msTransform = "translateX(0px)"; 
-    document.getElementById("circle2").style.msTransform = "translateX(0px)"; 
-	document.getElementById("img").style.msTransform = "translateX(0px)"; 
-	document.getElementById("imgMap2").style.msTransform = "translateX(0px)"; 
-	document.getElementById("mode-selector").style.msTransform = "translateX(0px)"; 
-}
-
-//funcao que move o logo para a tela
-function logoGo(){
-// Standard syntax
-    document.getElementById("logo").style.transform = "translateX(300px)"; 
-	document.getElementById("circle1").style.transform = "translateX(300px)"; 
-	document.getElementById("circle2").style.transform = "translateX(300px)"; 
-	document.getElementById("img").style.transform = "translateX(300px)"; 
-	document.getElementById("imgMap2").style.transform = "translateX(300px)"; 
-	document.getElementById("mode-selector").style.transform = "translateX(300px)"; 	   
-	
-	// Code for Safari
-    document.getElementById("logo").style.WebkitTransform = "translateX(300px)"; 
-	document.getElementById("circle1").style.WebkitTransform = "translateX(300px)"; 
-	document.getElementById("circle2").style.WebkitTransform = "translateX(300px)"; 
-	document.getElementById("img").style.WebkitTransform = "translateX(300px)"; 
-	document.getElementById("imgMap2").style.WebkitTransform = "translateX(300px)"; 
-	document.getElementById("mode-selector").style.WebkitTransform = "translateX(300px)"; 
-   
-	// Code for IE9
-    document.getElementById("logo").style.msTransform = "translateX(300px)"; 
-    document.getElementById("circle1").style.msTransform = "translateX(300px)"; 
-    document.getElementById("circle2").style.msTransform = "translateX(300px)"; 
-	document.getElementById("img").style.msTransform = "translateX(300px)"; 
-	document.getElementById("imgMap2").style.msTransform = "translateX(300px)"; 
-	document.getElementById("mode-selector").style.msTransform = "translateX(300px)"; 
-}
-	
-
-//veriifica se o logo deve ir ou voltar
-function logoOptions(){
-
-	if(logoPosition=="mostrar"){
-		logoPosition="nao mostrar";
-		logoGo();
-	}else{
-		logoPosition="mostrar";
-		logoBack();
-	}
-} 
 
 var menuManager ="desce";
 var menuIndex=0;
 
 function closeMenu(){
-	for(var a=1; a<6;a++){
+	for(var a=1; a<5;a++){
 		// Standard syntax
     document.getElementById(idMenu[a][0]).style.transform = "translateY(0px)"; 
 	
@@ -145,7 +76,7 @@ function closeMenu(){
 }
 
 function openMenu(){
-	for(var a=1; a<6;a++){
+	for(var a=1; a<5;a++){
 		// Standard syntax
     document.getElementById(idMenu[a][0]).style.transform = "translateY(110px)"; 
 	
@@ -157,6 +88,8 @@ function openMenu(){
 	}
 }
 
+
+
 function moveElement(){
 	mudarVisualizacao();
 	if(menuManager=="desce"){
@@ -166,8 +99,7 @@ function moveElement(){
 		menuManager="desce";
 		closeMenu();
 	}
-}	
-
+}
 
 //funcao que remove e insere os marcadores no mapa, mudar a cor de elemento
 function atualizaMarkes(){
@@ -189,6 +121,8 @@ function atualizaMarkes(){
 var visualizacaoOpcoes="mostrar"
 //funcao usada para alternar a visualizacao dos icones
 function mudarVisualizacao() {
+
+console.log("aa");
 mudarEstado('img');
 mudarEstado('imgMap2');
 mudarEstado('circle1');

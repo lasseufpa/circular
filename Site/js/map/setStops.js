@@ -78,7 +78,11 @@ function addMarker(location, index) {
 		map: map
     });
 		
-    marker.addListener('click', function() {
+    marker.addListener('mouseout', function() {
+        infowindow.close(map, marker);
+    });
+	
+	marker.addListener('mouseover', function() {
         infowindow.open(map, marker);
     });
 	

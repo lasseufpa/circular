@@ -1,21 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Inseridindo Onibus</title>
-    <script type="text/javascript" src="js/mqtt/browserMqtt.js"></script>  
+  <meta charset="UTF-8">
+  <title>Inseridindo Onibus</title>
+  <script type="text/javascript" src="js/mqtt/browserMqtt.js"></script>
 </head>
+
 <body>
-    <h1>Abra o Console</h1>
-	   <script>
-	   
-	   var client1 = mqtt.connect('ws://test.mosca.io:80')
-        client1.on('connect', function(){
-		var text='+CGNSINF: 1,1,20170606213815.000,-1.464823,-48.445460,25.900,1.74,13.6,1,,4.4,4.5,1.0,,13,3,,,37,,';
-            client1.publish('CircularUFPA_Loc',text);
-			console.log(text);
-        });
-	 
-    </script>
+  <h1>Abra o Console</h1>
+  <script>
+    var client1 = mqtt.connect('ws://test.mosca.io:80')
+    client1.on('connect', function() {
+      var text = '+CGNSINF+CGNSINF: 1,1,20170606213815.000,-1.464823,-48.445460,25.900,1.74,13.6,1,,4.4,4.5,1.0,,13,3,,,37,,';
+      client1.publish('ufpa/circular/loc/01', text);
+      console.log(text);
+    });
+    var client2 = mqtt.connect('ws://test.mosca.io:80')
+    client2.on('connect', function() {
+      var text = '+CGNSINF+CGNSINF: 1,1,20170606213815.000,-1.467153,-48.446684,25.900,1.74,13.6,1,,4.4,4.5,1.0,,13,3,,,37,,';
+      client2.publish('ufpa/circular/loc/02', text);
+      console.log(text);
+    });
+  </script>
 </body>
-</html>  
+
+</html>
