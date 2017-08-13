@@ -44,6 +44,9 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
     private TextView viewMessage;
     private MapView map;
 
+    //repositório de circulares no mapa
+    public static final RepositorioCircular repositorioCirculares = new RepositorioCircular();
+
     //variável do serviço de atualização do mapa
     private CircularPositionUpdater mapUpdateService;
 
@@ -81,14 +84,14 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mapUpdateService = new CircularPositionUpdater(getActivity().getApplicationContext(),maphandler);
+       // mapUpdateService = new CircularPositionUpdater(getActivity().getApplicationContext(),maphandler);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         map.onResume();
-        ReloadMapService();
+//        ReloadMapService();
     }
 
     @Override
@@ -100,7 +103,7 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
     @Override
     public void onPause() {
         super.onPause();
-        pauseMapService();
+      //  pauseMapService();
     }
 
     @Override
@@ -136,13 +139,8 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
         map.onStop();
     }
 
-    /*
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        ReloadMapService();
-    }
-    */
+
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -155,7 +153,7 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
         // Zoom out to zoom level 10, animating with a duration of 2 seconds.
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 1000, null);
 
-        mapUpdateService.start();
+       // mapUpdateService.start();
     }
 
     @Override
@@ -165,15 +163,17 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
     }
 
     private void pauseMapService() {
-       mapUpdateService.pause();
+
+        //mapUpdateService.pause();
     }
 
     private void StopMapService() {
-        mapUpdateService.stop();
+
+        //mapUpdateService.stop();
     }
 
     private void ReloadMapService() {
-        mapUpdateService.start();
+        //mapUpdateService.start();
     }
 
     private void updateConectivity (boolean connectivity) {

@@ -53,7 +53,15 @@
 
         </activity>
 
-        <service android:name="org.eclipse.paho.android.service.MqttService"></service>
+        <service android:name="org.eclipse.paho.android.service.MqttService" />
+
+        <service android:name=".CircularUpdateService" android:exported="false">
+            <intent-filter>
+                <action android:name="CIRCULAR_LOCATION"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+
+        </service>
 
 
     </application>

@@ -14,7 +14,7 @@ import java.util.Objects;
  * Created by alberto on 04/08/2017.
  */
 
-public class CircularBuilderGSM extends CircularBuilder {
+public class CircularBuilderGSM {
 
 
     /**
@@ -24,8 +24,8 @@ public class CircularBuilderGSM extends CircularBuilder {
      */
 
 
-    @Override
-    public Circular CircularBuild (String message) throws IllegalArgumentException {
+
+    public Circular CircularBuild (String message,String nomeCircular) throws IllegalArgumentException {
 
         String Messages[] = message.split(":");
         String Data[] = Messages[1].split(",");
@@ -34,7 +34,7 @@ public class CircularBuilderGSM extends CircularBuilder {
 
         if (isValidMessage(Messages[0])) {
 
-            String nome = Messages[0];
+            String nome = nomeCircular;
             LatLng local = getLoc(Data);
 
             Log.i("localização",Messages[0]+Data[3]+Data[4]);

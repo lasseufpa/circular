@@ -9,7 +9,7 @@ import java.util.Calendar;
  * Created by alberto on 24/11/2016.
  */
 
-public class RespositorioCircular {
+public class RepositorioCircular {
 
     private  ArrayList<Circular> circularesList;
     private long  timeToObsolete = 30000; //tempo para informação obsoleta
@@ -18,7 +18,7 @@ public class RespositorioCircular {
 
 
 
-    public RespositorioCircular() {
+    public RepositorioCircular() {
         circularesList = new ArrayList<>();
         lastUpdate = Calendar.getInstance();
     }
@@ -99,6 +99,14 @@ public class RespositorioCircular {
         }
 
 
+    }
+
+    public int activeCircularesNumber() {
+        int retorno = 0;
+        for (Circular currentC : circularesList) {
+            retorno ++;
+        }
+        return retorno;
     }
 
     /**

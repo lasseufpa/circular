@@ -27,6 +27,8 @@ public class CircularBuilder {
 
 
 
+
+
     private String identName(String message) throws IllegalArgumentException {
         String name = getVar(message,'N');
 
