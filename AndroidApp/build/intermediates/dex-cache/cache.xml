@@ -435,6 +435,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\Users\alberto\.android\build-cache\b9594272192c08e321ab15bec209c551b52ab4cb\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="7f2420506110902f033406b25697cf97ee8c38b2">
+        <dex dex="C:\Users\alberto\Documents\circular\AndroidApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_da814c642ae20688f3cd9e9cf968380a131bc4a4\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\Users\alberto\.android\build-cache\7a9a0bd0d0d35afde0d4330c57660ef56390fe5a\output\jars\classes.jar"
         jumboMode="true"
         optimize="true"

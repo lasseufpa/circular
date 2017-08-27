@@ -29,7 +29,7 @@ import org.lasseufpa.circular.Domain.StopPoint;
 
 import java.util.ArrayList;
 
-public class CircularMapFragment extends Fragment implements OnMapReadyCallback {
+public class CircularMapFragment extends Fragment implements OnMapReadyCallback,RepositorioCircular.RepositorioCircularChangeListener {
 
     //TASKS
     // - atualizar pontos de parada
@@ -39,31 +39,22 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
     //Objeto Google Map
     private GoogleMap mMap;
 
-    //Objetos Textview para atualização de status do mapa
-    private TextView status;
-    private TextView viewMessage;
+    //mapview
     private MapView map;
 
     //repositório de circulares no mapa
     public static final RepositorioCircular repositorioCirculares = new RepositorioCircular();
 
-    //variável do serviço de atualização do mapa
-    private CircularPositionUpdater mapUpdateService;
+    //lista de circulares
+    ArrayList<Circular> circulares;
 
 
 
-    //handler para capturar mensagens de CircularPositionUpdater
-    private Handler maphandler = new MapHandler();
+
 
     Context contexto;
 
-    //variaveis de mensagens
-    public static final int MESSAGE_LOG             = 1;
-    public static final int UPDATE_CIRCULAR         = 2;
-    public static final int UPDATE_STOPPOINT        = 3;
-    public static final int CONECTIVITY_STATEMENT   = 4;
-    public static final int ERR_CONECTION_TIMEOUT   = 5;
-    public static final int TRACE_ROUTE             = 6;
+
 
 
     @Override
@@ -76,9 +67,13 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        circulares = repositorioCirculares.getCircularList();
+    }
 
-
-
+    @Override
+    public void onStart() {
+        super.onStart();
+        repositorioCirculares.setRepositorioCircularChangeListener(this);
     }
 
     @Override
@@ -91,7 +86,6 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
     public void onResume() {
         super.onResume();
         map.onResume();
-//        ReloadMapService();
     }
 
     @Override
@@ -103,7 +97,6 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
     @Override
     public void onPause() {
         super.onPause();
-      //  pauseMapService();
     }
 
     @Override
@@ -114,10 +107,9 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
 
     @Override
     public View onCreateView(LayoutInflater inflater,  ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_maps,container);
+        View view = inflater.inflate(R.layout.activity_maps,null);
 
-        status = (TextView) view.findViewById(R.id.status);
-        viewMessage = (TextView) view.findViewById(R.id.message);
+
 
         // obtém o SupportMapFragment e recebe uma notificação caso o mapa esteja pronto paras ser utilizado
         map = (MapView) view.findViewById(R.id.map);
@@ -135,7 +127,7 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
     @Override
     public void onStop() {
         super.onStop();
-        pauseMapService();
+        repositorioCirculares.removeRepositorioCircularChangeListener(this);
         map.onStop();
     }
 
@@ -153,39 +145,18 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
         // Zoom out to zoom level 10, animating with a duration of 2 seconds.
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 1000, null);
 
-       // mapUpdateService.start();
+
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        StopMapService();
+
     }
 
-    private void pauseMapService() {
 
-        //mapUpdateService.pause();
-    }
 
-    private void StopMapService() {
 
-        //mapUpdateService.stop();
-    }
-
-    private void ReloadMapService() {
-        //mapUpdateService.start();
-    }
-
-    private void updateConectivity (boolean connectivity) {
-
-        if (connectivity) {
-            status.setText("Conectado");
-            status.setTextColor(Color.GREEN);
-        } else {
-            status.setText("Desconectado");
-            status.setTextColor(Color.RED);
-        }
-    }
 
 
     /**
@@ -194,11 +165,6 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
      *
      */
     private void updateCircularPosition(){
-        //atualiza a lista de circulares
-        CircularPositionUpdater.repositorioCirculares.UpdateCircularList();
-
-        //captura a lista de circulares do repositório
-        ArrayList<Circular> circulares =  CircularPositionUpdater.repositorioCirculares.getCircularcopyList();
 
         //repete para cada circular na lista
         for (Circular currentC : circulares) {
@@ -234,8 +200,8 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
             //remove marcador do mapa
             C.getMarcador().remove();
             //remove da lista
-            CircularPositionUpdater.repositorioCirculares.getCircularList()
-                    .remove(CircularPositionUpdater.repositorioCirculares.getCircularcopyList().indexOf(C));
+            //CircularPositionUpdater.repositorioCirculares.getCircularList()
+                  //  .remove(CircularPositionUpdater.repositorioCirculares.getCircularcopyList().indexOf(C));
         } else {
 
             //verifica se a informação é antiga para marcar cinza
@@ -274,50 +240,15 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback 
     }
 
 
-    //classe anonima para capturar mensagens
-    private class MapHandler extends Handler {
+    @Override
+    public void onRepositorioCircularChanged() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
 
-
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-
-            if (msg.what == MESSAGE_LOG) {
-                //mensagem de log
-                viewMessage.setText(msg.getData().getString("message"));
-            }
-
-            if (msg.what == UPDATE_CIRCULAR) { // 1 - posiciona um circular no mapa
                updateCircularPosition();
-            }
-
-            if (msg.what == UPDATE_STOPPOINT) { //2 - posiciona ponto de parada no mapa
-                ArrayList<StopPoint> pontos = (ArrayList<StopPoint>) msg.getData().getSerializable("pontos");
-                setStops(pontos);
 
             }
-
-            if (msg.what == CONECTIVITY_STATEMENT) {
-                boolean con_status = msg.getData().getBoolean("conectivity");
-                updateConectivity(con_status);
-            }
-
-            if (msg.what == ERR_CONECTION_TIMEOUT) {
-
-            }
-
-            if (msg.what == TRACE_ROUTE) {
-                ArrayList<LatLng> pontos = (ArrayList<LatLng>) msg.getData().getSerializable("pontos");
-                traceRoute(pontos);
-            }
-
-
-
-        }
+        });
     }
-
-
-
-
 }

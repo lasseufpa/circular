@@ -1,53 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingBottom="0dp"
-    android:paddingLeft="0dp"
-    android:paddingRight="0dp"
-    android:paddingTop="0dp"
-    tools:context=".CircularMapFragment"
+    android:orientation="horizontal"
     android:weightSum="1">
 
-    <com.google.android.gms.maps.MapView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:map="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <com.google.android.gms.maps.MapView
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.MapView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="org.lasseufpa.circular.MapsActivity"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:elevation="4dp"
+        tools:context="org.lasseufpa.circular.MainActivity" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@android:color/background_light"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:paddingTop="2dp"
-        android:paddingBottom="2dp"
-        android:elevation="5dp">
+    <FrameLayout
+        android:layout_width="10dp"
+        android:layout_height="match_parent"
+        android:layout_margin="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:background="@color/colorPrimary">
 
-        <TextView
-            android:text="Mensagem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/message"
-            android:layout_weight="1"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="10sp" />
+    </FrameLayout>
 
-        <TextView
-            android:text="Conectado"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/status"
-            android:layout_weight="1"
-            android:textColor="?attr/colorButtonNormal"
-            android:textSize="12sp" />
-    </LinearLayout>
+
 </LinearLayout>
+
+
+
+

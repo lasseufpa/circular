@@ -25,7 +25,7 @@ public class MQTTconect {
     private String clientID;                                    //armazena o identificador do cliente MQTT
     private String username = "alberto";                        //armazena o nome de usuário
     private String password = "null";                           //armazena a senha de conexão do broker
-    private String publishTopic = "/ufpa/circular/#";                  //Tópico para o cliente subescrever no servidor
+    private String publishTopic = "/ufpa/circular/#";           //Tópico para o cliente subescrever no servidor
 
 
     public MQTTconect(Context contexto,MqttCallback mqttcallback) {
@@ -52,30 +52,14 @@ public class MQTTconect {
         return retorno;
     }
 
-    public void doConnect() throws Throwable {
+    public void doConnect(IMqttActionListener listener) {
 
         try {
             //realiza a conexão com o broker
             MqttConnectOptions options = new MqttConnectOptions();
             options.setConnectionTimeout(5);
             IMqttToken token = mqttAndroidClient.connect();
-            token.setActionCallback(new IMqttActionListener() {
-
-                //chamado quando a conexão é estabelecida
-                @Override
-                public void onSuccess(IMqttToken asyncActionToken) {
-
-                    subscribeToTopic();
-                }
-
-                //chamado quando há falha na conexão
-                @Override
-                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-
-
-                }
-            });
-
+            token.setActionCallback(listener);
 
         } catch (MqttException e) {
 

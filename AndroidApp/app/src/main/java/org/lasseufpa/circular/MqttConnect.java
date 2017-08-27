@@ -41,7 +41,7 @@ public class MqttConnect  {
         this.handler = hand;
     }
 
-    public boolean isconnected () {
+    boolean isconnected() {
         boolean retorno;
         try {
             retorno = mqttAndroidClient.isConnected();
@@ -157,7 +157,7 @@ public class MqttConnect  {
         Circular c;
         try {
             c = circularBuilder.CircularBuild(s);
-            CircularPositionUpdater.repositorioCirculares.saveCircular(c);
+            //CircularPositionUpdater.repositorioCirculares.saveCircular(c);
             publishMessage("localização de "+c.getNome()+" Recebida");
         } catch (IllegalArgumentException e) {
             publishMessage("Mensagem de Localização Inválida");

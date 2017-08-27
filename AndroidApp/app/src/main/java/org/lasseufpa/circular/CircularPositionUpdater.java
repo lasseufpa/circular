@@ -1,3 +1,5 @@
+/*
+
 package org.lasseufpa.circular;
 
 import android.content.Context;
@@ -15,13 +17,7 @@ import org.lasseufpa.circular.Domain.StopPoints;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-/**
- * Created by @albertklik on 25/01/2017.
- * Agradeçam a kelly Souza, pois ela é a pessoa que me dá motivação para fazer isto aqui
- *
- * CircularPositionUpdater é responsável por escutar o canal de comunicação mqtt e atualizar
- * a posição dos ônibus circulares no repositório
- */
+
 
 public class CircularPositionUpdater implements Runnable {
 
@@ -43,11 +39,6 @@ public class CircularPositionUpdater implements Runnable {
 
 
 
-    /**
-     * Construtor da classe CircularPositionUpdater
-     * @param context contexto da aplicação
-     * @param mapHandlergot handler de comunicação com o mapa
-     */
     public CircularPositionUpdater(Context context, Handler mapHandlergot) {
         contexto = context;
         mapHandler = mapHandlergot;
@@ -59,7 +50,7 @@ public class CircularPositionUpdater implements Runnable {
 
     /**
      * Iniciar o processo de atualização do mapa
-     */
+
     public void start() {
         serviceOn = true;
         Thread t = new Thread(this);
@@ -72,7 +63,7 @@ public class CircularPositionUpdater implements Runnable {
     }
     /**
      * Parar o processo de atualização do mapa
-     */
+
     public void stop() {
         mqttconnect.Disconnect();
         serviceOn = false;
@@ -81,7 +72,7 @@ public class CircularPositionUpdater implements Runnable {
 
     /**
      * Iniciar o processo de comunicação com o broker MQTT
-     */
+
     private void startMqttConnect() {
      mqttconnect = new MqttConnect(contexto,mqttHandler);
         Thread t = new Thread() {
@@ -93,44 +84,24 @@ public class CircularPositionUpdater implements Runnable {
         t.start();
     }
 
-    private boolean isMqttConnected() {
-        updateConectivityStatement(mqttconnect.isconnected());
-        return mqttconnect.isconnected();
-    }
 
-    private void updateConectivityStatement(boolean conectivity) {
-        Message msg = new Message();
-        Bundle b = new Bundle();
-        b.putBoolean("conectivity",conectivity);
-        msg.setData(b);
-        msg.what = CircularMapFragment.CONECTIVITY_STATEMENT;
-        mapHandler.sendMessage(msg);
-    }
 
-    private void timeOutConnection() {
-        Message msg = new Message();
-        msg.what = CircularMapFragment.ERR_CONECTION_TIMEOUT;
-        mapHandler.sendMessage(msg);
-    }
+
+
+
 
     private boolean isUpdated() {
         //pergunta para o repositorio se o mapa está atualizado
         return repositorioCirculares.isUpdated(lastUpdate);
     }
 
-    private void updateMap() {
-        Log.i("status","Update map called");
-        lastUpdate = Calendar.getInstance();
-        Message msg = new Message();
-        msg.what = CircularMapFragment.UPDATE_CIRCULAR;
-        mapHandler.sendMessage(msg);
-    }
+
 
 
 
     /**
      * Traça a rota do circular no mapa
-     */
+
     private void traceRoute () {
 
         ArrayList<LatLng> pontos= new ArrayList<>();
@@ -169,9 +140,9 @@ public class CircularPositionUpdater implements Runnable {
 
     /**
      * Processo de execução principal, atualização do mapa de localização de circulares
-     */
-    @Override
-    public void run() {
+
+
+    public run() {
 
         int sumTime = 0; //variavel para armazenar a soma de tempo
 
@@ -263,3 +234,4 @@ public class CircularPositionUpdater implements Runnable {
 
 
 }
+*/

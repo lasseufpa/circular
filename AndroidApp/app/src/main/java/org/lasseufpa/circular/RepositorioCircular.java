@@ -12,14 +12,16 @@ import java.util.Calendar;
 public class RepositorioCircular {
 
     private  ArrayList<Circular> circularesList;
+    private ArrayList<RepositorioCircularChangeListener> listenersList;
     private long  timeToObsolete = 30000; //tempo para informação obsoleta
     private long  timeToErase = 60000;    //tempo para informação ser apagada
-    private Calendar lastUpdate;
+    private Calendar lastUpdate = Calendar.getInstance();
 
 
 
     public RepositorioCircular() {
         circularesList = new ArrayList<>();
+        listenersList = new ArrayList<>();
         lastUpdate = Calendar.getInstance();
     }
 
@@ -42,8 +44,15 @@ public class RepositorioCircular {
                 currentC.setRecivedTime(circ.getRecivedTime());
                 return;
             }
-        //se não encontrar nenhum adiciona na ultima posição
-        circularesList.add(circ);
+        //se não encontrar nenhum verifica se já está no limite
+        if (activeCircularesNumber()<10) {
+            circularesList.add(circ);
+        } else {
+            eraseLastCircular();
+            circularesList.add(circ);
+        }
+
+        notifyChange();
 
     }
 
@@ -75,6 +84,8 @@ public class RepositorioCircular {
      */
     public void UpdateCircularList () {
 
+        Circular circularForErase=null;
+
         for (Circular currentC : circularesList) {
             long timeCurrentC = currentC.getRecivedTime().getTimeInMillis();
             long timePassed = Calendar.getInstance().getTimeInMillis() - timeCurrentC;
@@ -83,21 +94,52 @@ public class RepositorioCircular {
             if (timePassed>timeToErase) {
                 if (!currentC.isErase()) lastUpdate = Calendar.getInstance();
                 currentC.setErase(true);
+                circularForErase = currentC;
+
 
             } else if (timePassed>timeToObsolete) {
 
-                if (!currentC.isObsolet()) lastUpdate = Calendar.getInstance();
+                if (!currentC.isObsolet()) {
+                    lastUpdate = Calendar.getInstance();
+                    notifyChange();
+                }
                 currentC.setObsolet(true);
 
             } else {
-                if (currentC.isObsolet()) lastUpdate = Calendar.getInstance();
+                if (currentC.isObsolet()) {
+                    lastUpdate = Calendar.getInstance();
+                    notifyChange();
+                }
                 currentC.setObsolet(false);
 
             }
-
-
         }
 
+        if (circularForErase!=null) {
+            circularesList.remove(circularForErase);
+            notifyChange();
+        }
+
+
+    }
+
+    private void eraseLastCircular() {
+
+        Circular lastC = new Circular();
+        lastC.setRecivedTime(Calendar.getInstance());
+        long maxtime = 0;
+        for (Circular currentC : circularesList) {
+            long timeCurrentC = currentC.getRecivedTime().getTimeInMillis();
+            long timePassed = Calendar.getInstance().getTimeInMillis() - timeCurrentC;
+
+            if (timePassed>maxtime) {
+                maxtime = timePassed;
+                lastC = currentC;
+            }
+        }
+
+
+        circularesList.remove(lastC);
 
     }
 
@@ -109,17 +151,26 @@ public class RepositorioCircular {
         return retorno;
     }
 
-    /**
-     * remove todos os marcadores da lista de circulares
-     */
-    public void removeAllCircularMarks() {
-        for (Circular currentC : circularesList) {
-            currentC.setMarcador(null);
+    public void setRepositorioCircularChangeListener(RepositorioCircularChangeListener listener)  {
+        listenersList.add(listener);
+    }
+
+    public void removeRepositorioCircularChangeListener(RepositorioCircularChangeListener listener) {
+        listenersList.remove(listener);
+    }
+
+    public void notifyChange() {
+        for (RepositorioCircularChangeListener listener : listenersList) {
+            listener.onRepositorioCircularChanged();
         }
 
     }
 
 
+    public interface RepositorioCircularChangeListener {
+        public void onRepositorioCircularChanged();
+
+    }
 
 
 

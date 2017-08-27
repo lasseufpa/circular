@@ -1,9 +1,13 @@
 package org.lasseufpa.circular;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,17 +19,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
 
     private int itemSelected = 0;
+    NavigationView nav;
+    ViewPager viewPager;
+    Toolbar toolbar;
+    String[] titles = {"Mapa","Frota Ativa","Informações Ambientais","Configurações"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,9 +48,14 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        navigationView.setCheckedItem(R.id.nav_map);
+        nav = (NavigationView) findViewById(R.id.nav_view);
+        nav.setNavigationItemSelectedListener(this);
+        nav.setCheckedItem(R.id.nav_map);
+
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager.setAdapter(new MainPagerAdapter(this.getSupportFragmentManager(),this));
+        viewPager.addOnPageChangeListener(this);
+
 
         Intent in = new Intent("CIRCULAR_LOCATION");
         in.setPackage(this.getPackageName());
@@ -97,14 +109,17 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         if (id == R.id.nav_map) {
 
+            viewPager.setCurrentItem(0);
+
         }else if (id == R.id.nav_frota) {
 
+            viewPager.setCurrentItem(1);
         } else if (id == R.id.nav_inf) {
-
+            viewPager.setCurrentItem(2);
         } else if (id == R.id.nav_config) {
-
+            viewPager.setCurrentItem(3);
         } else if (id == R.id.nav_feedback) {
-
+            viewPager.setCurrentItem(4);
         } else if (id == R.id.nav_about) {
 
         }
@@ -112,5 +127,44 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        toolbar.setTitle(titles[position]);
+        if (position==1) {
+            toolbar.setElevation(0);
+        } else {
+            toolbar.setElevation(5);
+        }
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        switch (position) {
+            case 0:
+                nav.setCheckedItem(R.id.nav_map);
+                break;
+            case 1:
+                nav.setCheckedItem(R.id.nav_frota);
+                break;
+            case 2:
+                nav.setCheckedItem(R.id.nav_inf);
+                break;
+            case 3:
+                nav.setCheckedItem(R.id.nav_config);
+                break;
+            case 4:
+                nav.setCheckedItem(R.id.nav_feedback);
+                break;
+        }
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }
