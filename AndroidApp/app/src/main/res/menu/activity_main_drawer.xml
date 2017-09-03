@@ -12,9 +12,9 @@
             android:icon="@drawable/ic_informacoes"
             android:title="Frota Ativa" />
         <item
-            android:id="@+id/nav_inf"
-            android:icon="@drawable/ic_ambiente"
-            android:title="Informações Ambientais" />
+            android:id="@+id/nav_stops"
+            android:icon="@drawable/ic_flagd"
+            android:title="Paradas" />
         <item
             android:id="@+id/nav_config"
             android:icon="@drawable/ic_settings"

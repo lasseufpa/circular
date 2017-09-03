@@ -3,14 +3,12 @@ package org.lasseufpa.circular;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import org.lasseufpa.circular.Domain.Circular;
 
 /**
  * A fragment representing a list of Items.
@@ -18,18 +16,30 @@ import org.lasseufpa.circular.Domain.Circular;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class CircularListFragment extends Fragment implements RepositorioCircular.RepositorioCircularChangeListener {
+public class CircularListFragment extends Fragment
+        implements RepositorioCircular.RepositorioCircularChangeListener {
 
 
+    private EmptyCircularListReciclerViewAdapter emptyRecyclerViewAdapter;
+    private CircularListRecyclerViewAdapter recyclerViewAdapter;
     private OnListFragmentInteractionListener mListener;
     private RepositorioCircular repositorio = CircularMapFragment.repositorioCirculares;
     private RecyclerView recyclerView;
+    private FragmentActivity activity;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
     public CircularListFragment() {
+         recyclerViewAdapter = new CircularListRecyclerViewAdapter(repositorio.getCircularList());
+         emptyRecyclerViewAdapter = new EmptyCircularListReciclerViewAdapter();
+    }
+
+
+    public void setOnListFragmentInteractionListener(OnListFragmentInteractionListener listener) {
+        mListener = listener;
+        recyclerViewAdapter.setmListener(mListener);
     }
 
 
@@ -69,7 +79,13 @@ public class CircularListFragment extends Fragment implements RepositorioCircula
 
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-            recyclerView.setAdapter(new MyCircularListRecyclerViewAdapter(repositorio.getCircularList(), mListener));
+            if (repositorio.getCircularList().size()!=0) {
+
+                recyclerView.setAdapter(recyclerViewAdapter);
+            }
+            else {
+                recyclerView.setAdapter(emptyRecyclerViewAdapter);
+            }
         }
         return view;
     }
@@ -78,7 +94,7 @@ public class CircularListFragment extends Fragment implements RepositorioCircula
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
+        activity = (FragmentActivity) context;
     }
 
     @Override
@@ -93,15 +109,22 @@ public class CircularListFragment extends Fragment implements RepositorioCircula
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
+                if (repositorio.getCircularList().size()!=0) {
+                    if (!recyclerView.getAdapter().equals(recyclerViewAdapter))
+                        recyclerView.setAdapter(recyclerViewAdapter);
+                }
+                else {
+                    recyclerView.setAdapter(emptyRecyclerViewAdapter);
+                }
                 recyclerView.getAdapter().notifyDataSetChanged();
-
 
             }
         });
 
 
     }
+
+
 
     /**
      * This interface must be implemented by activities that contain this
@@ -115,6 +138,6 @@ public class CircularListFragment extends Fragment implements RepositorioCircula
      */
     public interface OnListFragmentInteractionListener {
 
-        void onListFragmentInteraction(Circular item);
+        void onListFragmentInteraction(String CircularName);
     }
 }

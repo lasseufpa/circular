@@ -4,13 +4,31 @@ package org.lasseufpa.circular.Domain;
  * Created by alberto on 03/04/2017.
  */
 
-public class StopPoint {
+public class Parada {
 
     private double x;
     private double y;
 
     private String title;
     private String description;
+    private final int nParada;
+    private boolean IsCircularHere;
+
+    public Parada (int nParada) {
+        this.nParada = nParada;
+    }
+
+    public boolean isCircularHere() {
+        return IsCircularHere;
+    }
+
+    public void setCircularHere(boolean circularHere) {
+        IsCircularHere = circularHere;
+    }
+
+    public int getnParada() {
+        return nParada;
+    }
 
     public double getX() {
         return x;

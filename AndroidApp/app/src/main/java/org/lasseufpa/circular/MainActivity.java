@@ -7,7 +7,6 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,15 +16,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
+import org.lasseufpa.circular.Domain.Circular;
+
+public class MainActivity
+        extends
+        AppCompatActivity
+        implements
+        NavigationView.OnNavigationItemSelectedListener,
+        ViewPager.OnPageChangeListener,
+        CircularListFragment.OnListFragmentInteractionListener
+{
 
     private int itemSelected = 0;
     NavigationView nav;
     ViewPager viewPager;
     Toolbar toolbar;
-    String[] titles = {"Mapa","Frota Ativa","Informações Ambientais","Configurações"};
+    String[] titles = {"Mapa","Frota Ativa","Paradas","Configurações"};
+    private MainPagerAdapter mainPagerAdapter;
+
+    public static final RepositorioParadas repositorioParadas = new RepositorioParadas();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +65,8 @@ public class MainActivity extends AppCompatActivity
         nav.setCheckedItem(R.id.nav_map);
 
         viewPager = (ViewPager) findViewById(R.id.pager);
-        viewPager.setAdapter(new MainPagerAdapter(this.getSupportFragmentManager(),this));
+        mainPagerAdapter = new MainPagerAdapter(this.getSupportFragmentManager(),this);
+        viewPager.setAdapter(mainPagerAdapter);
         viewPager.addOnPageChangeListener(this);
 
 
@@ -83,7 +96,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        //getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
@@ -114,7 +127,7 @@ public class MainActivity extends AppCompatActivity
         }else if (id == R.id.nav_frota) {
 
             viewPager.setCurrentItem(1);
-        } else if (id == R.id.nav_inf) {
+        } else if (id == R.id.nav_stops) {
             viewPager.setCurrentItem(2);
         } else if (id == R.id.nav_config) {
             viewPager.setCurrentItem(3);
@@ -151,7 +164,7 @@ public class MainActivity extends AppCompatActivity
                 nav.setCheckedItem(R.id.nav_frota);
                 break;
             case 2:
-                nav.setCheckedItem(R.id.nav_inf);
+                nav.setCheckedItem(R.id.nav_stops);
                 break;
             case 3:
                 nav.setCheckedItem(R.id.nav_config);
@@ -163,8 +176,18 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    void CircularObjectInFocus(String CircularName) {
+        viewPager.setCurrentItem(0);
+    }
+
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+
+    @Override
+    public void onListFragmentInteraction(String CircularName) {
+        CircularObjectInFocus(CircularName);
     }
 }

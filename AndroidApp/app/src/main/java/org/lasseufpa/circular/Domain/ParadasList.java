@@ -4,7 +4,7 @@ package org.lasseufpa.circular.Domain;
  * Created by alberto on 02/04/2017.
  */
 
-public abstract class StopPoints {
+public abstract class ParadasList {
 
 
     public static final int N_STOP_POINTS = 28;
