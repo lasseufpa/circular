@@ -42,6 +42,8 @@ var menorDistanciaIndexB=0;
 var distancesA = [];
 var distancesB = [];
 
+var visualizacaoOpcoes="mostrar";
+
 var idMenu = new Array(
 [ "menu-1","desce"],  
 [ "menu-2","desce" ],
@@ -56,7 +58,6 @@ mudarEstado('imgMap2');
 mudarEstado('circle1');
 mudarEstado('circle2');
 mudarEstado('mode-selector');
-
 
 
 var menuManager ="desce";
@@ -78,17 +79,15 @@ function closeMenu(){
 function openMenu(){
 	for(var a=1; a<5;a++){
 		// Standard syntax
-    document.getElementById(idMenu[a][0]).style.transform = "translateY(110px)"; 
+    document.getElementById(idMenu[a][0]).style.transform = "translateY(130px)"; 
 	
 	// Code for Safari
-    document.getElementById(idMenu[a][0]).style.WebkitTransform = "translateY(110px)"; 
+    document.getElementById(idMenu[a][0]).style.WebkitTransform = "translateY(130px)"; 
    
 	// Code for IE9
-    document.getElementById(idMenu[a][0]).style.msTransform = "translateY(110px)"; 
+    document.getElementById(idMenu[a][0]).style.msTransform = "translateY(130px)"; 
 	}
 }
-
-
 
 function moveElement(){
 	mudarVisualizacao();
@@ -110,32 +109,40 @@ function atualizaMarkes(){
 			markers[menorDistanciaIndexA].setMap(null); 
 			markers[menorDistanciaIndexB].setMap(null);
 		}
-		document.getElementById("circle1").style.backgroundColor = "#4285F4";
-		}else{
-			valor="mostrar";
-			clearMarkers();
-			document.getElementById("circle1").style.backgroundColor = "#FF8F1C";
-		}
+	document.getElementById("circle1").style.backgroundColor = "#4285F4";
+	}else{
+		valor="mostrar";
+		clearMarkers();
+		document.getElementById("circle1").style.backgroundColor = "#FF8F1C";
+	}
 }
 
-var visualizacaoOpcoes="mostrar"
 //funcao usada para alternar a visualizacao dos icones
 function mudarVisualizacao() {
+	mudarEstado('img');
+	mudarEstado('imgMap2');
+	mudarEstado('circle1');
+	mudarEstado('circle2');
 
-console.log("aa");
-mudarEstado('img');
-mudarEstado('imgMap2');
-mudarEstado('circle1');
-mudarEstado('circle2');
+	Cmap="com rota";
+	removeIconsBus();
+	removeIconsUser();
+	directionsDisplay.setMap(null);
+
+	document.getElementById("changemode-walking").checked = false;
+	document.getElementById("changemode-transit").checked = false;
+	document.getElementById("changemode-driving").checked = false;
+	document.getElementById("circle2").style.backgroundColor = "#4285F4";
+	document.getElementById('mode-selector').style.display = 'none';
 }
 
 //funcao usada para ocultar ou mostrar alguma DIV na tela
 function mudarEstado(el) {
-        var display = document.getElementById(el).style.display;
-        if(display == "none")
-            document.getElementById(el).style.display = 'block';
-        else
-            document.getElementById(el).style.display = 'none';
+	var display = document.getElementById(el).style.display;
+	if(display == "none")
+		document.getElementById(el).style.display = 'block';
+	else
+		document.getElementById(el).style.display = 'none';
 }
 	
 //mostra no mapa a rota para quem vai andando
@@ -319,7 +326,7 @@ function CalculaDistancia(i) {
 	if(distA < menorDistanciaA){
 		menorDistanciaA=distA;
 		
-}
+	}
 	
 	//calcula a menor distancia para o End
 	var distB = google.maps.geometry.spherical.computeDistanceBetween(p2, p3);

@@ -1,0 +1,85 @@
+/******** CIRULO AZUL 1 *******/
+#circle1 {   
+	position:absolute;
+	width: 50px;  
+	height: 50px;
+	top: 44.5%;
+	left: 50px;   
+	background: #4285F4;   
+	transition: all .1s linear;
+	-moz-border-radius: 70px;   
+	-webkit-border-radius: 70px;   
+	border-radius: 70px;
+	border: 1px solid #6b6868;	
+	z-index:3;
+	-moz-box-shadow: 3px 3px 2px #000000;
+	-webkit-box-shadow: 3px 3px 2px #000000;
+	box-shadow: 3px 3px 2px #000000;
+} 
+
+/******** CIRULO AZUL 2 *******/
+#circle2 {   
+	position:absolute;
+	width: 50px;  
+	height: 50px;
+	top: 44.5%;
+	left: 150px;   
+	background: #4285F4;  
+	transition: all .1s linear;	
+	-moz-border-radius: 70px;   
+	-webkit-border-radius: 70px;   
+	border-radius: 70px;  
+	border: 1px solid #6b6868;
+	z-index:3;
+	-moz-box-shadow: 3px 3px 2px #000000;
+	-webkit-box-shadow: 3px 3px 2px #000000;
+	box-shadow: 3px 3px 2px #000000;
+}
+
+/******** IMAGEM(CIRULO AZUL 1) *******/
+#img{
+	padding: 7px;
+	z-index: 4;
+	transition: all .1s linear;
+}
+
+/******** IMAGEM(CIRULO AZUL 2) *******/
+#imgMap2{
+	padding: 7px;
+	z-index: 4;
+	transition: all .1s linear;
+}
+
+/******** OPCAO DE ROTAS *******/
+	
+#mode-selector {
+	display:none;
+	position:absolute;
+	top: 350px;
+	left: -5px;
+	color: #fff;
+	background-color: #4285F4;
+	transition: all .1s linear;
+	margin-left: 12px;
+	padding: 5px 11px 0px 11px;
+	z-index:4;
+}
+.controls {
+	top: 10px;
+	border: 1px solid transparent;
+	border-radius: 2px 0 0 2px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	height: 32px;
+	outline: none;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  }
+
+#mode-selector label {
+	font-family: Roboto;
+	font-size: 13px;
+	font-weight: 300;
+	}
+
+
+
