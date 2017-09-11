@@ -57,8 +57,6 @@ mudarEstado('img');
 mudarEstado('imgMap2');
 mudarEstado('circle1');
 mudarEstado('circle2');
-mudarEstado('mode-selector');
-
 
 var menuManager ="desce";
 var menuIndex=0;

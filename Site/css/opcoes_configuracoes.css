@@ -1,10 +1,11 @@
 /******** CIRULO AZUL 1 *******/
 #circle1 {   
+	display:none;
 	position:absolute;
 	width: 50px;  
 	height: 50px;
-	top: 44.5%;
-	left: 50px;   
+	top: 35%;
+	left: 3%;   
 	background: #4285F4;   
 	transition: all .1s linear;
 	-moz-border-radius: 70px;   
@@ -19,11 +20,12 @@
 
 /******** CIRULO AZUL 2 *******/
 #circle2 {   
+	display:none;
 	position:absolute;
 	width: 50px;  
 	height: 50px;
-	top: 44.5%;
-	left: 150px;   
+	top: 35%;
+	left: 10%;   
 	background: #4285F4;  
 	transition: all .1s linear;	
 	-moz-border-radius: 70px;   
@@ -38,6 +40,7 @@
 
 /******** IMAGEM(CIRULO AZUL 1) *******/
 #img{
+	display:none;
 	padding: 7px;
 	z-index: 4;
 	transition: all .1s linear;
@@ -45,6 +48,7 @@
 
 /******** IMAGEM(CIRULO AZUL 2) *******/
 #imgMap2{
+	display:none;	
 	padding: 7px;
 	z-index: 4;
 	transition: all .1s linear;
@@ -53,6 +57,7 @@
 /******** OPCAO DE ROTAS *******/
 	
 #mode-selector {
+	display:none;
 	display:none;
 	position:absolute;
 	top: 350px;
