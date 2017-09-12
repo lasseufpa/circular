@@ -4,7 +4,7 @@
 			return res[ident];
 	  }
 
-	   var client = mqtt.connect('ws://test.mosca.io:80')
+	   var client = mqtt.connect('ws://iot.eclipse.org:80/ws')
         client.on('connect', function(){
             console.log('client connected')
             client.subscribe('ufpa/circular/loc/+');
