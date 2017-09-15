@@ -7,11 +7,11 @@
 	   var client = mqtt.connect('ws://iot.eclipse.org:80/ws')
         client.on('connect', function(){
             console.log('client connected')
-            client.subscribe('ufpa/circular/loc/+');
+            client.subscribe('/ufpa/circular/loc/+');
             client.on('message', function(topic, payload) {
 							var circular = topic.split('/')
 							var mess = payload.toString()
-							CircularText = "Circular"+circular[3]; //Nome do circular + circular[3] que é o numero do circular
+							CircularText = "Circular"+circular[4]; //Nome do circular + circular[3] que é o numero do circular
 							CircularTimer = getVar(mess, 2) // Hora e Data
 			  			CircularLat = getVar(mess, 3) //Latitude
 							CircularLng = getVar(mess, 4) //Longitude
