@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 /**
  * A fragment representing a list of Items.
  * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
+ * Activities containing this fragment MUST implement the {@link OnCircularListFragmentInteractionListener}
  * interface.
  */
 public class CircularListFragment extends Fragment
@@ -22,7 +22,7 @@ public class CircularListFragment extends Fragment
 
     private EmptyCircularListReciclerViewAdapter emptyRecyclerViewAdapter;
     private CircularListRecyclerViewAdapter recyclerViewAdapter;
-    private OnListFragmentInteractionListener mListener;
+    private OnCircularListFragmentInteractionListener mListener;
     private RepositorioCircular repositorio = CircularMapFragment.repositorioCirculares;
     private RecyclerView recyclerView;
     private FragmentActivity activity;
@@ -37,7 +37,7 @@ public class CircularListFragment extends Fragment
     }
 
 
-    public void setOnListFragmentInteractionListener(OnListFragmentInteractionListener listener) {
+    public void setOnListFragmentInteractionListener(OnCircularListFragmentInteractionListener listener) {
         mListener = listener;
         recyclerViewAdapter.setmListener(mListener);
     }
@@ -136,7 +136,7 @@ public class CircularListFragment extends Fragment
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnListFragmentInteractionListener {
+    public interface OnCircularListFragmentInteractionListener {
 
         void onListFragmentInteraction(String CircularName);
     }

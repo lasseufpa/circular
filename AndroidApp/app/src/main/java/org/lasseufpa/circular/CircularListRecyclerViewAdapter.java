@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.lasseufpa.circular.CircularListFragment.OnListFragmentInteractionListener;
+import org.lasseufpa.circular.CircularListFragment.OnCircularListFragmentInteractionListener;
 import org.lasseufpa.circular.Domain.Circular;
 import java.util.ArrayList;
 
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class CircularListRecyclerViewAdapter extends RecyclerView.Adapter<CircularListRecyclerViewAdapter.ViewHolder> {
 
     private final ArrayList<Circular> circularList;
-    private OnListFragmentInteractionListener mListener;
+    private OnCircularListFragmentInteractionListener mListener;
 
     public CircularListRecyclerViewAdapter(ArrayList<Circular> circulares) {
         circularList = circulares;
@@ -24,7 +24,7 @@ public class CircularListRecyclerViewAdapter extends RecyclerView.Adapter<Circul
 
     }
 
-    public void setmListener(OnListFragmentInteractionListener listener) {
+    public void setmListener(OnCircularListFragmentInteractionListener listener) {
         mListener = listener;
     }
 
@@ -60,11 +60,11 @@ public class CircularListRecyclerViewAdapter extends RecyclerView.Adapter<Circul
         public final TextView mContentView;
         public final ImageView mImageView;
         public final CardView mCardView;
-        public final OnListFragmentInteractionListener mListener;
+        public final OnCircularListFragmentInteractionListener mListener;
         public Circular mItem;
         public String mCircularName;
 
-        public ViewHolder(View view, OnListFragmentInteractionListener listener ) {
+        public ViewHolder(View view, OnCircularListFragmentInteractionListener listener ) {
             super(view);
             mView = view;
             mListener = listener;

@@ -1,6 +1,8 @@
 package org.lasseufpa.circular;
 
 import android.os.AsyncTask;
+import android.os.Build;
+import android.util.Log;
 
 import org.lasseufpa.circular.Domain.Parada;
 import org.lasseufpa.circular.Domain.ParadasList;
@@ -21,6 +23,7 @@ public class RepositorioParadas {
 
         paradas = new ArrayList<>();
         listeners = new ArrayList<>();
+        seupParadasList();
     }
 
     public void salvaParada(Parada p) {
@@ -50,7 +53,10 @@ public class RepositorioParadas {
 
 
     public void seupParadasList() {
+
         new SetupParadasListTask().execute();
+
+
     }
 
     public void setOnRepositorioParadasChangeListener(OnRepositorioParadasChangeListener listener) {
@@ -90,6 +96,7 @@ public class RepositorioParadas {
                 currentP.setY(ParadasList.POINTS[i][1]);
                 currentP.setCircularHere(false);
                 paradas.add(i,currentP);
+                Log.i("log","adicionado" + currentP.getDescription());
             }
             return null;
         }

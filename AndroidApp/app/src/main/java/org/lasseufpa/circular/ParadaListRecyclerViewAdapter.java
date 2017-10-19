@@ -23,6 +23,10 @@ public class ParadaListRecyclerViewAdapter extends RecyclerView.Adapter<ParadaLi
     private ArrayList<Parada> paradas;
 
 
+    public ParadaListRecyclerViewAdapter(ArrayList<Parada> paradas) {
+        this.paradas = paradas;
+    }
+
     @Override
     public ParadaListRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
