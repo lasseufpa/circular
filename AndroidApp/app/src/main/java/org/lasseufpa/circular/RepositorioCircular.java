@@ -1,5 +1,7 @@
 package org.lasseufpa.circular;
 
+import android.util.Log;
+
 import org.lasseufpa.circular.Domain.Circular;
 
 import java.util.ArrayList;
@@ -34,6 +36,9 @@ public class RepositorioCircular {
     //salva um circular
     public void saveCircular(Circular circ) {
 
+        Log.i("depura"," circular " + circ.getNome() +  "adicionado");
+
+
         lastUpdate = Calendar.getInstance(); //registra o tempo de atualização
         circ.setRecivedTime(Calendar.getInstance()); //salva o instante de captura da localização
 
@@ -42,6 +47,7 @@ public class RepositorioCircular {
             if (currentC.getNome().equals(circ.getNome())) {
                 currentC.setPosition(circ.getPosition());
                 currentC.setRecivedTime(circ.getRecivedTime());
+                notifyChange();
                 return;
             }
         //se não encontrar nenhum verifica se já está no limite
@@ -160,8 +166,11 @@ public class RepositorioCircular {
     }
 
     public void notifyChange() {
+
+
         for (RepositorioCircularChangeListener listener : listenersList) {
             listener.onRepositorioCircularChanged();
+            Log.i("depura"," notifiquei um listener");
         }
 
     }

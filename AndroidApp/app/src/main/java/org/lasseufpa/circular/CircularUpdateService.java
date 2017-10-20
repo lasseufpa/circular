@@ -11,6 +11,7 @@ import android.os.IBinder;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -46,7 +47,7 @@ public class CircularUpdateService extends Service implements Runnable,MqttCallb
     //tempo de atualização em milisegundos
     private final int timeUpdate = 500;
 
-    PendingIntent p;
+    //PendingIntent p;
 
 
     /**
@@ -58,12 +59,17 @@ public class CircularUpdateService extends Service implements Runnable,MqttCallb
 
         mqttconnect = new MQTTconect(getApplicationContext(),this);
         ciruclarBuilder = new CircularBuilderGSM();
-        p = PendingIntent.getActivity(getApplicationContext(),0,new Intent(getApplicationContext(),MainActivity.class),0);
+        //p = PendingIntent.getActivity(getApplicationContext(),0,new Intent(getApplicationContext(),MainActivity.class),0);
 
 
     }
 
-
+    @Override
+    public boolean stopService(Intent name) {
+        Log.i("CicularService","StopServiceChamado");
+        stop();
+        return super.stopService(name);
+    }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -117,6 +123,10 @@ public class CircularUpdateService extends Service implements Runnable,MqttCallb
                 serviceOn = false;
             }
         }
+
+        NotificationManager mNotificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.cancel(1);
     }
 
     private boolean isUpdated() {
@@ -158,6 +168,7 @@ public class CircularUpdateService extends Service implements Runnable,MqttCallb
 
     @Override
     public void onDestroy() {
+        stop();
         NotificationManager mNotificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.cancel(1);

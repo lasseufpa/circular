@@ -30,7 +30,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
                 ((CircularListFragment) fragment).setOnListFragmentInteractionListener((CircularListFragment.OnCircularListFragmentInteractionListener) context);
                 break;
             case 2:
-                fragment = Fragment.instantiate(context, FeedbackFragment.class.getName());
+                fragment = Fragment.instantiate(context, ParadaListFragment.class.getName());
                 break;
             case 3:
                 fragment = Fragment.instantiate(context, FeedbackFragment.class.getName());

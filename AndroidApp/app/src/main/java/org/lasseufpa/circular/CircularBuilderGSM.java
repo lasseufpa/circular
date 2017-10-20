@@ -34,7 +34,7 @@ public class CircularBuilderGSM {
 
         if (isValidMessage(Messages[0])) {
 
-            String nome = nomeCircular;
+            String nome = "Circular " + nomeCircular;
             LatLng local = getLoc(Data);
 
             Log.i("localização",Messages[0]+Data[3]+Data[4]);

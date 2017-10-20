@@ -71,7 +71,7 @@ public class ParadaListFragment extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_paradaslist,container,false);
+        View v = inflater.inflate(R.layout.fragment_paradaslist_list,container,false);
 
         if (v instanceof RecyclerView) {
             Context context = v.getContext();

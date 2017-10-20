@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CompoundButton;
 
 public class MainActivity
         extends
@@ -23,7 +26,8 @@ public class MainActivity
         implements
         NavigationView.OnNavigationItemSelectedListener,
         ViewPager.OnPageChangeListener,
-        CircularListFragment.OnCircularListFragmentInteractionListener
+        CircularListFragment.OnCircularListFragmentInteractionListener,
+        CompoundButton.OnCheckedChangeListener
 {
 
     private int itemSelected = 0;
@@ -63,6 +67,10 @@ public class MainActivity
         nav.setNavigationItemSelectedListener(this);
         nav.setCheckedItem(R.id.nav_map);
 
+        MenuItem switchItem = nav.getMenu().findItem(R.id.nav_switch);
+        CompoundButton switchView = (CompoundButton) MenuItemCompat.getActionView(switchItem);
+        switchView.setOnCheckedChangeListener(this);
+
         viewPager = (ViewPager) findViewById(R.id.pager);
         mainPagerAdapter = new MainPagerAdapter(this.getSupportFragmentManager(),this);
         viewPager.setAdapter(mainPagerAdapter);
@@ -70,17 +78,25 @@ public class MainActivity
 
 
 
+
+    }
+
+    public void startCircularService () {
         Intent in = new Intent("CIRCULAR_LOCATION");
         in.setPackage(this.getPackageName());
         startService(in);
     }
 
+    public void stopCircularService() {
+        Intent in = new Intent(MainActivity.this,CircularUpdateService.class);
+        in.setPackage(this.getPackageName());
+        stopService(in);
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Intent in = new Intent("CIRCULAR_LOCATION");
-        in.setPackage(this.getPackageName());
-        stopService(in);
+        stopCircularService();
     }
 
     @Override
@@ -189,5 +205,16 @@ public class MainActivity
     @Override
     public void onListFragmentInteraction(String CircularName) {
         CircularObjectInFocus(CircularName);
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        if (b) {
+            startCircularService();
+            Log.i("UpdateCircularService","Servico inicial");
+        } else {
+            stopCircularService();
+            Log.i("UpdateCircularService","Servico parado");
+        }
     }
 }

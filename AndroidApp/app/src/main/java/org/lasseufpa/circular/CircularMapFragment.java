@@ -83,6 +83,9 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback,
     public void onResume() {
         super.onResume();
         map.onResume();
+
+        Log.i("circularMapFragment","Onresume chamado");
+
     }
 
     @Override
@@ -93,7 +96,12 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback,
 
     @Override
     public void onPause() {
+
         super.onPause();
+        map.onPause();
+        Log.i("circularMapFragment","Onspause chamado");
+
+        //salav estado do mapa
     }
 
     @Override
@@ -110,15 +118,20 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback,
 
         // obtém o SupportMapFragment e recebe uma notificação caso o mapa esteja pronto paras ser utilizado
         map = (MapView) view.findViewById(R.id.map);
-
         map.onCreate(savedInstanceState);
+
+
         map.onResume();
+
+
         map.getMapAsync(this);
 
+        Log.i("circularMapFragment","OncreateView chamado");
 
 
         return view;
     }
+
 
 
     @Override
@@ -126,6 +139,8 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback,
         super.onStop();
         repositorioCirculares.removeRepositorioCircularChangeListener(this);
         map.onStop();
+        circularesMarkers.clear();
+        Log.i("circularMapFragment","Onstop chamado");
     }
 
 
@@ -143,6 +158,11 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback,
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 1000, null);
 
 
+        //salvar estado do mapa
+
+        //atualiza posição dos circulares no mapa
+        updateCircularPosition();
+        Log.i("circularMapFragment","OnmapReady chamado");
     }
 
     @Override
@@ -161,7 +181,58 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback,
      * Atualiza os pontos do circular no mapa
      *
      */
+
     private void updateCircularPosition(){
+        Log.i("circularMapFragment","UpdateCircularPosition chamado");
+
+        ArrayList<Marker> ToRemoveList = new ArrayList<>();
+        boolean found = false;
+
+        //atualizando marcadores existentes
+        for (Marker m : circularesMarkers) {
+
+            for (Circular currentC : circulares) {
+
+                if (m.getTitle().equals(currentC.getNome())) {
+                    m.setPosition(currentC.getPosition());
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                m.remove();
+            } else {
+                found = false;
+            }
+        }
+
+        //adicionando novos
+        for (Circular currentC : circulares) {
+
+            for (Marker m : circularesMarkers) {
+
+                if (m.getTitle().equals(currentC.getNome())) {
+                    found = true;
+                    break;
+                }
+
+            }
+
+            if (!found) {
+                addCircular(currentC);
+            } else {
+                found = false;
+            }
+
+        }
+
+    }
+
+    /* old
+    private void updateCircularPosition(){
+
+        Log.i("circularMapFragment","UpdateCircularPosition chamado");
 
         for (Marker m : circularesMarkers) {
             m.remove();
@@ -171,7 +242,7 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback,
         for (Circular currentC : circulares) {
             addCircular(currentC);
         }
-    }
+    } */
 
 
     //redimenciona os icones do mapa para tamanhos personalizados
@@ -184,6 +255,7 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback,
 
     private void addCircular(Circular C) {
 
+        Log.i("circularMapFragment","addCircular chamado");
             //se o circular não tem marcador - cria um marcador
             Marker circular = mMap.addMarker(new MarkerOptions()
                     .position(C.getPosition())
@@ -221,6 +293,7 @@ public class CircularMapFragment extends Fragment implements OnMapReadyCallback,
 
     @Override
     public void onRepositorioCircularChanged() {
+        Log.i("circularMapFragment","OrepositorioCircularChanged chamado");
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
