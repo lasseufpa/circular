@@ -1,4 +1,6 @@
-# Circular UFPA (SmartBus)
+# Localização do Circular UFPA (SmartBus)
+
+<img src="https://raw.githubusercontent.com/albertklik/circular/431fff080698cad886565cd0fc45d29c02cd0d63/AndroidApp/app/src/main/res/drawable/iconcirc.png" >
 
 Mais da metade da população mundial está concentrada em centros urbanos e o número de pessoas morando em cidades tende a crescer rapidamente nos próximos anos. Com o acelerado crescimento das cidades, muitos problemas surgem e com eles a necessidade de fazer planejamentos cada vez mais inteligentes para os centros urbanos.
 
