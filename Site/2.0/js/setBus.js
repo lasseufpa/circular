@@ -2,80 +2,97 @@
 var imageBus = 'img/newPinCirc.png';
 
 //variaveis do circular
-var NameBus = [];
-var positionBus = [];
-var markerBus = [];
+
 var CircularText;
 var CircularLat;
 var CircularLng;
 
+var circularMarkers = [];
+
+
 function setBus() {
-    var enableBus = document.getElementById("checkbox-enable-bus");
 
-    if (enableBus.checked ==true) { // verifica o checkbox
-        var cont = 0; //contador para saber se foi inserido uma NOVA POSICAO em algum onibus
-        for (var i = 0; i < NameBus.length; i++) {
-            if (NameBus[i] == CircularText) { //usa o nome pra saber se o onibus ja esta no aray
-                markerBus[i].setMap(null);
-                positionBus[i] = new google.maps.LatLng(CircularLat, CircularLng); //se ja existir, apenas atualiza a posicao
-                cont++;
+    var marker = getMarker();
+
+    if (circularMarkers.length != 0) {
+        circularMarkers.forEach(function (bus) {
+
+            if (bus.getTitle() == marker.getTitle()) {
+                // console.log("BUS FOUND");
+                moveBus(bus, marker);
             }
-        }
-        if (cont == 0) { //se nao houve mudanca
-            positionBus.push(new google.maps.LatLng(CircularLat, CircularLng)); //insere a nova localizacao no array
-            NameBus.push(CircularText); //insere o novo nomme no array
-        }
-        if (markerBus.length == 0) {
-            addBus(positionBus[0], 0)
-        } else {
-            clearMarkersBus();
-            showMarkersBus();
-            for (var i = 0; i < positionBus.length; i++) {
-                addBus(positionBus[i], i);
-            }
-        }
+
+        });
     } else {
-        clearMarkersBus();
-
+        // console.log("ADD BUS");
+        marker.setMap(map);
+        circularMarkers.push(marker);
     }
 
 }
 
-
-//funcao que insere no array os onibus
-function addBus(location, index) {
+function getMarker() {
     var infowindowBus = new google.maps.InfoWindow({
-        content: NameBus[index]
+        content: CircularText
     });
     var marker = new google.maps.Marker({
-        position: location,
+        position: new google.maps.LatLng(CircularLat, CircularLng), //define a posicao do marcador
         icon: imageBus, // define a imagem do marcador
-        map: map
+        map: null
     });
     marker.addListener('click', function () {
-        infowindowBus.open(map, marker);
+        infowindowBus.open(marker);
     });
-    markerBus.push(marker);
+
+    return marker;
 }
 
-// Seta no mapa os onibus do array
-function setMapBus(map) {
-    for (var i = 0; i < markerBus.length; i++) {
-        markerBus[i].setMap(map);
+function moveBus(markerStart, markerEnd) {
+    var request = {
+        origin: markerStart.getPosition(),
+        destination: markerEnd.getPosition(),
+        travelMode: google.maps.TravelMode.DRIVING
+    };
+
+    var directionsService = new google.maps.DirectionsService();
+    directionsService.route(request, function (response, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+            response.routes.forEach(function (rout) {
+                var path = (rout.overview_path);
+
+                path.forEach(function (position, p2, p3) {
+                    console.log("position -> " + position)
+                    markerStart.setPosition(position);
+                    sleep(50);
+                })
+            });
+        } else {
+            markerStart.setPosition(markerStart.getPosition());
+        }
+    });
+
+}
+
+function sleep(miliseconds) {
+    var currentTime = new Date().getTime();
+
+    while (currentTime + miliseconds >= new Date().getTime()) {
+        console.log("TIMER");
     }
 }
 
 //funcao que � chamada para apagar os onibus
 function clearMarkersBus() {
-    for (var i = 0; i < markerBus.length; i++) {
-        markerBus[i].setMap(null);
-    }
+    circularMarkers.forEach(function (bus) {
+        bus.setMap(null);
+    });
 
 }
 
 //funcao que e chamada para adcionar os onibus
 function showMarkersBus() {
-    for (var i = 0; i < positionBus.length; i++) {
-        addBus(positionBus[i]);
-    }
+    circularMarkers.forEach(function (bus) {
+        bus.setMap(map);
+    });
 }
+
