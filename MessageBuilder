@@ -1,7 +1,0 @@
-class MessageBuilder{
-    String Build(int circular, double x, double y){
-        String loc;
-        loc = String.format("#Ncircular%d*#X%f*#Y%f*", circular, x, y );
-        return (loc);
-    }
-}
