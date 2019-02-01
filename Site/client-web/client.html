@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Insert Bus</title>
+  <script type="text/javascript" src="browserMqtt.js"></script>
+</head>
+
+<body>
+  <h1>Open Console</h1>
+  <script>
+	var client = mqtt.connect('ws://iot.eclipse.org:80/ws')
+        client.on('connect', function(){
+            console.log('client connected')
+            client.subscribe('/ufpa/circular/loc/+');
+            client.on('message', function(topic, payload) {
+							var mess = payload.toString()
+							console.log(mess)
+						});
+        });
+  </script>
+</body>
+
+</html>
