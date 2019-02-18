@@ -25,6 +25,15 @@
 #define TINY_GSM_MODEM_SIM808
 #include <TinyGsmClient.h> //Library for GPRS(GSM) connection
 #include <PubSubClient.h> //Library for MQTT protocol
+//#define broker "iot.eclipse.org"
+
+#define D9 5                // Pino que possui funções de gerenciamento de energia (sair do sleep)
+#define ledNetwork 2
+#define ledInternet 3
+#define ledMqtt 4
+#define RX_pin 10
+#define TX_pin 11
+
 
 //Variables to storage the GNSS data
 String data;
@@ -33,16 +42,16 @@ char data2[70];
 
 // Your GPRS credentials
 // Leave empty, if missing user or pass
-const char apn[]  = "claro.com.br";
-const char user[] = "claro";
-const char pass[] = "claro";
+const char apn[]  = "timbrasil.br";
+const char user[] = "tim";
+const char pass[] = "tim";
 
 // Use Hardware Serial on Mega, Leonardo, Micro
 //#define Serial1 SerialAT
 
 // or Software Serial on Uno, Nano
 #include <SoftwareSerial.h>
-SoftwareSerial SerialAT(10, 11); // RX, TX
+SoftwareSerial SerialAT(RX_pin, TX_pin); // RX, TX
 
 TinyGsm modem(SerialAT);
 TinyGsmClient client(modem);
@@ -60,55 +69,54 @@ const char* topicInit = "GsmClientTest/init"; // topic to send the alive menssag
 // /ufpa/circular/loc/XX(number of the bus)
 const char* topicLocation = "/ufpa/circular/loc/01";  // MQTT topic to publish the current GNSS data
 
+//Control variables
+boolean flagNetwork = 0;
+boolean flagInternet = 0;
+boolean flagMqtt = 0;
 
 //Timing variables
 unsigned long t = 0;
 unsigned long lastReconnectAttempt = 0;
 unsigned long lastGNSS = 0;
-unsigned long lastSensor = 0;
 
 //Functions intervals
 unsigned int intervalReconnect = 10000;     //10 seconds
 unsigned int intervalGNSS = 2000;           //2 seconds (send GNSS data every 2 seconds)
-unsigned int intervalSensor = 60000;        //1 minute (send sensor data every minute)
 
+void modemRestart();
+void connectNetwork();
+void connectInternet();
+boolean mqttConnect();
+void checkConnection();
+void GNSSRequest();
+void getStatus();
+void mqttCallback(char* topic, byte* payload, unsigned int len);
 
 void setup()
 {
-  pinMode(30,OUTPUT);
-  digitalWrite(30,HIGH);
+  pinMode(D9,OUTPUT);
+  pinMode(ledNetwork, OUTPUT);
+  pinMode(ledInternet, OUTPUT);
+  pinMode(ledMqtt, OUTPUT);
+
+  digitalWrite(D9,HIGH);            //deve ser mantido no HIGH
+  digitalWrite(ledNetwork, LOW);
+  digitalWrite(ledInternet, LOW);
+  digitalWrite(ledMqtt, LOW);
+  
   
   // Set console baud rate
-  Serial.begin(115200);
+  Serial.begin(38400);
   delay(10);
 
   // Set GSM module baud rate
-  SerialAT.begin(115200);
+  SerialAT.begin(38400);
   delay(10);
-  
-  Serial.print("Initializing modem...");
-  modem.restart();
-  Serial.println("OK");
 
-  // Unlock your SIM card with a PIN
-  //modem.simUnlock("1234");
-
-  Serial.print("Waiting for network...");
-  if (!modem.waitForNetwork())
-  {
-    Serial.println(" fail");
-    while (true);
-  }
-  Serial.println(" OK");
-
-  Serial.print("Connecting to ");
-  Serial.print(apn);
-  if (!modem.gprsConnect(apn, user, pass))
-  {
-    Serial.println(" fail");
-    while (true);
-  }
-  Serial.println(" OK");
+  // Init Connections
+  modemRestart();
+  connectNetwork();
+  connectInternet();
 
   // MQTT Broker setup
   mqtt.setServer(broker, broker_port);
@@ -117,56 +125,80 @@ void setup()
   Serial.println("calback");
 }
 
-boolean mqttConnect()
-{
-  Serial.print("Connecting to ");
-  Serial.print(broker);
-  if (!mqtt.connect(client_id, mqtt_user, mqtt_pass))
-  {
-    Serial.println(" fail");
-    return false;
-  }
-  Serial.println(" OK");
-  mqtt.publish(topicInit, "GsmClientTest started");
-
-  //Turn GNSS on
-  SerialAT.write("AT+CGPSPWR=1\r\n");
-
-  return mqtt.connected();
-}
-
 void loop()
 {
+  // Check Connections
+  checkConnection();                   //Futuramente fazer uma interrupção ou usar o millis()
 
-  if (mqtt.connected())
+  // if Network is desconnected, then..
+  if(!flagNetwork)
   {
-    mqtt.loop();
-    GNSSRequest();
-
+    getStatus();       //Print status
+    //modemRestart();
+    connectNetwork(); //Connect to Network
   }
+
+  // if Ineternet is desconnected, then..
+  if(!flagInternet)
+  {
+    getStatus();       //Print status
+    connectInternet();//Connect to Internet
+  }
+
+  //if MQTT is connected
+  if (flagMqtt) // then...
+  {
+    mqtt.loop();    //
+    GNSSRequest();  //Send location
+  }
+  // else
   else
   {
-  	if(modem.isGprsConnected())
-    {
-     // Reconnect every 10 seconds
+     // Try to reconnect every 10 seconds
       t = millis();
       if (t - lastReconnectAttempt > intervalReconnect)
       {
+       getStatus();       //Print status
        lastReconnectAttempt = t;
        if (mqttConnect()) {
           lastReconnectAttempt = 0;
         }
-      }
-    }
-    else
-    {
-     if (!modem.gprsConnect(apn, user, pass))
-     {
-       Serial.println("REINICIAR MCU!");
-       while (true);
      }
-    }
-  } 
+   } 
+}
+
+void modemRestart()
+{
+  Serial.print("Initializing modem...");
+  modem.restart();
+  Serial.println("OK");
+}
+
+void connectNetwork()
+{
+  Serial.print("Waiting for network...");
+  if (!modem.waitForNetwork())
+  {
+    Serial.println(" fail");
+    while (true);
+  }
+  Serial.println(" OK");
+  flagNetwork = 1;
+  digitalWrite(ledNetwork, HIGH);
+}
+
+void connectInternet()
+{
+  Serial.print("Connecting to ");
+  Serial.print(apn);
+  if (!modem.gprsConnect(apn, user, pass))
+  {
+    Serial.println(" fail");
+    while (true);
+  }
+  Serial.println(" OK");
+  flagInternet = 1;
+  digitalWrite(ledInternet, HIGH);
 }
 
 //Function that gets and and publish on the MQTT network the GNSS data
@@ -190,9 +222,91 @@ void GNSSRequest()
   }
 }
 
+boolean mqttConnect()
+{
+  Serial.print("Connecting to ");
+  Serial.print(broker);
+  if (!mqtt.connect(client_id, mqtt_user, mqtt_pass))
+  {
+    Serial.println(" fail");
+    return false;
+  }
+  Serial.println(" OK");
+  mqtt.publish(topicInit, "GsmClientTest started");
 
+  //Turn GNSS on
+  SerialAT.write("AT+CGPSPWR=1\r\n");
 
+  return mqtt.connected();
+}
 
+// Function to show module status
+void getStatus()
+{
+  Serial.println(modem.getGSMDateTime(DATE_FULL));
+  if(modem.isNetworkConnected())
+  {
+    Serial.println("Conectado a Network");
+    Serial.print("Signal Quality: ");
+    Serial.println(modem.getSignalQuality());
+  }
+  else
+  {
+    Serial.println("Desconectado a Network");
+  }
+  if(modem.isGprsConnected())
+  {
+    Serial.println("Conectado a Internet");
+  }
+  else
+  {
+    Serial.println("Desconectado a Internet");
+  }
+}
+
+// Function to check connections
+void checkConnection()
+{
+  flagNetwork  = 0;
+  flagInternet = 0;
+  flagMqtt     = 0;
+  
+  //Check Connection with Network
+  if(modem.isNetworkConnected())
+  {
+    flagNetwork  = 1;
+    digitalWrite(ledNetwork, HIGH);
+  }
+  else
+  {
+    flagNetwork  = 0;
+    digitalWrite(ledNetwork, LOW);
+  }
+  
+  //Check Connection with Internet
+  if(modem.isGprsConnected())
+  {
+    flagInternet = 1;
+    digitalWrite(ledInternet, HIGH);
+  }
+  else
+  {
+    flagInternet = 0;
+    digitalWrite(ledInternet, LOW);
+  }
+
+  //Check Connection with MQTT Broker
+  if(mqtt.connected())
+  {
+    flagMqtt = 1;
+    digitalWrite(ledMqtt, HIGH);
+  }
+  else
+  {
+    flagMqtt = 0;
+    digitalWrite(ledMqtt, LOW);
+  }
+}
 // Function to receive the income data from MQTT subscribed topics
 void mqttCallback(char* topic, byte* payload, unsigned int len)
 {
