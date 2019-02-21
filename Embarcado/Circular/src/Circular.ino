@@ -79,6 +79,7 @@ unsigned long t = 0;
 unsigned long lastReconnectAttempt = 0;
 unsigned long lastGNSS = 0;
 
+char res;
 //Functions intervals
 unsigned int intervalReconnect = 10000;     //10 seconds
 unsigned int intervalGNSS = 2000;           //2 seconds (send GNSS data every 2 seconds)
@@ -128,6 +129,8 @@ void setup()
 void loop()
 {
   // Check Connections
+  if(Serial.available()) res = Serial.read();
+  if(res == 'i') modem.gprsDisconnect();  
   checkConnection();                   //Futuramente fazer uma interrupção ou usar o millis()
 
   // if Network is desconnected, then..
@@ -152,7 +155,7 @@ void loop()
     GNSSRequest();  //Send location
   }
   // else
-  else
+  else if (!flagMqtt && flagInternet)
   {
      // Try to reconnect every 10 seconds
       t = millis();
@@ -243,6 +246,7 @@ boolean mqttConnect()
 // Function to show module status
 void getStatus()
 {
+  Serial.println("*************************");
   Serial.println(modem.getGSMDateTime(DATE_FULL));
   if(modem.isNetworkConnected())
   {
@@ -262,6 +266,7 @@ void getStatus()
   {
     Serial.println("Desconectado a Internet");
   }
+  Serial.println("*************************");
 }
 
 // Function to check connections
@@ -280,6 +285,8 @@ void checkConnection()
   else
   {
     flagNetwork  = 0;
+    flagInternet = 0;
+    flagMqtt     = 0;
     digitalWrite(ledNetwork, LOW);
   }
   
@@ -292,6 +299,7 @@ void checkConnection()
   else
   {
     flagInternet = 0;
+    flagMqtt     = 0;
     digitalWrite(ledInternet, LOW);
   }
 
