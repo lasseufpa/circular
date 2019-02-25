@@ -19,6 +19,8 @@
     <script type="text/javascript" src="assets/js/mqtt/browserMqtt.js"></script>
     <script type="text/javascript" src="assets/js/mqtt/clientMqtt.js"></script>
 
+	<script type="text/javascript" src="assets/js/layer/vector/KML.js"></script>
+		
 </head>
 <body>
 <div id="mapid" style="width: 100vw; height: 100vh;"></div>
