@@ -19,7 +19,8 @@
     <script type="text/javascript" src="assets/js/mqtt/browserMqtt.js"></script>
     <script type="text/javascript" src="assets/js/mqtt/clientMqtt.js"></script>
 
-	<script type="text/javascript" src="assets/js/layer/vector/KML.js"></script>
+    <script type="text/javascript" src="assets/js/layer/vector/KML.js"></script>
+    <script type="text/javascript" src="assets/js/layer/MovingMarker.js"></script>
 		
 </head>
 <body>
