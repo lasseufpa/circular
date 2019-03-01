@@ -14,7 +14,8 @@ def on_message(client, userdata, msg):
     # Timer : message[2], Lat : message[3], Lng : message[4], Speed : message[6]
     message = str(msg.payload).split(",")
     print(message)
-    save_mqtt(message[2], message[3], message[4], message[6])
+    with open("Output.txt", "a") as text_file:
+        print("{}".format(message), file=text_file)
 
 # Save the mqtt message on mysql database
 def save_mqtt(timer, lat, lng, speed):
