@@ -26,15 +26,12 @@ function initialize_map() {
     map.on('click', onMapClick);
     set_stops(map);
 
-
-    // L.Routing.control({
-    //     waypoints: [
-    //       L.latLng(-1.470546, -48.447899),
-    //       L.latLng(-1.471194, -48.447996)
-    //     ],
-    //     useZoomParameter: false,
-    //     autoRoute: false,
-    //   }).addTo(map);
-
+   var track = new L.KML("assets/data/rota.kml", {async: true});
+	track.on("loaded", function(e) {
+			map.fitBounds(e.target.getBounds());
+		});
+	map.addLayer(track);
+	
+		
 }
 
