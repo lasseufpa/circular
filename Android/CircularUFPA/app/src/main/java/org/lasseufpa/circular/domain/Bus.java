@@ -1,4 +1,4 @@
 package org.lasseufpa.circular.domain;
 
-public class Circular {
+public class Bus {
 }
