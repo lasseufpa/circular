@@ -35,4 +35,9 @@ dependencies {
 
     implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.0'
     implementation 'org.eclipse.paho:org.eclipse.paho.android.service:1.1.1'
+
+    implementation 'org.osmdroid:osmdroid-android:6.0.3'
+    implementation 'org.osmdroid:osmdroid-mapsforge:6.0.3'
+    implementation 'org.osmdroid:osmdroid-geopackage:6.0.3'
+    implementation 'org.osmdroid:osmdroid-third-party:6.0.1'
 }
