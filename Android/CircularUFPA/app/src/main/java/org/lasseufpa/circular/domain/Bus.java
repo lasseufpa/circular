@@ -14,6 +14,7 @@ public class Bus {
     private float   temperature;
     private String  date;
     private String  time;
+    private Boolean isObsolet;
 
 
     public Bus(double latitude, double longitude, Marker marker, String name){
@@ -52,5 +53,8 @@ public class Bus {
 
     public void setTime(String time){ this.time = time; }
     public String getTime(){ return time; }
+
+    public void setIsObsolet(Boolean isObsolet){ this.isObsolet = isObsolet; }
+    public Boolean getIsObsolet(){ return isObsolet; }
 
 }
