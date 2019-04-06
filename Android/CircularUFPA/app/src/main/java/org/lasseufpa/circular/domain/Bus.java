@@ -1,10 +1,10 @@
 package org.lasseufpa.circular.domain;
 
 import org.osmdroid.api.Marker;
+import org.osmdroid.util.GeoPoint;
 
 public class Bus {
-    private double  latitude;
-    private double  longitude;
+    private GeoPoint latLog;
     private Marker  marker;
     private String  name;
 
@@ -17,18 +17,14 @@ public class Bus {
     private Boolean isObsolet;
 
 
-    public Bus(double latitude, double longitude, Marker marker, String name){
-        this.latitude = latitude;
-        this.longitude = longitude;
+    public Bus(GeoPoint latLog, Marker marker, String name){
+        this.latLog = latLog;
         this.marker = marker;
         this.name = name;
     }
 
-    public void setLatitude(double latitude){ this.latitude = latitude; }
-    public Double getLatitude(){ return latitude; }
-
-    public void setLongitude(double longitude){ this.longitude = longitude; }
-    public Double getLongitude(){ return longitude; }
+    public void setLatLog(double latitude){ this.latLog = latLog; }
+    public GeoPoint getLatLog(){ return latLog; }
 
     public void setMarker(Marker marker){ this.marker = marker; }
     public Marker getMarket(){ return this.marker; }
