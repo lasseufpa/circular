@@ -12,14 +12,12 @@ public class Bus {
     private double speed;
     private float signalQuality;
     private float temperature;
-    private String date;
-    private String time;
+    private String dateTime;
     private Boolean isObsolet;
 
 
-    public Bus(GeoPoint latLog, Marker marker, String name){
+    public Bus(GeoPoint latLog, String name, double speed, float signalQuality, String temperature, String dateTime){
         this.latLog = latLog;
-        this.marker = marker;
         this.name = name;
     }
 
@@ -44,11 +42,8 @@ public class Bus {
     public void setTemperature(float temperature){ this.temperature = temperature; }
     public Float getTemperature(){ return temperature; }
 
-    public void setDate(String temperature){ this.date = date; }
-    public String getDate(){ return date; }
-
-    public void setTime(String time){ this.time = time; }
-    public String getTime(){ return time; }
+    public void setDateTime(String temperature){ this.dateTime = dateTime; }
+    public String getDateTime(){ return dateTime; }
 
     public void setIsObsolet(Boolean isObsolet){ this.isObsolet = isObsolet; }
     public Boolean getIsObsolet(){ return isObsolet; }
