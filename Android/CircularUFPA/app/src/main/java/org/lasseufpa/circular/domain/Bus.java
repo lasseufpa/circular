@@ -5,15 +5,15 @@ import org.osmdroid.util.GeoPoint;
 
 public class Bus {
     private GeoPoint latLog;
-    private Marker  marker;
-    private String  name;
+    private Marker marker;
+    private String name;
 
-    private Route   route;
-    private double  speed;
-    private float   signalQuality;
-    private float   temperature;
-    private String  date;
-    private String  time;
+    private Route route;
+    private double speed;
+    private float signalQuality;
+    private float temperature;
+    private String date;
+    private String time;
     private Boolean isObsolet;
 
 
