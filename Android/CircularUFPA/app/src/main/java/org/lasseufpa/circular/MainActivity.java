@@ -1,9 +1,14 @@
 package org.lasseufpa.circular;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -53,6 +58,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void setupMap(){
+        // load/initialize the osmdroid configuration
+        Context context = getApplicationContext();
+        Configuration.getInstance().load(context, PreferenceManager.getDefaultSharedPreferences(context));
+
         //User-Agent variable. Identifies the user to OSM servers.
         Configuration.getInstance().setUserAgentValue(BuildConfig.APPLICATION_ID);
 
