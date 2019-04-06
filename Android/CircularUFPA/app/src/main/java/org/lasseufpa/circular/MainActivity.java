@@ -16,6 +16,7 @@ import android.view.MenuItem;
 
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.lasseufpa.circular.helpers.MqttHelper;
+import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.CustomZoomButtonsController;
@@ -48,18 +49,22 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        setupMap();
+    }
+
+    public void setupMap(){
+        //User-Agent variable. Identifies the user to OSM servers.
+        Configuration.getInstance().setUserAgentValue(BuildConfig.APPLICATION_ID);
+
         MapView map = (MapView) findViewById(R.id.map);
         map.setTileSource(TileSourceFactory.MAPNIK);
 
-        //--------------------
-        // Map Configuration
-        //--------------------
+        // Zoom configuration
         map.setMultiTouchControls(true);
         map.getController().setZoom(ZOOM_LEVEL);
 
         GeoPoint startPoint = new GeoPoint(INICIAL_LAT, INICIAL_LONG);
         map.getController().setCenter(startPoint);
-
     }
 
     @Override
