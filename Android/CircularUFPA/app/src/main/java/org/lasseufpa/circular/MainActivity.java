@@ -2,12 +2,8 @@ package org.lasseufpa.circular;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -17,12 +13,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.lasseufpa.circular.helpers.MqttHelper;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.CustomZoomButtonsController;
 import org.osmdroid.views.MapView;
 
 public class MainActivity extends AppCompatActivity
@@ -57,7 +51,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void setupMap(){
-        // Load/Initialiize the osmdroid configuration
+        // load/initialize the osmdroid configuration
         Context context = getApplicationContext();
         Configuration.getInstance().load(context, PreferenceManager.getDefaultSharedPreferences(context));
 
@@ -75,7 +69,7 @@ public class MainActivity extends AppCompatActivity
         map.getController().setCenter(startPoint);
     }
 
-    public  void setupMqtt(){
+    public void setupMqtt(){
         MqttHelper mqtt = new MqttHelper(getApplicationContext());
         mqtt.connect();
 
@@ -111,21 +105,6 @@ public class MainActivity extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

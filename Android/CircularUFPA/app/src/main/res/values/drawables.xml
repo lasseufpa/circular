@@ -7,4 +7,6 @@
     <item name="ic_feedback" type="drawable">@drawable/ic_message_alert_white_24dp</item>
     <item name="ic_about" type="drawable">@drawable/ic_information_white_24dp</item>
 
+    <item name="main_logo" type="drawable">@drawable/logo</item>
+
 </resources>
