@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -29,9 +30,6 @@ import org.osmdroid.views.MapView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    private Handler handler;
-    private MqttHelper MqttHelper;
 
     private final float ZOOM_LEVEL = 17;
     private final double INICIAL_LAT = -1.473590;
@@ -55,6 +53,8 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         setupMap();
+        //setupMqtt();
+
     }
 
     public void setupMap(){
@@ -76,6 +76,17 @@ public class MainActivity extends AppCompatActivity
         map.getController().setCenter(startPoint);
     }
 
+    public void setupMqtt(){
+        MqttHelper mqtt = new MqttHelper();
+        mqtt.connect();
+
+        if (mqtt.isConnected()){
+            Log.e("MQTT", "Connected");
+        } else {
+            Log.e("MQTT", "Disconnected");
+        }
+    }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -91,21 +102,6 @@ public class MainActivity extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
