@@ -18,8 +18,6 @@
  *
  *
  */
-
- 
 #define TINY_GSM_MODEM_SIM808
 #include <TinyGsmClient.h> //Library for GPRS(GSM) connection
 #include <PubSubClient.h> //Library for MQTT protocol
@@ -35,12 +33,12 @@
 
 //Variables to storage the GNSS data
 String data;
-String debug_string;
 char   data2[70];
 float  temp;
 
 // Your GPRS credentials
 // Leave empty, if missing user or pass
+
 const char apn[]  = "claro.com.br";
 const char user[] = "claro";
 const char pass[] = "claro";
@@ -59,15 +57,16 @@ PubSubClient mqtt(client);
 // === MQTT parameters ===
 const char* broker    = "iot.eclipse.org";      //Broker adress
 const int broker_port = 1883;                   //Broker port adress
-const char* client_id = "circular01";           //MQTT client ID
+const char* client_id = "circular02";           //MQTT client ID
 const char* mqtt_user = "";                     //MQTT broker user
 const char* mqtt_pass = "";                     //MQTT broker password
 
 //  == MQTT topics ==
 // /ufpa/circular/loc/XX(number of the bus)
-const char* topicLocation = "/ufpa/circular/loc/01";    // MQTT topic to publish the current GNSS data
+const char* topicLocation = "/ufpa/circular/loc/02";    // MQTT topic to publish the current GNSS data
 
 //Control variables
+boolean waitConnection  = 0;
 boolean flagNetwork     = 0;
 boolean flagInternet    = 0;
 boolean flagMqtt        = 0;
@@ -75,40 +74,49 @@ boolean flagLedNetwork  = 0;
 boolean flagLedInternet = 0;
 boolean flagLedMqtt     = 0;
 boolean flagReset       = 0;
+uint8_t resetNumber     = 0;
 
 //Timing variables
 unsigned long lastReconnectAttempt = 0;
 unsigned long lastGNSS   = 0;
-unsigned long t          = 0;
+unsigned long resetAHour   = 0;
 uint8_t counter          = 0;
 
 //Functions intervals
 unsigned const int intervalReconnect = 5000;  //5 seconds
 unsigned const int intervalGNSS      = 2000;  //2 seconds (send GNSS data every 2 seconds)
-
 void connections();
 void GNSSRequest();
 void failConnection();
+void splitGnssData(String data_,char div);
 
-char* buffer_ ;
-char* hora;
-char* latitude;
-char* longitude;
-char* velocidade;
-char* curso;
+String hora;
+String latitude;
+String longitude;
+String velocidade;
+String curso;
 
-int address = 0;
-char buff = ' ';
+boolean debuger = 0;
 
 //Rotina de Interrupção que ocorre a cada ~ 10ms
 ISR(TIMER2_OVF_vect)
 {
+    
     TCNT2=100;                      // Reinicializa o registrador do Timer2
     counter++;                      //incremente várialvel auxiliar
     if(counter == 50)               //Ocorre a cada 500ms
     {
       counter = 0;                  //Reiniciar a variável
-      
+        /*
+        Serial.println("-------------------");
+        Serial.print("waitConnection: ");
+        Serial.println(waitConnection);
+        Serial.print("Flag Reset: ");
+        Serial.println(flagReset);
+        Serial.print("Reset Number: ");
+        Serial.println(resetNumber);
+        Serial.println("-------------------");
+        */      
       if(flagNetwork)           digitalWrite(ledNetwork, HIGH);
       else if (flagLedNetwork)  digitalWrite(ledNetwork, !digitalRead(ledNetwork));
       else                      digitalWrite(ledNetwork, LOW);
@@ -121,7 +129,21 @@ ISR(TIMER2_OVF_vect)
       else if (flagLedMqtt)     digitalWrite(ledMqtt, !digitalRead(ledMqtt));
       else                      digitalWrite(ledMqtt, LOW);
 
-      if(!flagReset) wdt_reset();
+      if(millis()-resetAHour > 60*60*1000) //delisgar a cada uma hora
+      {
+        flagReset = 1;
+      }
+      if(flagReset) ;
+      else if(!waitConnection) wdt_reset();
+      else
+      {
+        if(resetNumber > 0)
+        {
+          wdt_reset();
+          resetNumber--;
+        }
+        else ;
+      }
     }  
 }
 
@@ -158,7 +180,8 @@ void setup()
   Serial.print("Initializing modem...");
   modem.restart();
   Serial.println("OK");
-    
+
+  SerialAT.println("AT+IPR=38400");               //Set baud rate to 38400
   SerialAT.write("AT+CGPSPWR=1\r\n");           // Power On GPS
 
   cli();           //Desabilitando interrupções globais
@@ -172,24 +195,33 @@ void setup()
   sei();           //Habilitando interrupções globais
 
   mqtt.setServer(broker, broker_port);           // MQTT Broker setup
+  mqtt.setCallback(mqttCallback);
   
   connections();
+  resetAHour = millis();           //guardar o tempo que o Arduino ligou
 }
 
 void loop()
 {
+  //connectionTest();
+  mqtt.loop();
   connections();
-  
-  
   if (flagMqtt) //if MQTT is connected, then...
-  {
-    mqtt.loop();    
+  {    
     GNSSRequest();  //Send Location
-  } 
+  }
+  if(Serial.available())
+  {
+    wdt_reset();
+    ATcommands(Serial.readString());
+  }
 }
 
 void connections()
 {
+  resetNumber = 120;
+  waitConnection = 1;
+  
   if(!flagNetwork)
   {
     flagLedNetwork = 1;
@@ -201,9 +233,10 @@ void connections()
     Serial.println("OK");
     flagNetwork = 1;
     flagLedNetwork = 0;
-    
-    SerialAT.write("AT+CGPSPWR=1\r\n");           // Power On GPS
+    SerialAT.write("AT+CGPSPWR=1\r\n");
   }
+
+  resetNumber = 120;
   
   if(!flagInternet)
   {
@@ -218,6 +251,8 @@ void connections()
     flagInternet = 1;
     flagLedInternet = 0;
   }
+
+  resetNumber = 120;
   
   if(!flagMqtt)
   {
@@ -240,6 +275,18 @@ void connections()
     }
     else lastReconnectAttempt = millis();
   }
+
+  if(!flagNetwork || !flagInternet || !flagMqtt || debuger)
+  {
+    Serial.println("---------  DEPOIS -----------");
+    Serial.print("Network: ");-
+    Serial.println(flagNetwork);
+    Serial.print("Internet: ");
+    Serial.println(flagInternet);
+    Serial.print("MQTT: ");
+    Serial.println(flagMqtt);
+    debuger = 0;
+  }
   
   if(modem.isNetworkConnected())
   {
@@ -251,6 +298,8 @@ void connections()
     flagNetwork  = 0;
     flagInternet = 0;
     flagMqtt     = 0;
+    modem.gprsDisconnect();
+    mqtt.disconnect();
   }
 
   if(modem.isGprsConnected() && flagNetwork) flagInternet = 1;
@@ -259,13 +308,29 @@ void connections()
     Serial.println("Internet Falhou");
     flagInternet = 0;
     flagMqtt = 0;
+    modem.gprsDisconnect();
+    mqtt.disconnect();
   }
 
   if(mqtt.connected() && flagNetwork && flagInternet) flagMqtt = 1;
   else
   {
     Serial.println("MQTT Falhou");
+    mqtt.disconnect();
     flagMqtt = 0;
+  } 
+  waitConnection = 0;
+
+  if(!flagNetwork || !flagInternet || !flagMqtt)
+  {
+    Serial.println("---------  ANTES -----------");
+    Serial.print("Network: ");-
+    Serial.println(flagNetwork);
+    Serial.print("Internet: ");
+    Serial.println(flagInternet);
+    Serial.print("MQTT: ");
+    Serial.println(flagMqtt);
+    debuger = 1;
   }
 }
 
@@ -278,57 +343,53 @@ void GNSSRequest()
     data=SerialAT.readString();         //Save GNSS data at data variable (string)
     //Data structure: +CGNSINF: <GNSS run status>,<Fix status>,<UTC date & Time>,<Latitude>,<Longitude>,<MSL Altitude>,<Speed Over Ground>,<Course Over Ground>,
     //                          <Fix Mode>,<Reserved1>,<HDOP>,<PDOP>,<VDOP>,<Reserved2>,<GNSS Satellites in View>,<GNSS Satellites Used>,<GLONASS Satellites Used>,<Reserved3>,<C/N0 max>,<HPA>,<VPA>               //Print GNSS data
-    
+    //Serial.println("#############################");
+    Serial.println(data);
     //Split GNSS string
-    data.toCharArray(data2, 68);
-    buffer_ =    strtok(data2, ",");
-    buffer_ =    strtok(NULL, ",");
-    hora  =      strtok(NULL, ",");
-    latitude =   strtok(NULL, ",");
-    longitude =  strtok(NULL, ",");
-    buffer_  =   strtok(NULL, ",");
-    velocidade = strtok(NULL, ",");
-    curso  =     strtok(NULL, ",");
+    splitGnssData(data, ',');
     
     //Data structure: <Qualidade do sinal>,<Temperatura>,<UTC date & Time>,<Latitude>,<Longitude>,<Velocidade>,<Curso>
-    data = String(modem.getSignalQuality());
+    data =  String(-(113-(int(modem.getSignalQuality())*2)));
     data += ","; 
-    data +=String((float(analogRead(lm35))*5/(1023))/0.01);
-    data +=",";
-    data +=String(hora);
-    data +="," + String(latitude);
-    data +=",";
-    data +=String(longitude);
-    data +=",";
-    data +=String(velocidade);
-    data +=",";
-    data +=String(curso);
-
-    Serial.println("*************GNSS DATA *************");
-    Serial.println("INFORMAÇÕES ENVIADAS: ");
-    Serial.print("Qualidade do Sinal: ");
-    Serial.println(modem.getSignalQuality());
-    Serial.print("Temperatura: ");
-    Serial.println((float(analogRead(lm35))*5/(1023))/0.01);
-    Serial.print("Dara e Hora UTC: ");
-    Serial.println(String(hora));
-    Serial.print("Latitude: ");
-    Serial.println(String(latitude));
-    Serial.print("Longitude: ");
-    Serial.println(String(longitude));
-    Serial.print("Velocidade: ");
-    Serial.println(String(velocidade));
-    Serial.print("Curso: ");
-    Serial.println(String(curso));
-    Serial.print("Link: ");
-    debug_string = "http://maps.google.com/maps?q=" + String(latitude) + "," + String(longitude);
-    Serial.println(debug_string);
-    Serial.write("--------------------------------------\n");
+    data += String((float(analogRead(lm35))*5/(1023))/0.01);
+    data += ",";
+    data += hora;
+    data += ",";
+    data += latitude;
+    data += ",";
+    data += longitude;
+    data += ",";
+    data += velocidade;
+    data += ",";
+    data += curso;
     
     //MQTT labrary only sends chars
     data.toCharArray(data2, 68);          //Converter
     mqtt.publish(topicLocation, data2);     //Publish GNSS data on Topic Location
     lastGNSS = millis();                  //Guarda o tempo que o envio foi feito
+
+    /*
+    Serial.println("INFORMAÇÕES ENVIADAS: ");
+    Serial.print("Qualidade do Sinal ~: ");
+    Serial.print(String(-(113-(int(modem.getSignalQuality())*2))));
+    Serial.println("dBm");
+    Serial.print("Temperatura ~: ");
+    Serial.println((float(analogRead(lm35))*5/(1023))/0.01);
+    Serial.print("Dara e Hora UTC: ");
+    Serial.println(hora);
+    Serial.print("Latitude: ");
+    Serial.println(latitude);
+    Serial.print("Longitude: ");
+    Serial.println(longitude);
+    Serial.print("Velocidade: ");
+    Serial.println(velocidade);
+    Serial.print("Curso: ");
+    Serial.println(curso);
+    Serial.print("Link: ");
+    data = "http://maps.google.com/maps?q=" + latitude + "," + longitude;
+    Serial.println(data);
+    Serial.println("#############################");
+    */
   }
 }
 
@@ -342,24 +403,70 @@ void failConnection()
   flagLedInternet = 1;              //...
   flagLedMqtt = 1;                  //...
 
-  //****FUNÇÃO DE RESET AQUI ***
-  flagReset = 1; //Arduino ira resetar nos proximos 2S.
+  //flagReset = 1; //Arduino ira resetar nos proximos 2S.
+  resetNumber = 0;
   
-  //debuger
   Serial.println("Fail Reset");
   while(1);
   //
 }
 
-/*
-void debug()
+void splitGnssData(String data_,char div)
 {
-  Serial.print("Flags: ");
-  Serial.print(flagNetwork);
-  Serial.print(" ");
-  Serial.print(flagInternet);
-  Serial.print(" ");
-  Serial.print(flagMqtt);
-  Serial.println(" ");
+
+   uint8_t wordPosition=0;
+   String arr[8];
+
+   for (int i = 0; i < data_.length() ; ++i)
+   {
+       if(data_[i] == div)
+       {
+           ++wordPosition;
+           if(wordPosition == 8) break;
+       }
+       else
+       {
+           arr[wordPosition] += data_[i];
+       }
+   }
+
+   for (int i = 0; i < 8; ++i)
+   {
+       if(!arr[i].length())
+           arr[i] = "0.000000";
+   }
+
+   hora       = arr[2];
+   latitude   = arr[3];
+   longitude  = arr[4];
+   velocidade = arr[6];
+   curso      = arr[7];
 }
-*/
+
+void ATcommands(String command)
+{
+  SerialAT.println(command);
+  Serial.println(SerialAT.readString());
+}
+// Function to receive the income data from MQTT subscribed topics
+void mqttCallback(char* topic, byte* payload, unsigned int len)
+{
+  String msg;
+
+    if(!len) flagReset = 1;
+    //obtem a string do payload recebido
+    for(int i = 0; i < len; i++) 
+    {
+       char c = (char)payload[i];
+       msg += c;
+    }
+    
+    Serial.println(msg);
+}
+
+void connectionTest()
+{
+  mqtt.subscribe("/ufpa/circular/connectionTest/02");
+  mqtt.publish("/ufpa/circular/connectionTest/02", "1");
+  mqtt.loop();  
+}
