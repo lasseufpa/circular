@@ -1,9 +1,12 @@
 package org.lasseufpa.circular;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -25,8 +28,7 @@ import org.osmdroid.views.MapView;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Handler handler;
-    private MqttHelper MqttHelper;
+    MapView map;
 
     private final float ZOOM_LEVEL = 17;
     private final double INICIAL_LAT = -1.473590;
@@ -49,14 +51,20 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        // Setup the application
         setupMap();
+        setupMqtt();
     }
 
     public void setupMap(){
+        // Load/Initialiize the osmdroid configuration
+        Context context = getApplicationContext();
+        Configuration.getInstance().load(context, PreferenceManager.getDefaultSharedPreferences(context));
+
         //User-Agent variable. Identifies the user to OSM servers.
         Configuration.getInstance().setUserAgentValue(BuildConfig.APPLICATION_ID);
 
-        MapView map = (MapView) findViewById(R.id.map);
+        map = (MapView) findViewById(R.id.map);
         map.setTileSource(TileSourceFactory.MAPNIK);
 
         // Zoom configuration
@@ -65,6 +73,27 @@ public class MainActivity extends AppCompatActivity
 
         GeoPoint startPoint = new GeoPoint(INICIAL_LAT, INICIAL_LONG);
         map.getController().setCenter(startPoint);
+    }
+
+    public  void setupMqtt(){
+        MqttHelper mqtt = new MqttHelper(getApplicationContext());
+        mqtt.connect();
+
+        if (mqtt.isConnected()){
+            Log.w("MQTT", "Connected");
+        } else {
+            Log.w("MQTT", "Not connected");
+        }
+    }
+
+    public void onResume(){
+        super.onResume();
+        map.onResume(); // This will refresh the osmdroid configuration on resuming
+    }
+
+    public void onPause(){
+        super.onPause();
+        map.onPause();
     }
 
     @Override
