@@ -10,6 +10,7 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
+import org.lasseufpa.circular.threads.BusUpdateThread;
 
 public class MqttHelper implements MqttCallback {
 
@@ -66,7 +67,11 @@ public class MqttHelper implements MqttCallback {
 
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
-        Log.w("MQTT", message.toString());
+        Log.d("MQTT", "Message:" + message.toString());
+
+        BusUpdateThread busUp = new BusUpdateThread();
+        busUp.MessageArrived(message.toString(), "Circular02");
+
     }
 
     @Override

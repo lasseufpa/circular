@@ -3,10 +3,13 @@ package org.lasseufpa.circular.domain;
 import org.osmdroid.api.Marker;
 import org.osmdroid.util.GeoPoint;
 
+import java.util.Calendar;
+
 public class Bus {
     private GeoPoint latLog;
     private Marker marker;
     private String name;
+    private Calendar recivedTime;
 
     private Route route;
     private double speed;
@@ -14,14 +17,14 @@ public class Bus {
     private float temperature;
     private String dateTime;
     private Boolean isObsolet;
+    private int direction;
 
-
-    public Bus(GeoPoint latLog, String name, double speed, float signalQuality, String temperature, String dateTime){
+    public Bus(GeoPoint latLog, String name) {
         this.latLog = latLog;
         this.name = name;
     }
 
-    public void setLatLog(double latitude){ this.latLog = latLog; }
+    public void setLatLog(GeoPoint latLog){ this.latLog = latLog; }
     public GeoPoint getLatLog(){ return latLog; }
 
     public void setMarker(Marker marker){ this.marker = marker; }
@@ -48,4 +51,9 @@ public class Bus {
     public void setIsObsolet(Boolean isObsolet){ this.isObsolet = isObsolet; }
     public Boolean getIsObsolet(){ return isObsolet; }
 
+    public void setDirection(int direction) { this.direction = direction; }
+    public int getDirection() { return direction; }
+
+    public void setRecivedTime(Calendar recivedTime) { this.recivedTime = recivedTime; }
+    public Calendar getRecivedTime() { return recivedTime; }
 }
