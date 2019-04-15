@@ -1,6 +1,7 @@
 package org.lasseufpa.circular;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -13,11 +14,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import org.lasseufpa.circular.data.StopList;
+import org.lasseufpa.circular.helpers.MapHelper;
 import org.lasseufpa.circular.helpers.MqttHelper;
+import org.lasseufpa.circular.utils.UfpaStopList;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.ItemizedIconOverlay;
+import org.osmdroid.views.overlay.Marker;
+import org.osmdroid.views.overlay.Overlay;
+import org.osmdroid.views.overlay.OverlayItem;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -67,6 +77,28 @@ public class MainActivity extends AppCompatActivity
 
         GeoPoint startPoint = new GeoPoint(INICIAL_LAT, INICIAL_LONG);
         map.getController().setCenter(startPoint);
+
+        addStopMarkers();
+    }
+
+    public void addStopMarkers(){
+        Drawable stopsMarker = this.getResources().getDrawable(R.drawable.stop_point);
+        MapHelper mapHelper = new MapHelper();
+        ArrayList<OverlayItem> items = mapHelper.addStopOverlay(UfpaStopList.STOPS, stopsMarker);
+
+        ItemizedIconOverlay stopOverlay = new ItemizedIconOverlay(this, items, new ItemizedIconOverlay.OnItemGestureListener() {
+            @Override
+            public boolean onItemSingleTapUp(int index, Object item) {
+                return false;
+            }
+
+            @Override
+            public boolean onItemLongPress(int index, Object item) {
+                return false;
+            }
+        });
+
+        map.getOverlays().add(stopOverlay);
     }
 
     public void setupMqtt(){
@@ -83,6 +115,7 @@ public class MainActivity extends AppCompatActivity
     public void onResume(){
         super.onResume();
         map.onResume(); // This will refresh the osmdroid configuration on resuming
+
     }
 
     public void onPause(){
