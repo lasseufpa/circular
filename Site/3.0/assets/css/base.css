@@ -74,14 +74,16 @@
     font-size: 35px;
     font-weight: bold;
 }
+.animate {
+    animation: zoom 0.6s
+}
+
 .close:hover,.close:focus {
     color: red;
     cursor: pointer;
 }
 
-.animate {
-    animation: zoom 0.6s
-}
+
 @keyframes zoom {
     from {transform: scale(0)} 
     to {transform: scale(1)}
