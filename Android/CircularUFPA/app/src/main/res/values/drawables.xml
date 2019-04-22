@@ -8,5 +8,6 @@
     <item name="ic_about" type="drawable">@drawable/ic_information_white_24dp</item>
 
     <item name="main_logo" type="drawable">@drawable/logo</item>
+    <item name="app_splash" type="drawable">@drawable/splashscreen</item>
 
 </resources>
