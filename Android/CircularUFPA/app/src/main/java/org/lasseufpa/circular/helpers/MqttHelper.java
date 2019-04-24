@@ -10,7 +10,10 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
+import org.lasseufpa.circular.data.BusList;
+import org.lasseufpa.circular.domain.Bus;
 import org.lasseufpa.circular.threads.BusUpdateThread;
+import org.osmdroid.util.GeoPoint;
 
 public class MqttHelper implements MqttCallback {
 
@@ -69,9 +72,16 @@ public class MqttHelper implements MqttCallback {
     public void messageArrived(String topic, MqttMessage message) throws Exception {
         Log.d("MQTT", "Message:" + message.toString());
 
-        BusUpdateThread busUp = new BusUpdateThread();
-        busUp.MessageArrived(message.toString(), "Circular02");
+        String[] message_data = message.toString().split(",");
+        String[] topic_data = topic.split("/");
 
+        GeoPoint latLog = new GeoPoint(Double.parseDouble(message_data[3]), Double.parseDouble(message_data[4]));
+        Bus bus = new Bus(latLog, topic_data[4]);
+
+        BusList busList = new BusList();
+        busList.saveBus(bus);
+
+        Log.d("MQTT", String.valueOf(busList.size()));
     }
 
     @Override
