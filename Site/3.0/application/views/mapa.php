@@ -31,9 +31,9 @@
 <body>
 <!-- Navigation Bar -->
 <div class="w3-bar background w3-large"> 
-  <a class="nav-header w3-bar-item w3-mobile w3-hover-blue-gray"><img src="../../assets/img/sobre/logo_sidebar_2019.jpg" height="32.5" width="100"></a>
-  <a href="#paradas" class="w3-bar-item w3-button w3-hide-small w3-hover-blue-gray">Frota ativa</a>  
-  <a href="#paradas" class="w3-bar-item w3-button w3-hide-small w3-hover-blue-gray">Paradas</a>
+  <a class="nav-header w3-bar-item w3-mobile"><img src="../../assets/img/sobre/logo_sidebar_2019.jpg" height="32.5" width="100"></a>
+  <a  onclick = "document.getElementById('modal-wrapper4').style.display='block'" class="w3-bar-item w3-button w3-hide-small w3-hover-blue-gray">Frota ativa</a>  
+  <a  onclick = "document.getElementById('modal-wrapper3').style.display='block'" class="w3-bar-item w3-button w3-hide-small w3-hover-blue-gray">Paradas</a>
   <a onclick = "document.getElementById('modal-wrapper2').style.display='block'" class="w3-bar-item w3-button w3-hide-small w3-hover-blue-gray">Feedback</a>
   <a onclick = "document.getElementById('modal-wrapper').style.display='block'" class="w3-large w3-bar-item w3-button w3-hide-small w3-hover-blue-gray">Sobre</a>
   <a href="#work" class="w3-bar-item w3-button w3-right w3-hide-small w3-medium w3-hover-blue-gray w3-large"><i class="fa fa-facebook-official w3-hover-opacity fa-2x"></i></a>
@@ -48,8 +48,8 @@
 <div class="sidebar">
 <!-- Sidebar on small screens when clicking the menu icon -->
 	<nav class="w3-sidebar w3-bar-block w3-collapse w3-top background2 w3-animate-left w3-hide-large" style="width:250px;display:none" id="mySidebar">
-	<a href="#about" onclick="w3_close()" class="w3-bar-item w3-button">Frota ativa</a>  
-	<a onclick = "document.getElementById('modal-wrapper2').style.display='block'" class="w3-bar-item w3-button">Paradas</a>
+	<a onclick = "document.getElementById('modal-wrapper4').style.display='block'" class="w3-bar-item w3-button">Frota ativa</a>  
+	<a onclick = "document.getElementById('modal-wrapper3').style.display='block'" class="w3-bar-item w3-button">Paradas</a>
 	<a onclick = "document.getElementById('modal-wrapper2').style.display='block'" class="w3-bar-item w3-button">Feedback</a>
 	<a onclick = "document.getElementById('modal-wrapper').style.display='block'" class="w3-bar-item w3-button">Sobre</a>
 	<a href="#facebook" class="w3-bar-item w3-button w3-right"><i class="fa fa-facebook-official w3-hover-opacity"></i></a>
@@ -92,7 +92,7 @@
 </div>
 
 
-<!-- Modal 2 (Popup Contatos) -->
+<!-- Modal 2 (Popup Feedback) -->
 
 <div id="modal-wrapper2" class="modal">
   
@@ -114,34 +114,34 @@
 </div>
 
 <!-- Modal 3 (Popup Paradas) -->
-<div id="modal-wrapper2" class="modal">
-
+<div id="modal-wrapper3" class="modal">
+  
   <form class="modal-content animate" action="/action_page.php">
-
+        
     <div class="imgcontainer">
-      <span onclick="document.getElementById('modal-wrapper2').style.display='none'" class="close" title="Close PopUp">&times;</span>
+      <span onclick="document.getElementById('modal-wrapper3').style.display='none'" class="close" title="Close PopUp">&times;</span>
       <img src="../../assets/img/sobre/Banner_2019.jpeg" alt="Avatar" class="avatar">
-      <h1 style="text-align:center">Contato</h1>
+      <h1 style="text-align:center">Paradas</h1>
     </div>
 
     <div class="container2">
-      <h6>Em breve...</h6>
+      <h6>As paradas realizadas pelo circular são simbolizadas pelas bandeiras azuis no mapa. Para mais informações acerca dos campus da UFPA <a href="http://prefeitura.ufpa.br/index.php/mapas" target="_blank">acesse</a>. </h6>
     </div>
 
   </form>
-
+  
 </div>
 
 <!-- Modal 4 (Popup Frotas Ativas) -->
 
-<div id="modal-wrapper2" class="modal">
+<div id="modal-wrapper4" class="modal">
 
 	<form class="modal-content animate" action="/action_page.php">
 
 	<div class="imgcontainer">
-	      <span onclick="document.getElementById('modal-wrapper2').style.display='none'" class="close" title="Close PopUp">&times;</span>
+	      <span onclick="document.getElementById('modal-wrapper4').style.display='none'" class="close" title="Close PopUp">&times;</span>
      		 <img src="../../assets/img/sobre/Banner_2019.jpeg" alt="Avatar" class="avatar">
-     	 <h1 style="text-align:center">Contato</h1>
+     	 <h1 style="text-align:center">Frotas ativas</h1>
    	</div>
 
     <div class="container2">
@@ -155,7 +155,9 @@
 <!-- Fim dos Popups -->
 
 
-<div id="mapid" style="width: 100vw; height: 85vh;" class="background"></div>
+
+
+<div id="mapid" class="minha-div"></div>
 <!-- Footer -->
 	<footer class="background footer w3-center">
  	<h3>LASSE

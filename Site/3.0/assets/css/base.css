@@ -45,15 +45,27 @@
     margin: 4% auto 15% auto;
     border: 1px solid #888;
     width: 40%; 
-  padding-bottom: 30px;
-color: black;
+    padding-bottom: 30px;
+    color: black;
 }
 
-@media only screen and (max-width: 600px) {
- .modal-content {
-     width:100%;
-  }
+.minha-div{
+    width: 100vw;
+    height: 90%;
+    z-index: 1000;
 }
+
+.sidebar{
+ display:none;
+}
+
+.footer {
+    position:fixed;
+    width:100%;
+    z-index: 2000;
+    bottom:0;
+}
+
 .close {
     position: absolute;
     right: 25px;
@@ -62,31 +74,26 @@ color: black;
     font-size: 35px;
     font-weight: bold;
 }
+.animate {
+    animation: zoom 0.6s
+}
+
 .close:hover,.close:focus {
     color: red;
     cursor: pointer;
 }
 
-.animate {
-    animation: zoom 0.6s
-}
+
 @keyframes zoom {
     from {transform: scale(0)} 
     to {transform: scale(1)}
-}
-
-
-.sidebar{
- display:none;
 }
 
 @media only screen and (max-width: 600px) {
  .sidebar {
      display:block;
   }
-}
-.footer {
-    position:absolute;
-    bottom:0;
-    width:100%;
+.modal-content {
+     width:100%;
+  }
 }
