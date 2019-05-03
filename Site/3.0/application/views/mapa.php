@@ -5,12 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!--CSS Styles-->
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="../../assets/css/w3.css">
+    <link rel="stylesheet" href="../../assets/css/css?family=Raleway">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="crossorigin=""/>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+    <link rel="stylesheet" href="../../assets/css/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="crossorigin=""/>
+    <link rel="stylesheet" href="../../assets/css/leaflet-routing-machine.css" />
 
     <link rel="stylesheet" type="text/css" href="../../assets/css/base.css"/>
 
@@ -41,13 +40,14 @@
   <a href="myfile.htm" class="w3-bar-item w3-button w3-right w3-hide-small w3-hover-blue-gray w3-large"><img src="../../assets/img/sobre/playstore_icon.svg" width="30" height="30"></a> 
 </div>
 <div class="w3-bar background w3-large"> 
-<a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium w3-hover-blue-gray" onclick="w3_open()">
+<a href="javascript:void(0)" class="w3-bar-item w3-right w3-hide-large w3-hide-medium" onclick="w3_open()">
       <i class="fa fa-bars"style="color:white"></i>
     </a>
   </div>
 <div class="sidebar">
 <!-- Sidebar on small screens when clicking the menu icon -->
-	<nav class="w3-sidebar w3-bar-block w3-collapse w3-top background2 w3-animate-left w3-hide-large" style="width:250px;display:none" id="mySidebar">
+	<nav class="w3-sidebar w3-bar-block w3-collapse w3-top background2 w3-hide-large" style="width:250px;display:none" id="mySidebar">
+        <a class="nav-header w3-bar-item w3-mobile"><img src="../../assets/img/sobre/logo_sidebar_2019.jpg" height="45" width="100"></a>
 	<a onclick = "document.getElementById('modal-wrapper4').style.display='block'" class="w3-bar-item w3-button">Frota ativa</a>  
 	<a onclick = "document.getElementById('modal-wrapper3').style.display='block'" class="w3-bar-item w3-button">Paradas</a>
 	<a onclick = "document.getElementById('modal-wrapper2').style.display='block'" class="w3-bar-item w3-button">Feedback</a>
@@ -55,7 +55,8 @@
 	<a href="#facebook" class="w3-bar-item w3-button w3-right"><i class="fa fa-facebook-official w3-hover-opacity"></i></a>
 	<a href="#twitter" class="w3-bar-item w3-button w3-right"> <i class="fa fa-twitter w3-hover-opacity"></i></a>    
 	<a href="#playstore" class="w3-bar-item w3-button w3-right"><img src="../../assets/img/sobre/playstore_icon.svg" width="15" height="15"></a>   
-	</nav>
+        <a class="nav-header w3-bar-item w3-mobile" style="position:absolute;bottom:0px"><img src="../../assets/img/sobre/logo.png" height="30" width="30"></a>	
+</nav>
 </div>
 
 <!-- Header -->
