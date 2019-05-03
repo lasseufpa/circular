@@ -1,11 +1,19 @@
-.background{ background-color: #0B1557;
+.background{ background-color: #272727;
  color: white;
- }
+ z-index: 5000;
+ width:100%;
+}
 
-.background2{ background-color: #3D74A2; 
+.background2{ background-color: #747474; 
   color: white;
   z-index: 2000;
  }
+
+.logo{
+position: absolute;
+  text-align: center;
+  font-size: 18px;
+}
 
 .container{
   text-indent: 15px;
@@ -62,7 +70,7 @@
 .footer {
     position:fixed;
     width:100%;
-    z-index: 2000;
+    z-index: 1000;
     bottom:0;
 }
 
@@ -95,5 +103,8 @@
   }
 .modal-content {
      width:100%;
+  }
+.w3-mobile {
+     display:block;
   }
 }
