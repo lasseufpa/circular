@@ -23,6 +23,7 @@
 #include <PubSubClient.h> //Library for MQTT protocol
 #include <avr/wdt.h>
 
+// --- Mapeamento de Hardware ---
 #define D9 6                // Pino que possui funções de gerenciamento de energia (sair do sleep)
 #define ledNetwork 2
 #define ledInternet 3
@@ -34,11 +35,9 @@
 //Variables to storage the GNSS data
 String data;
 char   data2[70];
-float  temp;
 
 // Your GPRS credentials
 // Leave empty, if missing user or pass
-
 const char apn[]  = "claro.com.br";
 const char user[] = "claro";
 const char pass[] = "claro";
@@ -57,13 +56,13 @@ PubSubClient mqtt(client);
 // === MQTT parameters ===
 const char* broker    = "iot.eclipse.org";      //Broker adress
 const int broker_port = 1883;                   //Broker port adress
-const char* client_id = "circular02";           //MQTT client ID
+const char* client_id = "circular01";           //MQTT client ID
 const char* mqtt_user = "";                     //MQTT broker user
 const char* mqtt_pass = "";                     //MQTT broker password
 
 //  == MQTT topics ==
 // /ufpa/circular/loc/XX(number of the bus)
-const char* topicLocation = "/ufpa/circular/loc/02";    // MQTT topic to publish the current GNSS data
+const char* topicLocation = "/ufpa/circular/loc/01";    // MQTT topic to publish the current GNSS data
 
 //Control variables
 boolean waitConnection  = 0;
@@ -79,7 +78,7 @@ uint8_t resetNumber     = 0;
 //Timing variables
 unsigned long lastReconnectAttempt = 0;
 unsigned long lastGNSS   = 0;
-unsigned long resetAHour   = 0;
+unsigned long resetADay = 0;
 uint8_t counter          = 0;
 
 //Functions intervals
@@ -96,7 +95,6 @@ String longitude;
 String velocidade;
 String curso;
 
-boolean debuger = 0;
 
 //Rotina de Interrupção que ocorre a cada ~ 10ms
 ISR(TIMER2_OVF_vect)
@@ -107,16 +105,7 @@ ISR(TIMER2_OVF_vect)
     if(counter == 50)               //Ocorre a cada 500ms
     {
       counter = 0;                  //Reiniciar a variável
-        /*
-        Serial.println("-------------------");
-        Serial.print("waitConnection: ");
-        Serial.println(waitConnection);
-        Serial.print("Flag Reset: ");
-        Serial.println(flagReset);
-        Serial.print("Reset Number: ");
-        Serial.println(resetNumber);
-        Serial.println("-------------------");
-        */      
+        
       if(flagNetwork)           digitalWrite(ledNetwork, HIGH);
       else if (flagLedNetwork)  digitalWrite(ledNetwork, !digitalRead(ledNetwork));
       else                      digitalWrite(ledNetwork, LOW);
@@ -129,20 +118,23 @@ ISR(TIMER2_OVF_vect)
       else if (flagLedMqtt)     digitalWrite(ledMqtt, !digitalRead(ledMqtt));
       else                      digitalWrite(ledMqtt, LOW);
 
-      if(millis()-resetAHour > 60*60*1000) //delisgar a cada uma hora
+      
+      if(millis()-resetADay > 86400000) //delisgar a cada 24h
       {
+        mqtt.publish("/ufpa/circular/debug/01", "Vou reiniciar, Tô trabalhando 24H");     //Mensagem de reiniciar
         flagReset = 1;
       }
-      if(flagReset) ;
-      else if(!waitConnection) wdt_reset();
-      else
+      
+      if(flagReset) ;                         // Se o MCU quiser reiniciar, então ... não faça nada (esperar o wdt_timer reiniciar)
+      else if(!waitConnection) wdt_reset();   // Se o MCU não está testando conexão, então ... reset o wdt para NÃO reiniciar
+      else                                    // Se o MCU está tentando se conectar, então ... espere 1 minuto antes de reiniciar
       {
         if(resetNumber > 0)
         {
           wdt_reset();
           resetNumber--;
         }
-        else ;
+        else ;                                // Passou um minuto, então ... espere (Por padrão, nunca orá acontecer)
       }
     }  
 }
@@ -167,7 +159,7 @@ void setup()
   delay(10);
   
   //Definindo Pino de controle e LEDs
-  pinMode(D9,OUTPUT);
+  pinMode(D9,OUTPUT);             
   pinMode(ledNetwork, OUTPUT);
   pinMode(ledInternet, OUTPUT);
   pinMode(ledMqtt, OUTPUT);
@@ -181,7 +173,7 @@ void setup()
   modem.restart();
   Serial.println("OK");
 
-  SerialAT.println("AT+IPR=38400");               //Set baud rate to 38400
+  SerialAT.println("AT+IPR=38400");             //Set baud rate to 38400
   SerialAT.write("AT+CGPSPWR=1\r\n");           // Power On GPS
 
   cli();           //Desabilitando interrupções globais
@@ -190,69 +182,70 @@ void setup()
   TCNT2  = 100;    //10 ms overflow again
   TIMSK2 = 0x01;   //Habilita interrupção do Timer2
 
-  wdt_enable(WDTO_2S);
+  wdt_enable(WDTO_2S);  //Configurando wdt_timer para estourar a cada 2S
   
-  sei();           //Habilitando interrupções globais
+  sei();               //Habilitando interrupções globais
 
   mqtt.setServer(broker, broker_port);           // MQTT Broker setup
-  mqtt.setCallback(mqttCallback);
+  mqtt.setCallback(mqttCallback);                // Set callback (Não utilizado)
   
-  connections();
-  resetAHour = millis();           //guardar o tempo que o Arduino ligou
+  connections();                   // Estabelece as conexões
+  mqtt.publish("/ufpa/circular/debug/01", "Iniciei");     //Mensagem de inicio
+  resetADay = millis();           //guardar o tempo que o Arduino iniciou 
 }
 
 void loop()
 {
-  //connectionTest();
   mqtt.loop();
   connections();
-  if (flagMqtt) //if MQTT is connected, then...
+  if (flagMqtt)             //if MQTT is connected, then...
   {    
-    GNSSRequest();  //Send Location
+    GNSSRequest();          //Send Location
   }
-  if(Serial.available())
+  if(Serial.available())    //Se Alguma mensagem foi enviada ao arduino, então ...
   {
-    wdt_reset();
-    ATcommands(Serial.readString());
+    wdt_reset();    
+    ATcommands(Serial.readString());  //Envie esse comando ao módulo
   }
 }
 
+//Fução que Estabelece e testa as conexões do Arduino
 void connections()
 {
-  resetNumber = 120;
-  waitConnection = 1;
+  resetNumber = 120;        // Esperar um minuto antes de reiniciar
+  waitConnection = 1;       // Afirma que está testando/estabelecendo conexões
   
-  if(!flagNetwork)
+  if(!flagNetwork)          // Se a rede não está conectada, então ... se conecte
   {
-    flagLedNetwork = 1;
+    flagLedNetwork = 1;     // Piscar o led de rede
     Serial.print("Waiting for network...");
     if (!modem.waitForNetwork())
     {
-      failConnection();
+      failConnection();     // Não consegui estabelecer conexão
     }
     Serial.println("OK");
-    flagNetwork = 1;
-    flagLedNetwork = 0;
-    SerialAT.write("AT+CGPSPWR=1\r\n");
+    flagNetwork = 1;        // Afirma que está conectado a rede
+    flagLedNetwork = 0;     // Pare de piscar o led de rede
+    SerialAT.write("AT+CGPSPWR=1\r\n");   // Ligue o GPS (Teoricamente não seria necessário...)
   }
 
-  resetNumber = 120;
+  resetNumber = 120;        // Esperar um minuto antes de reiniciar   
   
-  if(!flagInternet)
+  if(!flagInternet)         // Se a internet não está conectada, então ... se conecte
   {
-    flagLedInternet = 1;
+    flagLedInternet = 1;     // Piscar o led de internet
     Serial.print("Connecting to ");
     Serial.print(apn);
     if (!modem.gprsConnect(apn, user, pass))
     {
-     failConnection();
+     failConnection();     // Não consegui estabelecer conexão
     }
     Serial.println(" OK");
-    flagInternet = 1;
-    flagLedInternet = 0;
+    flagInternet = 1;        // Afirma que está conectado a internet
+    flagLedInternet = 0;     // Pare de piscar o led de rede
   }
 
-  resetNumber = 120;
+  resetNumber = 120;        // Esperar um minuto antes de reiniciar 
   
   if(!flagMqtt)
   {
@@ -274,18 +267,6 @@ void connections()
       }
     }
     else lastReconnectAttempt = millis();
-  }
-
-  if(!flagNetwork || !flagInternet || !flagMqtt || debuger)
-  {
-    Serial.println("---------  DEPOIS -----------");
-    Serial.print("Network: ");-
-    Serial.println(flagNetwork);
-    Serial.print("Internet: ");
-    Serial.println(flagInternet);
-    Serial.print("MQTT: ");
-    Serial.println(flagMqtt);
-    debuger = 0;
   }
   
   if(modem.isNetworkConnected())
@@ -321,17 +302,6 @@ void connections()
   } 
   waitConnection = 0;
 
-  if(!flagNetwork || !flagInternet || !flagMqtt)
-  {
-    Serial.println("---------  ANTES -----------");
-    Serial.print("Network: ");-
-    Serial.println(flagNetwork);
-    Serial.print("Internet: ");
-    Serial.println(flagInternet);
-    Serial.print("MQTT: ");
-    Serial.println(flagMqtt);
-    debuger = 1;
-  }
 }
 
 //Function that gets and and publish on the MQTT network the GNSS data
@@ -462,11 +432,4 @@ void mqttCallback(char* topic, byte* payload, unsigned int len)
     }
     
     Serial.println(msg);
-}
-
-void connectionTest()
-{
-  mqtt.subscribe("/ufpa/circular/connectionTest/02");
-  mqtt.publish("/ufpa/circular/connectionTest/02", "1");
-  mqtt.loop();  
 }
