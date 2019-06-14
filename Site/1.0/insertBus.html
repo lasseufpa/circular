@@ -12,13 +12,13 @@
   <script>
     var client1 = mqtt.connect('ws://iot.eclipse.org:80/ws')
     client1.on('connect', function() {
-      var text = '+CGNSINF+CGNSINF: 1,1,20170606213815.000,-1.464823,-48.445460,25.900,1.74,13.6,1,,4.4,4.5,1.0,,13,3,,,37,,';
+      var text = '19,25,20170606213815.000,-1.467153,-48.446684,25.900,1.74,13.6,84,1';
       client1.publish('/ufpa/circular/loc/01', text);
       console.log(text);
     });
     var client2 = mqtt.connect('ws://iot.eclipse.org:80/ws')
     client2.on('connect', function() {
-      var text = '+CGNSINF+CGNSINF: 1,1,20170606213815.000,-1.467153,-48.446684,25.900,1.74,13.6,1,,4.4,4.5,1.0,,13,3,,,37,,';
+      var text = '19,25,20170606213815.000,-1.467153,-48.446684,25.900,1.74,13.6,84,1';
       client2.publish('/ufpa/circular/loc/02', text);
       console.log(text);
     });

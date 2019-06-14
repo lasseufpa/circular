@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_map"
+            android:icon="@drawable/ic_map"
+            android:title="Mapa" />
+        <item
+            android:id="@+id/nav_active_fleet"
+            android:icon="@drawable/ic_active_fleet"
+            android:title="Frota Ativa" />
+        <item
+            android:id="@+id/nav_stops"
+            android:icon="@drawable/ic_stops"
+            android:title="Paradas" />
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_share"
+                android:title="Compartilhe" />
+            <item
+                android:id="@+id/nav_feedback"
+                android:icon="@drawable/ic_feedback"
+                android:title="Feedback" />
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_about"
+                android:title="Sobre" />
+        </menu>
+    </item>
+
+</menu>
