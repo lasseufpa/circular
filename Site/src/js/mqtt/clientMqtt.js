@@ -1,13 +1,12 @@
 //  <Qualidade do sinal>,<Temperatura>,<UTC date & Time>,<Latitude>,<Longitude>,<Velocidade>,<Curso>
 
-var client = mqtt.connect('ws://iot.eclipse.org:80/ws')
+var client = mqtt.connect('wss://iot.eclipse.org:443/ws')
 client.on('connect', function () {
     console.log('client connected')
     client.subscribe('/ufpa/circular/loc/+');
     client.on('message', function (topic, payload) {
         var circular = topic.split('/')
         var message  = (payload.toString()).split(',')
-        console.log(payload.toString())
 
         busText          = "Circular" + circular[4];    // Nome do circular + circular[4] que é o numero do circular
         busSignalQuality = message[0]                   // Qualidade de Sinal

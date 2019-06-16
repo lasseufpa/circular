@@ -1,9 +1,0 @@
-version: "3" 
-services:
-  php:
-    image: php:7.3.0-apache
-    volumes:
-      - "./../3.0/:/var/www/html/"
-    ports:
-      - "8080:80"
-    tty: true

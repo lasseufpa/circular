@@ -13,13 +13,8 @@ class Bus {
         this.lng           = lng;
         this.speed         = speed;
         this.direction     = direction;
-        this.oldLoc        = [lat, lng];
-        // this.marker        = 0;
-    }
-
-    isValid(){
-        console.log(Data.now());
-        console.log(this.timer);
+        this.oldLoc        = null;
+        this.marker        = null;
     }
   }
 
@@ -29,64 +24,50 @@ var busIcon = L.icon({
 });
 
 function set_bus(name, signalQuality, temp, timer, lat, lng, speed, direction, map){
-    bus = new Bus(name, signalQuality, temp, timer, lat, lng, speed, direction)
-
-    if (busList.length < 0 || !(find_bus(bus, busList))){
+    if (!(find_bus(name, busList))){
+        bus = new Bus(name, signalQuality, temp, timer, lat, lng, speed, direction)
         busList.push(bus)
-        console.log(busList)
+        create_bus(bus);
     } else {
-        update_bus(bus, busList);
-        console.log("updated")
-        console.log(busList)
+        update_bus(name, signalQuality, temp, timer, lat, lng, speed, direction, busList);
     }
-
-    // for (let b of busList){
-    //     busLoc = [bus.lat, bus.lng]
-
-    //     if (busLoc == null){
-    //         bus.marker = L.marker(busLoc, {icon: busIcon}).addTo(map);
-    //     } else {
-    //         bus.marker = L.Marker.movingMarker([bus.oldLoc, busLoc],  [1000], {icon: busIcon},).addTo(map);
-    //         bus.oldLoc = busLoc
-    //     }
-    // }
-
-    // if(locAtual == locAnt || locAnt == null){
-    //     bus_marker = L.marker(locAtual, {icon: busIcon}).addTo(map);
-    //     locAnt = locAtual;
-    // } else{
-    //     bus = L.Marker.movingMarker([locAnt, locAtual],  [1000], {icon: busIcon},).addTo(map);
-    //     map.addLayer(bus);
-    //     bus.start();
-    //     locAnt = locAtual;
-    // }
 }
 
-function update_bus(bus, busList){
-    busList.signalQuality = bus.signalQuality;
-    busList.temp          = bus.temp;
-    busList.timer         = bus.timer;
-    busList.lat           = bus.lat;
-    busList.lng           = bus.lng;
-    busList.speed         = bus.speed;
-    busList.direction     = bus.direction;
+function update_bus(name, signalQuality, temp, timer, lat, lng, speed, direction, busList){
+    for (b of busList){
+        if (b.name == name){
+            b.signalQuality = signalQuality;
+            b.temp          = temp;
+            b.timer         = timer;
+            b.lat           = lat;
+            b.lng           = lng;
+            b.speed         = speed;
+            b.direction     = direction;
+
+            // move_bus(b);
+            b.marker.remove();
+            create_bus(b);
+        }
+    }
 }
 
-function find_bus(bus, busList){
-    for (let k of busList){
-        if (bus.name == k.name){
+function find_bus(name, busList){
+    for (let b of busList){
+        if (b.name == name){
             return true;
         }
     }
-
     return false;
 }
 
-// function add_bus(bus, map){
-//     busList.push(bus)
-//     bus.marker = L.marker(locAtual, {icon: busIcon}).addTo(map);
-// }
+function create_bus(b){
+    b.marker = L.marker([b.lat, b.lng], {icon: busIcon}).addTo(map);
+    b.locAnt = [b.lat, b.lng];
+}
 
-// function remove_bus(bus){
-//     bus.marker.remove();
+// function move_bus(b){
+//     b.marker = L.Marker.movingMarker([b.oldLoc, [b.lat, b.lng]], [1000], {icon: busIcon},).addTo(map);
+//     map.addLayer(b.marker);
+//     b.marker.start();
+//     b.oldLoc = [b.lat, b.lng];
 // }
