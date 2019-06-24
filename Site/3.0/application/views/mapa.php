@@ -30,22 +30,22 @@
 <body>
 <!-- Navigation Bar -->
 <div class="w3-bar background w3-large"> 
-  <a class="nav-header w3-bar-item w3-mobile"><img src="../../assets/img/sobre/logo_sidebar_2019.jpg" height="32.5" width="100"></a>
-  <a  onclick = "document.getElementById('modal-wrapper4').style.display='block'" class="w3-bar-item w3-button w3-hide-small w3-hover-blue-gray">Frota ativa</a>  
-  <a  onclick = "document.getElementById('modal-wrapper3').style.display='block'" class="w3-bar-item w3-button w3-hide-small w3-hover-blue-gray">Paradas</a>
-  <a onclick = "document.getElementById('modal-wrapper2').style.display='block'" class="w3-bar-item w3-button w3-hide-small w3-hover-blue-gray">Feedback</a>
-  <a onclick = "document.getElementById('modal-wrapper').style.display='block'" class="w3-large w3-bar-item w3-button w3-hide-small w3-hover-blue-gray">Sobre</a>
+  <a class="nav-header w3-bar-item w3-mobile"><img src="../../assets/img/sobre/logo_sidebar_2019.jpg" height="36" width="90"></a>
+  <a  onclick = "document.getElementById('modal-wrapper4').style.display='block'" class="w3-xlarge w3-bar-item w3-button w3-hide-small w3-hover-blue-gray">Frota</a>  
+  <a  onclick = "document.getElementById('modal-wrapper3').style.display='block'" class="w3-xlarge w3-bar-item w3-button w3-hide-small w3-hover-blue-gray">Paradas</a>
+  <a onclick = "document.getElementById('modal-wrapper2').style.display='block'" class="w3-xlarge w3-bar-item w3-button w3-hide-small w3-hover-blue-gray">Feedback</a>
+  <a onclick = "document.getElementById('modal-wrapper').style.display='block'" class="w3-xlarge w3-bar-item w3-button w3-hide-small w3-hover-blue-gray">Sobre</a>
   <a href="#work" class="w3-bar-item w3-button w3-right w3-hide-small w3-medium w3-hover-blue-gray w3-large"><i class="fa fa-facebook-official w3-hover-opacity fa-2x"></i></a>
   <a href="#work" class="w3-bar-item w3-button w3-right w3-large w3-hide-small w3-hover-blue-gray"> <i class="fa fa-twitter w3-hover-opacity fa-2x"></i></a>    
-  <a href="myfile.htm" class="w3-bar-item w3-button w3-right w3-hide-small w3-hover-blue-gray w3-large"><img src="../../assets/img/sobre/playstore_icon.svg" width="30" height="30"></a> 
+  <a href="" class="w3-bar-item w3-button w3-right w3-hide-small w3-hover-blue-gray w3-large"><img src="../../assets/img/sobre/playstore_icon.svg" width="30" height="36"></a> 
 </div>
 <div class="w3-bar background w3-large"> 
 <a href="javascript:void(0)" class="w3-bar-item w3-right w3-hide-large w3-hide-medium" onclick="w3_open()">
       <i class="fa fa-bars"style="color:white"></i>
     </a>
   </div>
-<div class="sidebar">
 <!-- Sidebar on small screens when clicking the menu icon -->
+<div class="sidebar">
 	<nav class="w3-sidebar w3-bar-block w3-collapse w3-top background2 w3-hide-large" style="width:250px;display:none" id="mySidebar">
         <a class="nav-header w3-bar-item w3-mobile"><img src="../../assets/img/sobre/logo_sidebar_2019.jpg" height="45" width="100"></a>
 	<a onclick = "document.getElementById('modal-wrapper4').style.display='block'" class="w3-bar-item w3-button">Frota ativa</a>  
@@ -78,15 +78,15 @@
         
     <div class="imgcontainer">
       <span onclick="document.getElementById('modal-wrapper').style.display='none'" class="close" title="Close PopUp">&times;</span>
-      <img src="../../assets/img/sobre/Banner_2019.jpeg" alt="Avatar" class="avatar">
-      <h1 style="text-align:center">Sobre o Projeto</h1>
+      <img src="../../assets/img/sobre/Banner_2019.jpeg" width="25%" height="15%"/>
+      <h2 style="text-align:center">Sobre o nosso projeto:</h2>
     </div>
 
     <div class="container">
 
-      <p> É uma proposta desenvolvida pelo PETi (projeto dentro LASSE - Núcleo de P&D em Telecomunicações, Automação e Eletrônica) que visa atender a população que está diariamente na UFPA e necessita do transporte coletivo “circular”. A demanda de pessoas é bem maior do que o número de ônibus, no entanto, um dos principais problemas enfrentados pelos usuários é a questão do tempo, pois, mesmo estando dentro do campus, a demora para se locomover de um portão para outro, por exemplo, é muito prejudicial aos que estão a espera do transporte. É a partir dessa problemática que o projeto surge, a intenção é trazer mais conforto para todos. </p>
+      <p> É uma proposta desenvolvida pelo PETi (projeto dentro LASSE - Núcleo de P&D em Telecomunicações, Automação e Eletrônica) que visa atender a população que está diariamente na UFPA e necessita do transporte coletivo “circular”. A intenção é trazer mais conforto para todos. </p>
 
-<p><b>Agradecimento aos que fizeram este projeto acontecer:</b> Ingrid Nascimento, Moacir Neto, Camila Novaes, Carlos Eduardo Dias, Gabriel Couto, Marcos Lude, Virgínia Tavares e Yuri Silva. </p>   </div>
+<p><b>Nosso time:</b> Ingrid Nascimento, Moacir Neto, Camila Novaes, Carlos Eduardo Dias, Gabriel Couto, Virgínia Tavares e Yuri Silva. </p>   </div>
 
   </form>
   
@@ -101,7 +101,7 @@
         
     <div class="imgcontainer">
       <span onclick="document.getElementById('modal-wrapper2').style.display='none'" class="close" title="Close PopUp">&times;</span>
-      <img src="../../assets/img/sobre/Banner_2019.jpeg" alt="Avatar" class="avatar">
+      <img src="../../assets/img/sobre/Banner_2019.jpeg" width="25%" height="15%"/>
       <h1 style="text-align:center">Contato</h1>
     </div>
 
@@ -121,7 +121,7 @@
         
     <div class="imgcontainer">
       <span onclick="document.getElementById('modal-wrapper3').style.display='none'" class="close" title="Close PopUp">&times;</span>
-      <img src="../../assets/img/sobre/Banner_2019.jpeg" alt="Avatar" class="avatar">
+      <img src="../../assets/img/sobre/Banner_2019.jpeg" width="25%" height="15%"/>
       <h1 style="text-align:center">Paradas</h1>
     </div>
 
@@ -141,7 +141,7 @@
 
 	<div class="imgcontainer">
 	      <span onclick="document.getElementById('modal-wrapper4').style.display='none'" class="close" title="Close PopUp">&times;</span>
-     		 <img src="../../assets/img/sobre/Banner_2019.jpeg" alt="Avatar" class="avatar">
+     	 <img src="../../assets/img/sobre/Banner_2019.jpeg" width="25%" height="15%"/>
      	 <h1 style="text-align:center">Frotas ativas</h1>
    	</div>
 
@@ -162,7 +162,6 @@
 <!-- Footer -->
 	<footer class="background footer w3-center">
  	<h3>LASSE
-		<img src="../../assets/img/sobre/logo.png" height="30" width="30">
 	</h3>
 	</footer>
 	<script>  
