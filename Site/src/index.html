@@ -27,20 +27,21 @@
   <script type="text/javascript" src="./js/layer/vector/KML.js"></script>
   <script type="text/javascript" src="./js/layer/MovingMarker.js"></script>
 </head>
-<body>
 
+<body>
 
   <!-- Navigation Bar -->
   <div class="w3-bar background w3-large">
-    <a class="nav-header w3-bar-item w3-mobile"><img src="./img/sobre/logo_sidebar_2019.jpg" height="32.5" width="100"></a>
-    <a  onclick = "document.getElementById('modal-wrapper4').style.display='block'" class="w3-bar-item w3-button w3-hide-small w3-hover-blue-gray">Frota ativa</a>  
-    <a  onclick = "document.getElementById('modal-wrapper3').style.display='block'" class="w3-bar-item w3-button w3-hide-small w3-hover-blue-gray">Paradas</a>
+    <a class="w3-bar-item w3-mobile"><img src="./img/sobre/logo_sidebar_2019.jpg" height="37vh" width="100"></a>
+    <a onclick = "document.getElementById('modal-wrapper4').style.display='block'" class="w3-bar-item w3-button w3-hide-small w3-hover-blue-gray">Frota ativa</a>  
+    <a onclick = "document.getElementById('modal-wrapper3').style.display='block'" class="w3-bar-item w3-button w3-hide-small w3-hover-blue-gray">Paradas</a>
     <a onclick = "document.getElementById('modal-wrapper2').style.display='block'" class="w3-large w3-bar-item w3-button w3-hide-small w3-hover-blue-gray">Feedback</a>
     <a onclick = "document.getElementById('modal-wrapper').style.display='block'" class="w3-large w3-bar-item w3-button w3-hide-small w3-hover-blue-gray">Sobre</a>
     <a href="https://www.facebook.com/lasseufpa" target="_blank" class="w3-bar-item w3-button w3-right w3-hide-small w3-medium w3-hover-blue-gray w3-large"><i class="fab fa-facebook w3-hover-opacity fa-2x"></i></a>
     <a href="https://github.com/lasseufpa/circular" target="_blank" class="w3-bar-item w3-button w3-right w3-large w3-hide-small w3-hover-blue-gray"> <i class="fab fa-github w3-hover-opacity fa-2x"></i></a>    
     <a onclick = "document.getElementById('modal-wrapper5').style.display='block'" target="_blank" class="w3-bar-item w3-button w3-right w3-hide-small w3-hover-blue-gray w3-large"><i class="fab fa-google-play w3-hover-opacity fa-2x"></i></a> 
   </div>
+
   <div class="w3-bar background w3-large">
     <a href="javascript:void(0)" class="w3-bar-item w3-right w3-hide-large w3-hide-medium" onclick="w3_open()">
       <i class="fa fa-bars"style="color:white"></i>
@@ -49,7 +50,7 @@
 
   <div class="sidebar">
     <!-- Sidebar on small screens when clicking the menu icon -->
-    <nav class="w3-sidebar w3-bar-block w3-collapse w3-top background2 w3-hide-large" style="width:250px;display:none" id="mySidebar">
+    <nav class="w3-sidebar w3-bar-block w3-collapse w3-top background2 w3-hide-large" style="width:250px;" id="mySidebar">
       <a class="nav-header w3-bar-item w3-mobile"><img src="./img/sobre/logo_sidebar_2019.jpg" height="45" width="100"></a>
       <a onclick = "document.getElementById('modal-wrapper4').style.display='block'" class="w3-bar-item w3-button">Frota ativa</a>
       <a onclick = "document.getElementById('modal-wrapper3').style.display='block'" class="w3-bar-item w3-button">Paradas</a>
@@ -58,15 +59,15 @@
       <a href="https://www.facebook.com/lasseufpa" target="_blank" class="w3-bar-item w3-button w3-right"><i class="fab fa-facebook w3-hover-opacity fa-2x"></i></a>
       <a href="https://github.com/lasseufpa/circular" target="_blank" class="w3-bar-item w3-button w3-right"> <i class="fab fa-github w3-hover-opacity fa-2x"></i></a>
       <a onclick = "document.getElementById('modal-wrapper5').style.display='block'" class="w3-bar-item w3-button w3-right"><i class="fab fa-google-play w3-hover-opacity fa-2x"></i></a>
-      <a class="nav-header w3-bar-item w3-mobile" style="position:absolute;bottom:0px"><img src="./img/sobre/logo.png" height="30" width="30"></a>
+      <footer class="sidebar-footer w3-bar-item w3-mobile"><img src="./img/sobre/logo.png" height="30" width="30"></footer>
     </nav>
   </div>
+  </div>
  
-  <!-- Header -->
+  <!-- Header --
   <header class="w3-display-container w3-content" style="max-width:1500px;"></header>
+-->
 
-
-  <!-------------------------
   <!-- Inicio dos Popups --->
   <!-- Modal 1 (Popup Sobre) -->
   <div id="modal-wrapper" class="modal">
@@ -156,8 +157,8 @@
    <form class="modal-content animate" action="/action_page.php">
 
      <div class="imgcontainer">
-       <span onclick="document.getElementById('modal-wrapper5').style.display='none'" class="close" title="Close PopUp">&times;</span>
-      <img src="./img/googleplay/androidlogo.png" alt="Avatar" class="avatar">
+      <span onclick="document.getElementById('modal-wrapper5').style.display='none'" class="close" title="Close PopUp">&times;</span>
+      <img src="./img/googleplay/androidlogo.png" alt="Avatar" class="avatar2">
        <h1 style="text-align:center">Aplicativo</h1>
      </div>
 
@@ -171,12 +172,12 @@
   <!-------------------->
   <!-- Fim dos Popups -->
   
-  <div id="mapid" class="minha-div"></div>
+  <div id="mapid" class="map-div"></div>
   
   <!-- Footer -->
   <footer class="background footer w3-center">
-    <h3>LASSE
-      <img src="./img/sobre/logo.png" height="30" width="30">
+    <h3 id="h3footer" class="footer-text">LASSE
+      <img class="footer-logo" src="./img/sobre/logo.png">
     </h3>
   </footer>
 
@@ -185,19 +186,19 @@
   <script>
     // Toggle between showing and hiding the sidebar when clicking the menu icon
     var mySidebar = document.getElementById("mySidebar");
+    var h3footer = document.getElementById("h3footer");
+    var logomenu = document.getElementById("logomenu");
+
     function w3_open() {
-      if (mySidebar.style.display === 'block') {
+      if (mySidebar.style.display === 'block' && h3footer.style.display === 'none') {
         mySidebar.style.display = 'none';
+        h3footer.style.display = 'block';
       } 
       else {
         mySidebar.style.display = 'block';
+        h3footer.style.display = 'none';
       }
     } 
-
-  // Close the sidebar with the close button
-    function w3_close() {
-      mySidebar.style.display = "none";
-    }
   </script>
 
 </body>

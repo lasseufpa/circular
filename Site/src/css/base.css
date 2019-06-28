@@ -1,8 +1,11 @@
+body{
+  display: table;
+}
 
 .background{ background-color: #272727;
- color: white;
- z-index: 5000;
- width:100%;
+  color: white;
+  z-index: 5000;
+  width:100%;
 }
 
 .background2{ background-color: #747474;
@@ -11,7 +14,7 @@
  }
 
 .logo{
-position: absolute;
+  position: absolute;
   text-align: center;
   font-size: 18px;
 }
@@ -28,61 +31,72 @@ position: absolute;
 }
 
 .imgcontainer {
-    text-align: center;
-    margin: 24px 0 12px 0;
-    position: relative;
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
 }
 .avatar {
-    width: 200px;
-    height:200px;
-    margin-bottom: 10px;
+  width: 350px;
+  height:200px;
+  margin-bottom: 10px;
+}
+
+.avatar2{
+  width: 266px;
+  height: 200px;
+  margin-bottom: 10px
 }
 
 .modal {
   display:none;
-    position: fixed;
-    z-index: 2000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.4);
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
 }
 .modal-content {
-    background-color: #FFFFFF;
-    margin: 4% auto 15% auto;
-    border: 1px solid #888;
-    width: 40%;
-    padding-bottom: 30px;
-    color: black;
+  background-color: #FFFFFF;
+  margin: 4% auto 15% auto;
+  border: 1px solid #888;
+  width: 40%;
+  padding-bottom: 30px;
+  color: black;
 }
 
-.minha-div{
-    width: 100vw;
-    height: 90%;
-    z-index: 1000;
+.map-div{  
+  width: 100vw;
+  height: 82.5vh;
+  z-index: 1000;
 }
 
 .sidebar{
- display:none;
+  display:none;
+}
+
+.sidebar-footer{
+  position:absolute;
+  bottom: 0px;
 }
 
 .footer {
-    position:fixed;
-    height: 50px;
-    width:100%;
-    z-index: 1000;
-    bottom:0;
+  display: table-row;
+  position: fixed;
+  height: 15vw;
+  width:100%;
+  z-index: 1000;
 }
 
 .close {
-    position: absolute;
-    right: 25px;
-    top: 0;
-    color: #000;
-    font-size: 35px;
-    font-weight: bold;
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: #000;
+  font-size: 35px;
+  font-weight: bold;
 }
 .animate {
     animation: zoom 0.6s
@@ -94,19 +108,40 @@ position: absolute;
 }
 
 
+
 @keyframes zoom {
     from {transform: scale(0)}
     to {transform: scale(1)}
 }
 
-@media only screen and (max-width: 600px) {
- .sidebar {
-     display:block;
+@media only screen and (max-height: 820px) and (orientation: portrait){
+  .footer-text{
+    font-size: 2vh;
   }
-.modal-content {
-     width:100%;
+  .footer-logo{
+    height: 3vh;
+    width: 3vh;
   }
-.w3-mobile {
-     display:block;
+}
+
+@media only screen and (max-width: 768px) {
+  .footer{
+    display: block;
+  }
+  .sidebar{
+    display:block;
+  }
+  .modal-content {
+    width:100%;
+  }
+  .w3-mobile {
+    display:block;
+  }
+}
+
+@media screen and (orientation:landscape){
+  .sidebar-footer{
+   position: relative;
+   bottom: 0px;
   }
 }
