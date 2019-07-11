@@ -19,24 +19,25 @@ function set_stops(map){
   {lat: -1.473141, lng: -48.455911, fullname: "Ginasio"},
   {lat: -1.475790, lng: -48.455654, fullname: "Reitoria e Biblioteca"},
   {lat: -1.476433, lng: -48.454813, fullname: "Reitoria"},
-  {lat: -1.475053, lng: -48.458483, fullname: "RU e Instituto de Geociência"},
-  {lat: -1.473459, lng: -48.458701, fullname: ""},
-  {lat: -1.472336, lng: -48.457703, fullname: ""},
+  {lat: -1.475053, lng: -48.458483, fullname: "Instituto de Geociência"},
+  {lat: -1.473459, lng: -48.458701, fullname: "Garagem"},  //ls
+  {lat: -1.472336, lng: -48.457703, fullname: "CAPACIT"},
   {lat: -1.474918, lng: -48.454406, fullname: "PGITEC"},
   {lat: -1.474969, lng: -48.454264, fullname: "PGITEC"},
-  {lat: -1.477671, lng: -48.456557, fullname: ""},
-  {lat: -1.477092, lng: -48.458086, fullname: ""},
-  {lat: -1.473297, lng: -48.453620, fullname: "Dona Gina"},
-  {lat: -1.472667, lng: -48.448853, fullname: ""},
+  {lat: -1.477671, lng: -48.456557, fullname: "Mirante"},
+  {lat: -1.477092, lng: -48.458086, fullname: "RU"},  //ls
+  {lat: -1.473297, lng: -48.453620, fullname: "FAESA"},
+  {lat: -1.471597, lng: -48.450195, fullname: "ICJ"}, //ls
+  {lat: -1.472667, lng: -48.448853, fullname: "ICSA"},
   {lat: -1.471116, lng: -48.448037, fullname: "Odontologia e Laboratorio de Analises Clinicas"},
   {lat: -1.470950, lng: -48.447908, fullname: "Odontologia e Laboratorio de Analises Clinicas"},
   {lat: -1.470126, lng: -48.446759, fullname: "Nutricao e Betina"},
   {lat: -1.467505, lng: -48.447569, fullname: "Portão 04"},
-  {lat: -1.467192, lng: -48.446933, fullname: "Portão 04"},
+  {lat: -1.467192, lng: -48.446933, fullname: "Ceamazon"},
   {lat: -1.468420, lng: -48.448159, fullname: "Biomedicina"},
   {lat: -1.468937, lng: -48.448218, fullname: ""},
-  {lat: -1.463631, lng: -48.444562, fullname: "PCT"},
-  {lat: -1.463215, lng: -48.444622, fullname: "PCT"},
+  {lat: -1.465925, lng: -48.444579, fullname: "PCT"},  //ls //nao existe
+  {lat: -1.463215, lng: -48.444622, fullname: "Portão 5"},
   {lat: -1.461523, lng: -48.442213, fullname: "Instituto de Pesquisas Espaciais"}
   ];
 
