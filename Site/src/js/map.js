@@ -16,17 +16,17 @@ function initialize_map() {
         }).addTo(map);
 
     var popup = L.popup();
-    function onMapClick(e) {
+    /*function onMapClick(e) { //here
     popup
         .setLatLng(e.latlng)
         .setContent("You clicked the map at " + e.latlng.toString())
         .openOn(map);
     }
 
-    map.on('click', onMapClick);
+    map.on('click', onMapClick);*/ // here tira as coordenadas ao clicar
     set_stops(map);
 
-   var track = new L.KML("data/rota.kml", {async: true});
+    var track = new L.KML("data/rota.kml", {async: true});
 	track.on("loaded", function(e) {
 			map.fitBounds(e.target.getBounds());
 		});
